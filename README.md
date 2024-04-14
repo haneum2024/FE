@@ -1,3 +1,5 @@
+# Code Convention
+
 ### 깃허브 commit
 
 - feat: 기능 추가 및 구현
