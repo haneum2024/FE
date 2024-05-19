@@ -73,9 +73,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.fooddeliveryapp"
+    namespace "com.MyPet"
     defaultConfig {
-        applicationId "com.fooddeliveryapp"
+        applicationId "com.MyPet"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

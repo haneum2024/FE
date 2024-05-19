@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "FoodDeliveryApp.app"
-               BlueprintName = "FoodDeliveryApp"
-               ReferencedContainer = "container:FoodDeliveryApp.xcodeproj">
+               BuildableName = "MyPet.app"
+               BlueprintName = "MyPet"
+               ReferencedContainer = "container:MyPet.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "FoodDeliveryAppTests.xctest"
-               BlueprintName = "FoodDeliveryAppTests"
-               ReferencedContainer = "container:FoodDeliveryApp.xcodeproj">
+               BuildableName = "MyPetTests.xctest"
+               BlueprintName = "MyPetTests"
+               ReferencedContainer = "container:MyPet.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "FoodDeliveryApp.app"
-            BlueprintName = "FoodDeliveryApp"
-            ReferencedContainer = "container:FoodDeliveryApp.xcodeproj">
+            BuildableName = "MyPet.app"
+            BlueprintName = "MyPet"
+            ReferencedContainer = "container:MyPet.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "FoodDeliveryApp.app"
-            BlueprintName = "FoodDeliveryApp"
-            ReferencedContainer = "container:FoodDeliveryApp.xcodeproj">
+            BuildableName = "MyPet.app"
+            BlueprintName = "MyPet"
+            ReferencedContainer = "container:MyPet.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
