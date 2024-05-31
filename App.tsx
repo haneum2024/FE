@@ -25,6 +25,9 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+// import * as tf from '@tensorflow/tfjs';
+// import '@tensorflow/tfjs-react-native';
+
 type SectionProps = PropsWithChildren<{
   title: string;
 }>;
