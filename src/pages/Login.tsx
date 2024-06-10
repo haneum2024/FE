@@ -4,7 +4,6 @@ import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
 function Login() {
-
   return (
     <View style={styles.container}>
       <Pressable style={styles.button} onPress={() => onGoogleButtonPress()}>
@@ -13,7 +12,5 @@ function Login() {
     </View>
   );
 }
-
-
 
 export default Login;

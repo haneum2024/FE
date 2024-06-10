@@ -17,7 +17,7 @@ GoogleSignin.configure({
   webClientId: WEB_CLIENT_ID,
 });
 
-const onGoogleButtonPress = async () => {
+const googleLoginButton = async () => {
   const {idToken} = await GoogleSignin.signIn();
   const googleCredential = auth.GoogleAuthProvider.credential(idToken);
   return auth().signInWithCredential(googleCredential);
@@ -64,7 +64,7 @@ function App(): React.JSX.Element {
           <View style={styles.container}>
             <Pressable
               style={styles.button}
-              onPress={() => onGoogleButtonPress()}>
+              onPress={() => googleLoginButton()}>
               <Text>구글로그인</Text>
             </Pressable>
           </View>

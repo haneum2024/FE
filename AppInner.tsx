@@ -17,7 +17,8 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 // import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 // import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Camera from './src/pages/Camera';
-import BasicCamera from './src/pages/BasicCamera';
+import MyInfo from './src/pages/MyInfo';
+import Home from './src/pages/Home';
 
 export type LoggedInParamList = {
   Orders: undefined;
@@ -152,10 +153,10 @@ function AppInner() {
   return (
     <Tab.Navigator>
       <Tab.Screen
-        name="Camera"
-        component={Camera}
+        name="Home"
+        component={Home}
         options={{
-          title: '카메라 열기',
+          title: '홈',
           // tabBarIcon: ({color}) => (
           //   <FontAwesome name="gear" size={20} style={{color}} />
           // ),
@@ -164,10 +165,34 @@ function AppInner() {
         }}
       />
       <Tab.Screen
-        name="BasicCamera"
-        component={BasicCamera}
+        name="Health"
+        component={Camera}
         options={{
-          title: '기본 카메라 열기',
+          title: '건강 일지',
+          // tabBarIcon: ({color}) => (
+          //   <FontAwesome name="gear" size={20} style={{color}} />
+          // ),
+          tabBarActiveTintColor: 'blue',
+          unmountOnBlur: true,
+        }}
+      />
+      <Tab.Screen
+        name="Camera"
+        component={Camera}
+        options={{
+          title: '실종/발견 신고',
+          // tabBarIcon: ({color}) => (
+          //   <FontAwesome name="gear" size={20} style={{color}} />
+          // ),
+          tabBarActiveTintColor: 'blue',
+          unmountOnBlur: true,
+        }}
+      />
+      <Tab.Screen
+        name="MyInfo"
+        component={MyInfo}
+        options={{
+          title: '내 정보',
           // tabBarIcon: ({color}) => (
           //   <FontAwesome name="gear" size={20} style={{color}} />
           // ),
