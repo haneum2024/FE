@@ -12,6 +12,8 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
+import {useDispatch} from 'react-redux';
+import {logout} from '../store/reducers/authReducer';
 
 const WEB_CLIENT_ID =
   '54570271712-f59ukatoig739fk0evvibotcktb5hlrf.apps.googleusercontent.com';
@@ -20,11 +22,12 @@ GoogleSignin.configure({
   webClientId: WEB_CLIENT_ID,
 });
 
-const googleLogoutButton = async () => {
+const googleLogoutButton = async dispatch => {
   try {
     await GoogleSignin.revokeAccess();
     await GoogleSignin.signOut();
     await auth().signOut();
+    dispatch(logout()); // 로그아웃 후 상태 업데이트
     console.log('로그아웃 성공');
   } catch (error) {
     console.error('로그아웃 실패:', error);
@@ -32,6 +35,7 @@ const googleLogoutButton = async () => {
 };
 
 function MyInfo() {
+  const dispatch = useDispatch();
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
@@ -48,7 +52,9 @@ function MyInfo() {
         contentInsetAdjustmentBehavior="automatic"
         style={backgroundStyle}>
         <View>
-          <Pressable style={styles.button} onPress={googleLogoutButton}>
+          <Pressable
+            style={styles.button}
+            onPress={() => googleLogoutButton(dispatch)}>
             <Text>로그아웃</Text>
           </Pressable>
         </View>

@@ -1,16 +1,86 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Pressable, StyleSheet, Text} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import {useDispatch} from 'react-redux';
+import {login} from '../store/reducers/authReducer';
 
-function Login() {
+// Firebase 콘솔에서 얻은 웹 클라이언트 ID
+const WEB_CLIENT_ID =
+  '54570271712-f59ukatoig739fk0evvibotcktb5hlrf.apps.googleusercontent.com';
+
+GoogleSignin.configure({
+  webClientId: WEB_CLIENT_ID,
+});
+
+const googleLoginButton = async dispatch => {
+  const {idToken} = await GoogleSignin.signIn();
+  const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+  await auth().signInWithCredential(googleCredential);
+  dispatch(login());
+};
+
+const googleSignInConfigure = () => {
+  GoogleSignin.configure({
+    webClientId: WEB_CLIENT_ID,
+  });
+};
+
+const Login = ({navigation}) => {
+  const dispatch = useDispatch();
+  const [isLogin, setIsLogin] = useState(false);
+
+  const checkLoggedIn = () => {
+    auth().onAuthStateChanged(user => {
+      if (user) {
+        setIsLogin(true);
+        console.log('loggedIn');
+      } else {
+        setIsLogin(false);
+        console.log('loggedOut');
+      }
+    });
+  };
+
+  useEffect(() => {
+    googleSignInConfigure();
+  }, []);
+
+  useEffect(() => {
+    checkLoggedIn();
+  }, [isLogin]);
+
   return (
     <View style={styles.container}>
-      <Pressable style={styles.button} onPress={() => onGoogleButtonPress()}>
+      <Pressable
+        style={styles.button}
+        onPress={() => googleLoginButton(dispatch)}>
         <Text>구글로그인</Text>
+      </Pressable>
+      <Pressable
+        style={styles.button}
+        onPress={() => navigation.navigate('SignUpFirstStep')}>
+        <Text>회원 가입</Text>
       </Pressable>
     </View>
   );
-}
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  button: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    width: 120,
+    alignItems: 'center',
+    backgroundColor: 'yellow',
+    borderRadius: 5,
+    margin: 5,
+  },
+});
 
 export default Login;
