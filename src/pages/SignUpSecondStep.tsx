@@ -2,15 +2,22 @@ import React from 'react';
 import {View, Text, Pressable, StyleSheet} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {login} from '../store/reducers/authReducer';
+import {AppDispatch} from '../store';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {PageNavigation} from '../../types/navigation';
 
-const handleSignUpComplete = dispatch => {
+interface SignUpSecondStepProps {
+  navigation: StackNavigationProp<PageNavigation, 'SignUpSecondStep'>;
+}
+
+const handleSignUpComplete = (dispatch: AppDispatch) => {
   // 여기서 사용자 계정을 등록하는 로직을 추가합니다.
 
   // 로그인 상태로 변경
   dispatch(login());
 };
 
-const SignUpSecondStep = ({navigation}) => {
+const SignUpSecondStep: React.FC<SignUpSecondStepProps> = () => {
   const dispatch = useDispatch();
 
   return (

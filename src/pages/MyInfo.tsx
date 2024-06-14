@@ -14,6 +14,7 @@ import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
 import {useDispatch} from 'react-redux';
 import {logout} from '../store/reducers/authReducer';
+import {AppDispatch} from '../store';
 
 const WEB_CLIENT_ID =
   '54570271712-f59ukatoig739fk0evvibotcktb5hlrf.apps.googleusercontent.com';
@@ -22,7 +23,7 @@ GoogleSignin.configure({
   webClientId: WEB_CLIENT_ID,
 });
 
-const googleLogoutButton = async dispatch => {
+const googleLogoutButton = async (dispatch: AppDispatch) => {
   try {
     await GoogleSignin.revokeAccess();
     await GoogleSignin.signOut();

@@ -1,7 +1,13 @@
 import React from 'react';
 import {View, Text, Pressable, StyleSheet} from 'react-native';
+import {PageNavigation} from '../../types/navigation';
+import {StackNavigationProp} from '@react-navigation/stack';
 
-const SignUpFirstStep = ({navigation}) => {
+interface SignUpFirstStepProps {
+  navigation: StackNavigationProp<PageNavigation, 'SignUpFirstStep'>;
+}
+
+const SignUpFirstStep: React.FC<SignUpFirstStepProps> = ({navigation}) => {
   return (
     <View style={styles.container}>
       <Text>회원가입 단계 1</Text>
