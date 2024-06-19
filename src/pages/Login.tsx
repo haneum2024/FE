@@ -41,6 +41,7 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
     auth().onAuthStateChanged(user => {
       if (user) {
         setIsLogin(true);
+        console.log('userData', auth().currentUser);
         console.log('loggedIn');
       } else {
         setIsLogin(false);
@@ -86,7 +87,7 @@ const styles = StyleSheet.create({
   button: {
     paddingHorizontal: 20,
     paddingVertical: 10,
-    width: 120,
+    width: 150,
     alignItems: 'center',
     backgroundColor: 'yellow',
     borderRadius: 5,
