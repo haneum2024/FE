@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "54570271712",
+    "project_id": "puppy-life-dc6ab",
+    "storage_bucket": "puppy-life-dc6ab.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:54570271712:android:cba15f82794f2af93da185",
+        "android_client_info": {
+          "package_name": "com.mypet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "54570271712-a2ct0tbftq1gdrnf7p9pk6m8kfs4sbsl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mypet",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "54570271712-f59ukatoig739fk0evvibotcktb5hlrf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAM_lAiigJ3yVivORsuVFY7pXc8Q9Sq6GU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "54570271712-f59ukatoig739fk0evvibotcktb5hlrf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

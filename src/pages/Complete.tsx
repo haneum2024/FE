@@ -28,8 +28,11 @@ function Complete() {
   const dispatch = useAppDispatch();
   const route = useRoute<RouteProp<LoggedInParamList>>();
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-  const [image, setImage] =
-    useState<{uri: string; name: string; type: string}>();
+  const [image, setImage] = useState<{
+    uri: string;
+    name: string;
+    type: string;
+  }>();
   const [preview, setPreview] = useState<{uri: string}>();
   const accessToken = useSelector((state: RootState) => state.user.accessToken);
 

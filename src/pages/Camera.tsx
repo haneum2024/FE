@@ -11,8 +11,8 @@ import {
 import {RNCamera} from 'react-native-camera';
 
 function Camera() {
-  const [photos, setPhotos] = useState([]);
-  const cameraRef = useRef(null);
+  const [photos, setPhotos] = useState<string[]>([]);
+  const cameraRef = useRef<RNCamera>(null);
 
   const takePicture = async () => {
     if (cameraRef.current && photos.length < 5) {
