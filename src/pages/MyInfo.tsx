@@ -11,23 +11,21 @@ import {
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
-import auth from '@react-native-firebase/auth';
 import {useDispatch} from 'react-redux';
 import {logout} from '../store/reducers/authReducer';
 import {AppDispatch} from '../store';
 
-const WEB_CLIENT_ID =
-  '54570271712-f59ukatoig739fk0evvibotcktb5hlrf.apps.googleusercontent.com';
+const ANDROID_CLIENT_ID =
+  '54570271712-a2ct0tbftq1gdrnf7p9pk6m8kfs4sbsl.apps.googleusercontent.com';
 
 GoogleSignin.configure({
-  webClientId: WEB_CLIENT_ID,
+  webClientId: ANDROID_CLIENT_ID,
 });
 
 const googleLogoutButton = async (dispatch: AppDispatch) => {
   try {
     await GoogleSignin.revokeAccess();
     await GoogleSignin.signOut();
-    await auth().signOut();
     dispatch(logout()); // 로그아웃 후 상태 업데이트
     console.log('로그아웃 성공');
   } catch (error) {

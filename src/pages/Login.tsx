@@ -1,35 +1,31 @@
 import React, {useEffect, useState} from 'react';
 import {View, Pressable, StyleSheet, Text} from 'react-native';
-import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {useDispatch} from 'react-redux';
 import {login} from '../store/reducers/authReducer';
 import {AppDispatch} from '../store';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {PageNavigation} from '../../types/navigation';
+import {authorize} from 'react-native-app-auth';
 
 interface LoginProps {
   navigation: StackNavigationProp<PageNavigation, 'SignUpFirstStep'>;
 }
 
-// Firebase 콘솔에서 얻은 웹 클라이언트 ID
-const WEB_CLIENT_ID =
-  '54570271712-f59ukatoig739fk0evvibotcktb5hlrf.apps.googleusercontent.com';
+// 구글 클라우드 콘솔에서 얻은 안드로이드 클라이언트 ID
+const ANDROID_CLIENT_ID =
+  '54570271712-a2ct0tbftq1gdrnf7p9pk6m8kfs4sbsl.apps.googleusercontent.com';
 
-GoogleSignin.configure({
-  webClientId: WEB_CLIENT_ID,
-});
-
-const googleLoginButton = async (dispatch: AppDispatch) => {
-  const {idToken} = await GoogleSignin.signIn();
-  const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-  await auth().signInWithCredential(googleCredential);
-  dispatch(login());
+const googleConfig = {
+  issuer: 'https://accounts.google.com',
+  clientId: ANDROID_CLIENT_ID,
+  redirectUrl: 'com.mypet:/oauth2redirect/google',
+  scopes: ['openid', 'profile', 'email'],
 };
 
 const googleSignInConfigure = () => {
   GoogleSignin.configure({
-    webClientId: WEB_CLIENT_ID,
+    webClientId: ANDROID_CLIENT_ID,
   });
 };
 
@@ -37,22 +33,22 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
   const dispatch = useDispatch();
   const [isLogin, setIsLogin] = useState(false);
 
-  const checkLoggedIn = () => {
-    auth().onAuthStateChanged(user => {
-      if (user) {
-        setIsLogin(true);
-        console.log('userData', auth().currentUser);
-        console.log('loggedIn');
-      } else {
-        setIsLogin(false);
-        console.log('loggedOut');
-      }
-    });
+  const googleLoginButton = async () => {
+    try {
+      const result = await authorize(googleConfig);
+      console.log(result);
+      // 서버로 result.accessToken을 보내서 JWT 발급
+      dispatch(login());
+    } catch (error) {
+      console.error('Google login error', error);
+    }
   };
+
+  const checkLoggedIn = async () => {};
 
   const handleSignIn = async () => {
     // 회원이 있는지 없는지 로직 필요
-    googleLoginButton(dispatch);
+    googleLoginButton();
     navigation.navigate('SignUpFirstStep');
   };
 
@@ -60,15 +56,9 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
     googleSignInConfigure();
   }, []);
 
-  useEffect(() => {
-    checkLoggedIn();
-  }, [isLogin]);
-
   return (
     <View style={styles.container}>
-      <Pressable
-        style={styles.button}
-        onPress={() => googleLoginButton(dispatch)}>
+      <Pressable style={styles.button} onPress={googleLoginButton}>
         <Text>구글로그인</Text>
       </Pressable>
       <Pressable style={styles.button} onPress={handleSignIn}>

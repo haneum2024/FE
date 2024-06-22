@@ -28,6 +28,7 @@
     "patch-package": "^8.0.0",
     "react": "18.2.0",
     "react-native": "0.74.1",
+    "react-native-app-auth": "^7.2.0",
     "react-native-calendars": "^1.1305.0",
     "react-native-camera": "^4.2.1",
     "react-native-config": "^1.5.1",
