@@ -5,9 +5,3 @@ const instance: AxiosInstance = axios.create({
 });
 
 export default instance;
-
-// export const loginApi = await axios.post(requests.fetchTodo, newTodo, {
-//   headers: {
-//     Authorization: `Bearer ${accessToken}`,
-//   },
-// });
