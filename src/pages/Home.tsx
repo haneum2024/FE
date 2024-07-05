@@ -1,5 +1,5 @@
 import React from 'react';
-import {Dimensions, StyleSheet, View} from 'react-native';
+import {Dimensions, StyleSheet, Text, View} from 'react-native';
 import {CalendarList, LocaleConfig} from 'react-native-calendars';
 
 LocaleConfig.locales.kr = {
@@ -50,7 +50,10 @@ function Home() {
 
   return (
     <>
-      <View style={styles.container}>
+      <View style={styles.HomeContainer}>
+        <View style={styles.CalendarText}>
+          <Text>{today}</Text>
+        </View>
         <CalendarList
           // Enable horizontal scrolling
           horizontal
@@ -119,10 +122,13 @@ function Home() {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  HomeContainer: {
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
+  },
+  CalendarText: {
+    backgroundColor: 'red',
   },
   agenda: {
     flex: 1,
