@@ -15,24 +15,18 @@ import {PageNavigation} from '../../types/navigation';
 import {setAccessToken} from '../storage/auth';
 import {login} from '../store/reducers/authReducer';
 
+import {
+  GOOGLE_CLIENT_ID,
+  GOOGLE_CLIENT_SECRET,
+  GOOGLE_REDIRECT_URI,
+  NAVER_CLIENT_ID,
+  NAVER_CLIENT_SECRET,
+  NAVER_REDIRECT_URI,
+} from 'react-native-dotenv';
+
 interface LoginProps {
   navigation: StackNavigationProp<PageNavigation, 'SignUpFirstStep'>;
 }
-
-// 구글 클라우드 콘솔에서 얻은 웹 클라이언트 ID
-const GOOGLE_CLIENT_ID =
-  // '54570271712-a2ct0tbftq1gdrnf7p9pk6m8kfs4sbsl.apps.googleusercontent.com';
-  '54570271712-6cj9qpfet066g5f0tb8le4hlvovr9073.apps.googleusercontent.com';
-// const GOOGLE_REDIRECT_URI = 'com.mypet:/oauth2redirect/google';
-// const GOOGLE_REDIRECT_URI = `com.googleusercontent.apps.${GOOGLE_CLIENT_ID}:/oauthredirect`;
-const GOOGLE_REDIRECT_URI =
-  'https://happy-maru.net/oauth2/authorization/google';
-const GOOGLE_CLIENT_SECRET = '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';
-
-// 네이버 클라이언트 정보
-const NAVER_CLIENT_ID = 'aRtsZ5tiPboW41G3a8iO';
-const NAVER_CLIENT_SECRET = 'UKEFaAtLbo';
-const NAVER_REDIRECT_URI = 'com.mypet:/oauth2redirect/naver';
 
 const googleConfig = {
   issuer: 'https://accounts.google.com',
