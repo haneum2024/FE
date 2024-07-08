@@ -4,7 +4,6 @@ import {
   ScrollView,
   StatusBar,
   StyleSheet,
-  Text,
   View,
   useColorScheme,
 } from 'react-native';
@@ -14,6 +13,7 @@ import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {useDispatch} from 'react-redux';
 import {logout} from '../store/reducers/authReducer';
 import {AppDispatch} from '../store';
+import CustomText from '../components/CustomText';
 
 const ANDROID_CLIENT_ID =
   '54570271712-a2ct0tbftq1gdrnf7p9pk6m8kfs4sbsl.apps.googleusercontent.com';
@@ -54,7 +54,7 @@ function MyInfo() {
           <Pressable
             style={styles.button}
             onPress={() => googleLogoutButton(dispatch)}>
-            <Text>로그아웃</Text>
+            <CustomText>로그아웃</CustomText>
           </Pressable>
         </View>
       </ScrollView>

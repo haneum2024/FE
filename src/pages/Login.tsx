@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Pressable, StyleSheet, Text} from 'react-native';
+import {View, Pressable, StyleSheet} from 'react-native';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {useDispatch} from 'react-redux';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -8,7 +8,6 @@ import {authorize} from 'react-native-app-auth';
 //   NaverLoginResponse,
 //   GetProfileResponse,
 // } from '@react-native-seoul/naver-login';
-import pkceChallenge from 'react-native-pkce-challenge';
 
 import {loginApi} from '../api/api';
 import {PageNavigation} from '../../types/navigation';
@@ -23,6 +22,7 @@ import {
   NAVER_CLIENT_SECRET,
   NAVER_REDIRECT_URI,
 } from 'react-native-dotenv';
+import CustomText from '../components/CustomText';
 
 interface LoginProps {
   navigation: StackNavigationProp<PageNavigation, 'SignUpFirstStep'>;
@@ -35,10 +35,10 @@ const googleConfig = {
   redirectUrl: GOOGLE_REDIRECT_URI,
   scopes: ['openid', 'profile', 'email'],
   // usePKCE: true,
-  // serviceConfiguration: {
-  //   authorizationEndpoint: 'https://accounts.google.com/o/oauth2/v2/auth',
-  //   tokenEndpoint: 'https://oauth2.googleapis.com/token',
-  // },
+  serviceConfiguration: {
+    authorizationEndpoint: 'https://accounts.google.com/o/oauth2/v2/auth',
+    tokenEndpoint: 'https://oauth2.googleapis.com/token',
+  },
 };
 
 const naverConfig = {
@@ -54,31 +54,27 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
 
   const googleLoginButton = async () => {
     try {
-      const pkce = pkceChallenge();
-      console.log('codeVerifier:', pkce.codeVerifier);
-      console.log('codeChallenge:', pkce.codeChallenge);
-
-      const result = await authorize({
-        ...googleConfig,
-        // additionalHeaders: {
-        //   code_challenge: pkce.codeChallenge,
-        //   code_challenge_method: 'S256',
-        // },
+      // const result = await authorize({
+      //   ...googleConfig,
+      //   // additionalHeaders: {
+      //   //   code_challenge: pkce.codeChallenge,
+      //   //   code_challenge_method: 'S256',
+      //   // },
+      // });
+      GoogleSignin.configure({
+        webClientId: GOOGLE_CLIENT_ID,
+        offlineAccess: true,
       });
 
-      // GoogleSignin.configure({
-      //   webClientId: GOOGLE_CLIENT_ID,
-      //   offlineAccess: true,
-      // });
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
+      console.log('User Info:', userInfo);
 
-      // await GoogleSignin.hasPlayServices();
-      // const userInfo = await GoogleSignin.signIn();
-      // console.log('User Info:', userInfo);
-
-      await setAccessToken(result.accessToken);
-      console.log('Google Authorization result:', result);
+      // await setAccessToken(result.accessToken);
+      console.log('Google Authorization result:', userInfo);
 
       // 서버로 code_verifier 및 result.accessToken을 보내서 JWT 발급
+
       // const response = await loginApi({
       //   provider: 'google',
       //   code: result.accessToken,
@@ -86,7 +82,6 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
       // });
 
       // console.log('Server response:', response.data);
-
       dispatch(login());
     } catch (error) {
       console.error('Google login error', error);
@@ -95,10 +90,6 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
 
   const naverLoginButton = async () => {
     try {
-      const pkce = pkceChallenge();
-      console.log('codeVerifier:', pkce.codeVerifier);
-      console.log('codeChallenge:', pkce.codeChallenge);
-
       const result = await authorize({
         ...naverConfig,
         // additionalParameters: {
@@ -110,13 +101,13 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
       console.log('Naver Authorization result:', result);
 
       // 서버로 code_verifier 및 result.accessToken을 보내서 JWT 발급
-      const response = await loginApi({
-        provider: 'naver',
-        code: result.accessToken,
-        codeVerifier: pkce.codeVerifier,
-      });
+      // const response = await loginApi({
+      //   provider: 'naver',
+      //   code: result.accessToken,
+      //   codeVerifier: pkce.codeVerifier,
+      // });
 
-      console.log('Server response:', response.data);
+      // console.log('Server response:', response.data);
 
       dispatch(login());
     } catch (error) {
@@ -137,13 +128,13 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
   return (
     <View style={styles.container}>
       <Pressable style={styles.button} onPress={googleLoginButton}>
-        <Text>구글로그인</Text>
+        <CustomText>구글로그인</CustomText>
       </Pressable>
       <Pressable style={styles.button} onPress={naverLoginButton}>
-        <Text>네이버로그인</Text>
+        <CustomText>네이버로그인</CustomText>
       </Pressable>
       <Pressable style={styles.button} onPress={handleSignIn}>
-        <Text>회원 가입</Text>
+        <CustomText>회원 가입</CustomText>
       </Pressable>
     </View>
   );

@@ -1,6 +1,9 @@
 import React from 'react';
-import {Dimensions, StyleSheet, Text, View} from 'react-native';
+import {Dimensions, StyleSheet, View, ScrollView} from 'react-native';
 import {CalendarList, LocaleConfig} from 'react-native-calendars';
+import Status from '../components/Status';
+import CustomText from '../components/CustomText';
+import Comment from '../components/Comment';
 
 LocaleConfig.locales.kr = {
   monthNames: [
@@ -49,10 +52,10 @@ function Home() {
   const today = new Date().toISOString().split('T')[0]; // 현재 날짜를 'YYYY-MM-DD' 형식으로 가져옴
 
   return (
-    <>
-      <View style={styles.HomeContainer}>
+    <ScrollView style={styles.HomeContainer}>
+      <View style={styles.CalendarContainer}>
         <View style={styles.CalendarText}>
-          <Text>{today}</Text>
+          <CustomText>{today}</CustomText>
         </View>
         <CalendarList
           // Enable horizontal scrolling
@@ -117,12 +120,17 @@ function Home() {
           }}
         />
       </View>
-    </>
+      <Status />
+      <Comment />
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   HomeContainer: {
+    display: 'flex',
+  },
+  CalendarContainer: {
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',

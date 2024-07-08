@@ -6,9 +6,9 @@ import {
   Image,
   ScrollView,
   Pressable,
-  Text,
 } from 'react-native';
 import {RNCamera} from 'react-native-camera';
+import CustomText from '../components/CustomText';
 
 function Camera() {
   const [photos, setPhotos] = useState<string[]>([]);
@@ -50,11 +50,11 @@ function Camera() {
         </ScrollView>
         {photos.length === 5 ? (
           <Pressable style={styles.button} onPress={handleConfirm}>
-            <Text style={styles.buttonText}>사진 전송</Text>
+            <CustomText style={styles.buttonText}>사진 전송</CustomText>
           </Pressable>
         ) : (
           <Pressable style={styles.button} onPress={takePicture}>
-            <Text style={styles.buttonText}>사진 촬영</Text>
+            <CustomText style={styles.buttonText}>사진 촬영</CustomText>
           </Pressable>
         )}
       </View>
