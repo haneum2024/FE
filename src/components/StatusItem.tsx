@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {StyleSheet, TouchableOpacity} from 'react-native';
 import {Checkbox} from 'react-native-paper';
 import color from '../styles/color';
 import CustomText from './CustomText';
@@ -7,30 +7,55 @@ import CustomText from './CustomText';
 interface StatusItemProps {
   label: string;
   checked: boolean;
+  isEditMode: boolean;
   onPress: () => void;
 }
 
-const StatusItem = ({label, checked, onPress}: StatusItemProps) => {
+const StatusItem = ({label, checked, isEditMode, onPress}: StatusItemProps) => {
+  const getCheckedTextColor = () => {
+    if (checked && isEditMode) {
+      return color.blue[600];
+    } else if (checked && !isEditMode) {
+      return color.gray[900];
+    }
+    return color.gray[400];
+  };
+
+  const getCheckedBackgroundColor = () => {
+    if (checked && isEditMode) {
+      return color.blue[100];
+    } else if (checked && !isEditMode) {
+      return color.gray[200];
+    }
+    return color.gray[50];
+  };
+
   return (
-    <View
+    <TouchableOpacity
       style={[
         styles.statusItemContainer,
-        {backgroundColor: checked ? color.blue[100] : color.gray[50]},
-      ]}>
-      <Checkbox
-        status={checked ? 'checked' : 'unchecked'}
-        onPress={onPress}
-        color={color.blue[600]}
-      />
+        {backgroundColor: getCheckedBackgroundColor()},
+      ]}
+      disabled={!isEditMode}
+      onPress={onPress}>
+      {isEditMode && (
+        <Checkbox
+          status={checked ? 'checked' : 'unchecked'}
+          // onPress={onPress}
+          color={color.blue[600]}
+        />
+      )}
       <CustomText
-        onPress={onPress}
+        disabled={!isEditMode}
+        // onPress={onPress}
         style={[
           styles.label,
+          {color: getCheckedTextColor()},
           checked ? styles.checkedLabel : styles.uncheckedLabel,
         ]}>
         {label}
       </CustomText>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -48,11 +73,9 @@ const styles = StyleSheet.create({
     fontSize: 13,
   },
   checkedLabel: {
-    color: color.blue[900],
     fontWeight: 700,
   },
   uncheckedLabel: {
-    color: color.gray[700],
     fontWeight: 400,
   },
 });

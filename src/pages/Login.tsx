@@ -71,7 +71,6 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
       console.log('User Info:', userInfo);
 
       // await setAccessToken(result.accessToken);
-      console.log('Google Authorization result:', userInfo);
 
       // 서버로 code_verifier 및 result.accessToken을 보내서 JWT 발급
 
