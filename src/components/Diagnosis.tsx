@@ -62,6 +62,7 @@ const styles = StyleSheet.create({
   iconBox: {
     display: 'flex',
     alignItems: 'center',
+    gap: 3,
   },
   subTitle: {
     color: color.blue[600],

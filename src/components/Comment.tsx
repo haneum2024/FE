@@ -67,7 +67,7 @@ const Comment = () => {
             onChangeText={handleCommentChange}
             style={[
               styles.textInput,
-              {borderColor: isFocused ? color.blue[600] : color.gray[200]},
+              {borderColor: isFocused ? color.blue[300] : color.gray[200]},
             ]}
             placeholderTextColor={color.gray[300]}
           />
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
   },
   textInput: {
     padding: 10,
-    borderWidth: 1,
+    borderWidth: 2,
     borderRadius: 10,
     backgroundColor: color.white,
   },

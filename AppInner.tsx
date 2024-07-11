@@ -1,13 +1,39 @@
 import React, {useEffect} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Alert, BackHandler} from 'react-native';
+
 import Camera from './src/pages/Camera';
 import MyInfo from './src/pages/MyInfo';
 import Home from './src/pages/Home';
+import colorType from './src/styles/color';
+
+import HomeIcon from './src/components/Icons/HomeIcon';
+import HealthIcon from './src/components/Icons/HealthIcon';
+import MissFoundIcon from './src/components/Icons/MissFoundIcon';
+import ProfileIcon from './src/components/Icons/ProfileIcon';
 
 const Tab = createBottomTabNavigator();
 
+const HomeTabBarIcon = ({color}: {color: string}) => (
+  <HomeIcon width={25} height={25} fill={color} />
+);
+
+const HealthTabBarIcon = ({color}: {color: string}) => (
+  <HealthIcon width={25} height={25} fill={color} />
+);
+
+const MissFoundTabBarIcon = ({color}: {color: string}) => (
+  <MissFoundIcon width={25} height={25} fill={color} stroke={color} />
+);
+
+const ProfileTabBarIcon = ({color}: {color: string}) => (
+  <ProfileIcon width={25} height={25} fill={color} />
+);
+
 function AppInner() {
+  const tabBarActiveTintColor = colorType.blue[600];
+  const tabBarInactiveTintColor = colorType.gray[300];
+
   useEffect(() => {
     const backAction = () => {
       Alert.alert(
@@ -31,16 +57,17 @@ function AppInner() {
   }, []);
 
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      screenOptions={{
+        tabBarActiveTintColor: tabBarActiveTintColor,
+        tabBarInactiveTintColor: tabBarInactiveTintColor,
+      }}>
       <Tab.Screen
         name="Home"
         component={Home}
         options={{
           title: '홈',
-          // tabBarIcon: ({color}) => (
-          //   <FontAwesome name="gear" size={20} style={{color}} />
-          // ),
-          tabBarActiveTintColor: 'blue',
+          tabBarIcon: HomeTabBarIcon,
           unmountOnBlur: true,
         }}
       />
@@ -49,10 +76,7 @@ function AppInner() {
         component={Camera}
         options={{
           title: '건강 일지',
-          // tabBarIcon: ({color}) => (
-          //   <FontAwesome name="gear" size={20} style={{color}} />
-          // ),
-          tabBarActiveTintColor: 'blue',
+          tabBarIcon: HealthTabBarIcon,
           unmountOnBlur: true,
         }}
       />
@@ -61,10 +85,7 @@ function AppInner() {
         component={Camera}
         options={{
           title: '실종/발견 신고',
-          // tabBarIcon: ({color}) => (
-          //   <FontAwesome name="gear" size={20} style={{color}} />
-          // ),
-          tabBarActiveTintColor: 'blue',
+          tabBarIcon: MissFoundTabBarIcon,
           unmountOnBlur: true,
         }}
       />
@@ -73,10 +94,7 @@ function AppInner() {
         component={MyInfo}
         options={{
           title: '내 정보',
-          // tabBarIcon: ({color}) => (
-          //   <FontAwesome name="gear" size={20} style={{color}} />
-          // ),
-          tabBarActiveTintColor: 'blue',
+          tabBarIcon: ProfileTabBarIcon,
           unmountOnBlur: true,
         }}
       />
