@@ -69,6 +69,7 @@ function AppInner() {
           title: '홈',
           tabBarIcon: HomeTabBarIcon,
           unmountOnBlur: true,
+          headerShown: false,
         }}
       />
       <Tab.Screen
@@ -78,6 +79,7 @@ function AppInner() {
           title: '건강 일지',
           tabBarIcon: HealthTabBarIcon,
           unmountOnBlur: true,
+          headerShown: false,
         }}
       />
       <Tab.Screen
@@ -87,6 +89,7 @@ function AppInner() {
           title: '실종/발견 신고',
           tabBarIcon: MissFoundTabBarIcon,
           unmountOnBlur: true,
+          headerShown: false,
         }}
       />
       <Tab.Screen
@@ -96,6 +99,7 @@ function AppInner() {
           title: '내 정보',
           tabBarIcon: ProfileTabBarIcon,
           unmountOnBlur: true,
+          headerShown: false,
         }}
       />
     </Tab.Navigator>

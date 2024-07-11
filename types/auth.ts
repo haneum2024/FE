@@ -5,4 +5,5 @@ export interface LoginResponse {
   refreshToken: string;
   refreshTokenExpirationTime: number;
   isFirstLogin: boolean;
+  isAgreeTerms: boolean;
 }

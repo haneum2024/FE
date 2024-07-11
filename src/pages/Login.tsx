@@ -22,9 +22,10 @@ import {login} from '../store/reducers/authReducer';
 
 import type {PageNavigation} from '../../types/navigation';
 import type {LoginResponse} from '../../types/auth';
+import color from '../styles/color';
 
 interface LoginProps {
-  navigation: StackNavigationProp<PageNavigation, 'SignUpFirstStep'>;
+  navigation: StackNavigationProp<PageNavigation, 'TermsOfUse'>;
 }
 
 const naverConfig = {
@@ -59,7 +60,12 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
       await setAccessToken(responseData.accessToken);
 
       console.log('Server response:', responseData);
-      dispatch(login());
+      if (!responseData.isAgreeTerms) {
+        navigation.navigate('TermsOfUse');
+        return;
+      } else {
+        dispatch(login());
+      }
     } catch (error) {
       console.error('Google login error', error);
     }
@@ -87,12 +93,6 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
     }
   };
 
-  const handleSignIn = async () => {
-    // 회원이 있는지 없는지 로직 필요
-    googleLoginButton();
-    navigation.navigate('SignUpFirstStep');
-  };
-
   return (
     <View style={styles.container}>
       <Pressable style={styles.button} onPress={googleLoginButton}>
@@ -100,9 +100,6 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
       </Pressable>
       <Pressable style={styles.button} onPress={naverLoginButton}>
         <CustomText>네이버로그인</CustomText>
-      </Pressable>
-      <Pressable style={styles.button} onPress={handleSignIn}>
-        <CustomText>회원 가입</CustomText>
       </Pressable>
     </View>
   );
@@ -113,6 +110,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: color.white,
   },
   button: {
     paddingHorizontal: 20,

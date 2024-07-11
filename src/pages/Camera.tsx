@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import {RNCamera} from 'react-native-camera';
 import CustomText from '../components/CustomText';
+import color from '../styles/color';
 
 function Camera() {
   const [photos, setPhotos] = useState<string[]>([]);
@@ -67,6 +68,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
+    backgroundColor: color.gray[50],
   },
   preview: {
     marginHorizontal: 10,

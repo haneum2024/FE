@@ -5,6 +5,7 @@ import Status from '../components/Status';
 import CustomText from '../components/CustomText';
 import Comment from '../components/Comment';
 import {PaperProvider} from 'react-native-paper';
+import color from '../styles/color';
 
 LocaleConfig.locales.kr = {
   monthNames: [
@@ -132,6 +133,7 @@ function Home() {
 const styles = StyleSheet.create({
   HomeContainer: {
     display: 'flex',
+    backgroundColor: color.gray[50],
   },
   CalendarContainer: {
     flex: 1,
