@@ -23,7 +23,7 @@ const CollapsibleView = ({
   onPress,
 }: {
   title: string;
-  children: any;
+  children: React.ReactNode;
   height: number;
   onPress: (disable: boolean) => void;
 }) => {

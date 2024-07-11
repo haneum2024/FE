@@ -8,10 +8,17 @@ interface StatusItemProps {
   label: string;
   checked: boolean;
   isEditMode: boolean;
+  icon: React.ReactNode;
   onPress: () => void;
 }
 
-const StatusItem = ({label, checked, isEditMode, onPress}: StatusItemProps) => {
+const StatusItem = ({
+  label,
+  checked,
+  isEditMode,
+  icon,
+  onPress,
+}: StatusItemProps) => {
   const getCheckedTextColor = () => {
     if (checked && isEditMode) {
       return color.blue[600];
@@ -25,7 +32,7 @@ const StatusItem = ({label, checked, isEditMode, onPress}: StatusItemProps) => {
     if (checked && isEditMode) {
       return color.blue[100];
     } else if (checked && !isEditMode) {
-      return color.gray[200];
+      return color.gray[100];
     }
     return color.gray[50];
   };
@@ -34,20 +41,23 @@ const StatusItem = ({label, checked, isEditMode, onPress}: StatusItemProps) => {
     <TouchableOpacity
       style={[
         styles.statusItemContainer,
+        isEditMode
+          ? styles.statusItemContainer
+          : styles.statusItemIconContainer,
         {backgroundColor: getCheckedBackgroundColor()},
       ]}
       disabled={!isEditMode}
       onPress={onPress}>
-      {isEditMode && (
+      {isEditMode ? (
         <Checkbox
           status={checked ? 'checked' : 'unchecked'}
-          // onPress={onPress}
           color={color.blue[600]}
         />
+      ) : (
+        checked && icon
       )}
       <CustomText
         disabled={!isEditMode}
-        // onPress={onPress}
         style={[
           styles.label,
           {color: getCheckedTextColor()},
@@ -67,6 +77,16 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     paddingVertical: 5,
     paddingHorizontal: 7,
+    height: 40,
+  },
+  statusItemIconContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 8,
+    borderRadius: 6,
+    paddingVertical: 5,
+    paddingHorizontal: 16,
+    gap: 10,
   },
   label: {
     marginLeft: 8,

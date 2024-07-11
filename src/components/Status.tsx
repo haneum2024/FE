@@ -1,22 +1,34 @@
 import React, {useMemo, useState} from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {Button, Portal, Snackbar} from 'react-native-paper';
-import StatusItem from './StatusItem';
-import color from '../styles/color';
+
 import CustomText from './CustomText';
 import Diagnosis from './Diagnosis';
+import StatusItem from './StatusItem';
+import color from '../styles/color';
+
+import FoodIcon from '../img/FoodIcon.svg';
+import BreathIcon from '../img/BreathIcon.svg';
+import HelplessIcon from '../img/HelplessIcon.svg';
+import VomitIcon from '../img/VomitIcon.svg';
+import RefusalIcon from '../img/RefusalIcon.svg';
+import CoughIcon from '../img/CoughIcon.svg';
+import WetNoseIcon from '../img/WetNoseIcon.svg';
+import PoopAlertIcon from '../img/PoopAlertIcon.svg';
+import TeethIcon from '../img/TeethIcon.svg';
+import FatIcon from '../img/FatIcon.svg';
 
 const statusItems = [
-  '음식을 잘 못 먹음',
-  '숨소리/호흡 이상',
-  '무기력함',
-  '구토 증상',
-  '스킨쉽 거부',
-  '잦은 기침',
-  '코가 축축함',
-  '배변 색/상태 이상',
-  '잇몸색 변화',
-  '체중 변화',
+  {title: '음식을 잘 못 먹음', icon: <FoodIcon width={24} height={24} />},
+  {title: '숨소리/호흡 이상', icon: <BreathIcon width={24} height={24} />},
+  {title: '무기력함', icon: <HelplessIcon width={24} height={24} />},
+  {title: '구토 증상', icon: <VomitIcon width={24} height={24} />},
+  {title: '스킨쉽 거부', icon: <RefusalIcon width={24} height={24} />},
+  {title: '잦은 기침', icon: <CoughIcon width={24} height={24} />},
+  {title: '코가 축축함', icon: <WetNoseIcon width={24} height={24} />},
+  {title: '배변 색/상태 이상', icon: <PoopAlertIcon width={24} height={24} />},
+  {title: '잇몸색 변화', icon: <TeethIcon width={24} height={24} />},
+  {title: '체중 변화', icon: <FatIcon width={24} height={24} />},
 ];
 
 const Status = () => {
@@ -101,9 +113,10 @@ const Status = () => {
       {statusItems.map((item, index) => (
         <StatusItem
           key={index}
-          label={item}
+          label={item.title}
           checked={checkedItems[index]}
           isEditMode={isEditMode}
+          icon={item.icon}
           onPress={() => handleCheckboxToggle(index)}
         />
       ))}
