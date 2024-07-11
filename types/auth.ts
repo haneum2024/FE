@@ -4,4 +4,5 @@ export interface LoginResponse {
   accessTokenExpirationTime: number;
   refreshToken: string;
   refreshTokenExpirationTime: number;
+  isFirstLogin: boolean;
 }
