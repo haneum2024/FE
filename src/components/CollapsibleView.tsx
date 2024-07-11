@@ -54,9 +54,6 @@ const CollapsibleView = ({
 
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const {contentOffset, contentSize, layoutMeasurement} = event.nativeEvent;
-    console.log('contentOffset:', contentOffset.y);
-    console.log('contentSize:', contentSize.height);
-    console.log('layoutMeasurement:', layoutMeasurement.height);
     if (contentOffset.y + layoutMeasurement.height >= contentSize.height - 10) {
       onPress(false);
     }

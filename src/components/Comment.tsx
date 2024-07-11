@@ -19,19 +19,16 @@ const Comment = () => {
 
   const handleCommentChange = (text: string) => {
     setCommentText(text);
-    console.log('text:', text);
   };
 
   const handleEditMode = () => {
     setIsEditMode(true);
-    console.log('수정하기 pressed');
   };
 
   const submitComment = () => {
     setVisible(true);
     setIsFocused(false);
     setIsEditMode(false);
-    console.log('코멘트 작성 완료');
   };
 
   const dismissKeyboard = () => {
@@ -125,6 +122,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 22,
     fontWeight: 700,
+    color: color.gray[900],
   },
   titleContainer: {
     display: 'flex',

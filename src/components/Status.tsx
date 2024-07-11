@@ -64,7 +64,6 @@ const Status = () => {
 
   const handleEditMode = () => {
     setIsEditMode(true);
-    console.log('수정하기 pressed');
   };
 
   const handleCheckboxToggle = (index: number) => {
@@ -74,7 +73,6 @@ const Status = () => {
   };
 
   const submitStatus = () => {
-    console.log(checkedItems);
     setIsEditMode(false);
     setVisible(true);
   };
@@ -179,6 +177,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 22,
     fontWeight: 700,
+    color: color.gray[900],
   },
   changeBox: {
     display: 'flex',

@@ -6,6 +6,7 @@ import CustomText from '../components/CustomText';
 import Comment from '../components/Comment';
 import {PaperProvider} from 'react-native-paper';
 import color from '../styles/color';
+import MissFound from '../components/MissFound';
 
 LocaleConfig.locales.kr = {
   monthNames: [
@@ -125,6 +126,7 @@ function Home() {
         </View>
         <Status />
         <Comment />
+        <MissFound />
       </ScrollView>
     </PaperProvider>
   );
