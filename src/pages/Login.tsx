@@ -4,42 +4,28 @@ import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {useDispatch} from 'react-redux';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {authorize} from 'react-native-app-auth';
+import {
+  GOOGLE_CLIENT_ID,
+  NAVER_CLIENT_ID,
+  NAVER_CLIENT_SECRET,
+  NAVER_REDIRECT_URI,
+} from 'react-native-dotenv';
 // import NaverLogin, {
 //   NaverLoginResponse,
 //   GetProfileResponse,
 // } from '@react-native-seoul/naver-login';
 
 import {loginApi} from '../api/api';
-import {PageNavigation} from '../../types/navigation';
+import CustomText from '../components/CustomText';
 import {setAccessToken} from '../storage/auth';
 import {login} from '../store/reducers/authReducer';
 
-import {
-  GOOGLE_CLIENT_ID,
-  GOOGLE_CLIENT_SECRET,
-  GOOGLE_REDIRECT_URI,
-  NAVER_CLIENT_ID,
-  NAVER_CLIENT_SECRET,
-  NAVER_REDIRECT_URI,
-} from 'react-native-dotenv';
-import CustomText from '../components/CustomText';
+import type {PageNavigation} from '../../types/navigation';
+import type {LoginResponse} from '../../types/auth';
 
 interface LoginProps {
   navigation: StackNavigationProp<PageNavigation, 'SignUpFirstStep'>;
 }
-
-const googleConfig = {
-  issuer: 'https://accounts.google.com',
-  clientId: GOOGLE_CLIENT_ID,
-  clientSecret: GOOGLE_CLIENT_SECRET,
-  redirectUrl: GOOGLE_REDIRECT_URI,
-  scopes: ['openid', 'profile', 'email'],
-  // usePKCE: true,
-  serviceConfiguration: {
-    authorizationEndpoint: 'https://accounts.google.com/o/oauth2/v2/auth',
-    tokenEndpoint: 'https://oauth2.googleapis.com/token',
-  },
-};
 
 const naverConfig = {
   issuer: 'https://nid.naver.com',
@@ -54,13 +40,6 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
 
   const googleLoginButton = async () => {
     try {
-      // const result = await authorize({
-      //   ...googleConfig,
-      //   // additionalHeaders: {
-      //   //   code_challenge: pkce.codeChallenge,
-      //   //   code_challenge_method: 'S256',
-      //   // },
-      // });
       GoogleSignin.configure({
         webClientId: GOOGLE_CLIENT_ID,
         offlineAccess: true,
@@ -70,17 +49,16 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
       const userInfo = await GoogleSignin.signIn();
       console.log('User Info:', userInfo);
 
-      // await setAccessToken(result.accessToken);
+      const response = await loginApi({
+        provider: 'google',
+        authorization: userInfo.idToken as string,
+      });
 
-      // 서버로 code_verifier 및 result.accessToken을 보내서 JWT 발급
+      const responseData: LoginResponse = response.data;
 
-      // const response = await loginApi({
-      //   provider: 'google',
-      //   code: result.accessToken,
-      //   codeVerifier: pkce.codeVerifier,
-      // });
+      await setAccessToken(responseData.accessToken);
 
-      // console.log('Server response:', response.data);
+      console.log('Server response:', responseData);
       dispatch(login());
     } catch (error) {
       console.error('Google login error', error);
@@ -91,10 +69,6 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
     try {
       const result = await authorize({
         ...naverConfig,
-        // additionalParameters: {
-        //   code_challenge: pkce.codeChallenge,
-        //   code_challenge_method: 'S256',
-        // },
       });
 
       console.log('Naver Authorization result:', result);
@@ -102,8 +76,7 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
       // 서버로 code_verifier 및 result.accessToken을 보내서 JWT 발급
       // const response = await loginApi({
       //   provider: 'naver',
-      //   code: result.accessToken,
-      //   codeVerifier: pkce.codeVerifier,
+      //   authorization: result.accessToken,
       // });
 
       // console.log('Server response:', response.data);
@@ -119,10 +92,6 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
     googleLoginButton();
     navigation.navigate('SignUpFirstStep');
   };
-
-  // useEffect(() => {
-  //   googleSignInConfigure();
-  // }, []);
 
   return (
     <View style={styles.container}>
