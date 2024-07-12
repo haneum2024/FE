@@ -18,7 +18,9 @@ const MissFound = () => {
 
   return (
     <View style={styles.missFoundContainer}>
-      <CustomText style={styles.title}>실종/발견</CustomText>
+      <CustomText weight="700" style={styles.title}>
+        실종/발견
+      </CustomText>
       <View style={styles.iconContainer}>
         <IconBox
           text={'실종 신고'}
@@ -42,7 +44,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 22,
-    fontWeight: 700,
     color: color.gray[950],
   },
   iconContainer: {

@@ -40,15 +40,19 @@ const Comment = () => {
     <TouchableWithoutFeedback onPress={dismissKeyboard}>
       <View style={styles.commentContainer}>
         <View style={styles.titleContainer}>
-          <CustomText style={styles.title}>코멘트</CustomText>
+          <CustomText weight="700" style={styles.title}>
+            코멘트
+          </CustomText>
           {!isEditMode && (
             <TouchableOpacity style={styles.changeBox} onPress={handleEditMode}>
-              <CustomText style={styles.change}>수정</CustomText>
+              <CustomText weight="500" style={styles.change}>
+                수정
+              </CustomText>
             </TouchableOpacity>
           )}
         </View>
         {isEditMode && (
-          <CustomText style={styles.subTitle}>
+          <CustomText weight="500" style={styles.subTitle}>
             반려견의 건강 상태에 대한 추가적인 관찰 사항, 특별한 주의 사항 등을
             자유롭게 적어주세요.
           </CustomText>
@@ -70,7 +74,7 @@ const Comment = () => {
           />
         ) : (
           <View style={styles.commentBox}>
-            <CustomText>{commentText}</CustomText>
+            <CustomText weight="500">{commentText}</CustomText>
           </View>
         )}
         {isEditMode && (
@@ -121,7 +125,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 22,
-    fontWeight: 700,
     color: color.gray[900],
   },
   titleContainer: {
@@ -142,13 +145,11 @@ const styles = StyleSheet.create({
   },
   change: {
     fontSize: 12,
-    fontWeight: 500,
     color: color.gray[600],
   },
   subTitle: {
     marginBottom: 16,
     fontSize: 13,
-    fontWeight: 500,
   },
   textInput: {
     padding: 10,

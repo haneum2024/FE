@@ -21,7 +21,9 @@ const IconBox = ({
       ]}
       onPress={onPress}>
       {icon}
-      <CustomText style={styles.title}>{text}</CustomText>
+      <CustomText weight="500" style={styles.title}>
+        {text}
+      </CustomText>
     </Pressable>
   );
 };
@@ -46,7 +48,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 14,
-    fontWeight: '500',
     color: color.gray[950],
   },
 });

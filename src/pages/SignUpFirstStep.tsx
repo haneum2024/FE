@@ -1,10 +1,10 @@
 import React from 'react';
 import {View, Text, Pressable, StyleSheet} from 'react-native';
-import {PageNavigation} from '../../types/navigation';
+import {AuthPageNavigation} from '../../types/navigation';
 import {StackNavigationProp} from '@react-navigation/stack';
 
 interface SignUpFirstStepProps {
-  navigation: StackNavigationProp<PageNavigation, 'SignUpFirstStep'>;
+  navigation: StackNavigationProp<AuthPageNavigation, 'SignUpFirstStep'>;
 }
 
 const SignUpFirstStep: React.FC<SignUpFirstStepProps> = ({navigation}) => {

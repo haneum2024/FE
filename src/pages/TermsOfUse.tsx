@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useDispatch} from 'react-redux';
 
@@ -10,21 +10,38 @@ import color from '../styles/color';
 import CustomText from '../components/CustomText';
 import CollapsibleView from '../components/CollapsibleView';
 import TermsOfUseText from '../components/TermsOfUseText';
+import {userAgreeApi} from '../api/api';
+import {getAccessToken} from '../storage/auth';
 
 const TermsOfUse = () => {
   const dispatch = useDispatch();
 
   const [checked, setChecked] = useState(false);
   const [checkDisabled, setCheckDisabled] = useState(true);
+  const [accessToken, setAccessToken] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchAccessToken = async () => {
+      const token = await getAccessToken();
+      setAccessToken(token);
+    };
+
+    fetchAccessToken();
+  }, []);
 
   const agreeTermsOfUse = () => {
     setChecked(!checked);
   };
 
-  const termsOfUseApi = () => {
-    // 이용약관 동의 api로직
-
-    dispatch(login());
+  const termsOfUseApi = async () => {
+    try {
+      if (accessToken !== null) {
+        await userAgreeApi({accessToken, isAgree: true});
+        dispatch(login());
+      }
+    } catch (error) {
+      console.error('termsOfUseApi error:', error);
+    }
   };
 
   const handleCollapse = (disable: boolean) => {
@@ -32,14 +49,18 @@ const TermsOfUse = () => {
   };
 
   const introductionText = `해피마루에 어서오세요!
-서비스를 이용하기 위해 이용약관 동의가 필요해요.`;
+    서비스를 이용하기 위해 이용약관 동의가 필요해요.`;
 
   return (
     <View style={styles.termsOfUseContainer}>
       <View style={styles.termsOfUseBox}>
         <NoticeIcon width={50} height={50} />
-        <CustomText style={styles.title}>이용약관 동의</CustomText>
-        <CustomText style={styles.label}>{introductionText}</CustomText>
+        <CustomText weight="700" style={styles.title}>
+          이용약관 동의
+        </CustomText>
+        <CustomText weight="500" style={styles.label}>
+          {introductionText}
+        </CustomText>
         <CollapsibleView
           title={'이용약관 전문 확인하기'}
           children={<TermsOfUseText />}
@@ -56,7 +77,10 @@ const TermsOfUse = () => {
             color={color.blue[600]}
           />
           <CustomText
-            style={{color: checkDisabled ? color.gray[300] : color.gray[700]}}>
+            weight="500"
+            style={{
+              color: checkDisabled ? color.gray[300] : color.gray[700],
+            }}>
             위의 이용약관에 동의합니다
           </CustomText>
         </View>
@@ -79,7 +103,6 @@ const TermsOfUse = () => {
 
 const styles = StyleSheet.create({
   termsOfUseContainer: {
-    display: 'flex',
     flex: 1,
     justifyContent: 'space-between',
     paddingTop: 77,
@@ -88,12 +111,10 @@ const styles = StyleSheet.create({
     backgroundColor: color.white,
   },
   termsOfUseBox: {
-    display: 'flex',
     alignItems: 'flex-start',
     gap: 18,
   },
   startBox: {
-    display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
   },
@@ -104,7 +125,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 28,
-    fontWeight: 700,
   },
   label: {
     fontSize: 13,

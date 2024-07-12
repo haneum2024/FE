@@ -5,5 +5,17 @@ export interface LoginResponse {
   refreshToken: string;
   refreshTokenExpirationTime: number;
   isFirstLogin: boolean;
-  isAgreeTerms: boolean;
+}
+
+export interface UserResponse {
+  id: string;
+  email: string;
+  name: string;
+  provider: 'google' | 'naver';
+  role: string;
+  jwtRefreshToken: string;
+  address: string;
+  publicKey: string;
+  encryptedPrivateKey: string;
+  termsOfServiceAgreement: boolean;
 }

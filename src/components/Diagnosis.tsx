@@ -36,11 +36,13 @@ const Diagnosis = ({type, borderColor}: DiagnosisProps) => {
     <View style={[styles.diagnosisContainer, {borderColor}]}>
       <View style={styles.iconBox}>
         <DiagnosisIcon width={60} height={40} />
-        <CustomText style={styles.subTitle}>진단서</CustomText>
+        <CustomText weight="700" style={styles.subTitle}>
+          진단서
+        </CustomText>
       </View>
       <View style={styles.columnLine} />
       <View style={styles.description}>
-        <CustomText>{dignosisDescription}</CustomText>
+        <CustomText weight="500">{dignosisDescription}</CustomText>
       </View>
     </View>
   );
@@ -54,7 +56,6 @@ const styles = StyleSheet.create({
     padding: 12,
     color: color.gray[700],
     fontSize: 13,
-    fontWeight: 500,
     borderWidth: 1,
     borderRadius: 20,
     marginBottom: 12,
@@ -67,7 +68,6 @@ const styles = StyleSheet.create({
   subTitle: {
     color: color.blue[600],
     fontSize: 13,
-    fontWeight: 700,
   },
   columnLine: {
     width: 1,

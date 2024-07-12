@@ -4,10 +4,10 @@ import {useDispatch} from 'react-redux';
 import {login} from '../store/reducers/authReducer';
 import {AppDispatch} from '../store';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {PageNavigation} from '../../types/navigation';
+import {AuthPageNavigation} from '../../types/navigation';
 
 interface SignUpSecondStepProps {
-  navigation: StackNavigationProp<PageNavigation, 'SignUpSecondStep'>;
+  navigation: StackNavigationProp<AuthPageNavigation, 'SignUpSecondStep'>;
 }
 
 const handleSignUpComplete = (dispatch: AppDispatch) => {

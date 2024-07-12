@@ -1,10 +1,14 @@
 import React, {useEffect} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {Alert, BackHandler} from 'react-native';
+import {createStackNavigator} from '@react-navigation/stack';
+import {Alert, BackHandler, StyleSheet} from 'react-native';
 
 import Camera from './src/pages/Camera';
 import MyInfo from './src/pages/MyInfo';
 import Home from './src/pages/Home';
+import CameraGuide from './src/pages/AddDogProfilePages/CameraGuide';
+import DogInfo from './src/pages/AddDogProfilePages/DogInfo';
+import DogProfileResult from './src/pages/AddDogProfilePages/DogProfileResult';
 import colorType from './src/styles/color';
 
 import HomeIcon from './src/components/Icons/HomeIcon';
@@ -13,6 +17,7 @@ import MissFoundIcon from './src/components/Icons/MissFoundIcon';
 import ProfileIcon from './src/components/Icons/ProfileIcon';
 
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
 const HomeTabBarIcon = ({color}: {color: string}) => (
   <HomeIcon width={25} height={25} fill={color} />
@@ -29,6 +34,42 @@ const MissFoundTabBarIcon = ({color}: {color: string}) => (
 const ProfileTabBarIcon = ({color}: {color: string}) => (
   <ProfileIcon width={25} height={25} fill={color} />
 );
+
+// const HomeStack = () => {
+//   return (
+//     <Stack.Navigator>
+//       <Stack.Screen
+//         name="HomeMain"
+//         component={Home}
+//         options={{headerShown: false}}
+//       />
+//       <Stack.Screen
+//         name="CameraGuide"
+//         component={CameraGuide}
+//         options={{
+//           tabBarStyle: {display: 'none'},
+//           headerShown: false,
+//         }}
+//       />
+//       <Stack.Screen
+//         name="DogInfo"
+//         component={DogInfo}
+//         options={{
+//           tabBarStyle: {display: 'none'},
+//           headerShown: false,
+//         }}
+//       />
+//       <Stack.Screen
+//         name="DogProfileResult"
+//         component={DogProfileResult}
+//         options={{
+//           tabBarStyle: {display: 'none'},
+//           headerShown: false,
+//         }}
+//       />
+//     </Stack.Navigator>
+//   );
+// };
 
 function AppInner() {
   const tabBarActiveTintColor = colorType.blue[600];
@@ -61,6 +102,9 @@ function AppInner() {
       screenOptions={{
         tabBarActiveTintColor: tabBarActiveTintColor,
         tabBarInactiveTintColor: tabBarInactiveTintColor,
+        tabBarStyle: styles.tabBar,
+        tabBarLabelStyle: styles.tabBarLabel,
+        tabBarHideOnKeyboard: true,
       }}>
       <Tab.Screen
         name="Home"
@@ -105,5 +149,14 @@ function AppInner() {
     </Tab.Navigator>
   );
 }
+
+const styles = StyleSheet.create({
+  tabBar: {
+    height: 60,
+  },
+  tabBarLabel: {
+    marginBottom: 6,
+  },
+});
 
 export default AppInner;

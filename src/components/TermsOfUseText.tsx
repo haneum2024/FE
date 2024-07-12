@@ -244,7 +244,11 @@ const useTermsText = `제1조(목적) 이 약관은 한이음(전자상거래 �
   `;
 
 const TermsOfUseText = () => {
-  return <CustomText style={styles.text}>{useTermsText}</CustomText>;
+  return (
+    <CustomText weight="400" style={styles.text}>
+      {useTermsText}
+    </CustomText>
+  );
 };
 
 const styles = StyleSheet.create({

@@ -51,11 +51,15 @@ function Camera() {
         </ScrollView>
         {photos.length === 5 ? (
           <Pressable style={styles.button} onPress={handleConfirm}>
-            <CustomText style={styles.buttonText}>사진 전송</CustomText>
+            <CustomText weight="500" style={styles.buttonText}>
+              사진 전송
+            </CustomText>
           </Pressable>
         ) : (
           <Pressable style={styles.button} onPress={takePicture}>
-            <CustomText style={styles.buttonText}>사진 촬영</CustomText>
+            <CustomText weight="500" style={styles.buttonText}>
+              사진 촬영
+            </CustomText>
           </Pressable>
         )}
       </View>

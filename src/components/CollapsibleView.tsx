@@ -64,7 +64,9 @@ const CollapsibleView = ({
       <View style={styles.collapsibleContainer}>
         <TouchableWithoutFeedback onPress={toggleCollapse}>
           <View style={styles.title}>
-            <CustomText style={styles.label}>{title}</CustomText>
+            <CustomText weight="500" style={styles.label}>
+              {title}
+            </CustomText>
             {collapsed ? (
               <BottomArrow width={15} height={15} />
             ) : (

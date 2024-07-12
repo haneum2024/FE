@@ -81,9 +81,12 @@ const Status = () => {
     <View style={styles.statusContainer}>
       <View style={styles.titleContainer}>
         <View style={styles.statusView}>
-          <CustomText style={styles.title}>상태</CustomText>
+          <CustomText weight="700" style={styles.title}>
+            상태
+          </CustomText>
           {!isEditMode && (
             <CustomText
+              weight="500"
               style={[
                 styles.statusBox,
                 {backgroundColor: statusStyle.backgroundColor},
@@ -94,12 +97,14 @@ const Status = () => {
         </View>
         {!isEditMode && (
           <TouchableOpacity style={styles.changeBox} onPress={handleEditMode}>
-            <CustomText style={styles.change}>수정</CustomText>
+            <CustomText weight="500" style={styles.change}>
+              수정
+            </CustomText>
           </TouchableOpacity>
         )}
       </View>
       {isEditMode ? (
-        <CustomText style={styles.subTitle}>
+        <CustomText weight="500" style={styles.subTitle}>
           반려견의 상태에서 이상 증세가 발견된다면 해당하는 항목을 체크해주세요.
         </CustomText>
       ) : (
@@ -168,7 +173,6 @@ const styles = StyleSheet.create({
   },
   statusBox: {
     fontSize: 12,
-    fontWeight: 500,
     paddingHorizontal: 5,
     paddingVertical: 2,
     borderRadius: 12,
@@ -176,7 +180,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 22,
-    fontWeight: 700,
     color: color.gray[900],
   },
   changeBox: {
@@ -191,13 +194,11 @@ const styles = StyleSheet.create({
   },
   change: {
     fontSize: 12,
-    fontWeight: 500,
     color: color.gray[600],
   },
   subTitle: {
     marginBottom: 16,
     fontSize: 13,
-    fontWeight: 500,
   },
   button: {
     borderRadius: 8,

@@ -7,6 +7,7 @@ import Comment from '../components/Comment';
 import {PaperProvider} from 'react-native-paper';
 import color from '../styles/color';
 import MissFound from '../components/MissFound';
+import DogProfile from '../components/DogProfile';
 
 LocaleConfig.locales.kr = {
   monthNames: [
@@ -57,7 +58,8 @@ function Home() {
   return (
     <PaperProvider>
       <ScrollView style={styles.HomeContainer}>
-        <View style={styles.CalendarContainer}>
+        <DogProfile />
+        {/* <View style={styles.CalendarContainer}>
           <View style={styles.CalendarText}>
             <CustomText>{today}</CustomText>
           </View>
@@ -123,7 +125,7 @@ function Home() {
               },
             }}
           />
-        </View>
+        </View> */}
         <Status />
         <Comment />
         <MissFound />

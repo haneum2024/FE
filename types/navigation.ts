@@ -1,7 +1,12 @@
-export type PageNavigation = {
+export type AuthPageNavigation = {
+  Login: undefined;
   SignUpFirstStep: undefined;
   SignUpSecondStep: undefined;
   TermsOfUse: undefined;
-  Login: undefined;
-  // 다른 화면들 추가
+};
+
+export type AddDogPageNavigation = {
+  CameraGuide: undefined;
+  DogInfo: undefined;
+  DogProfileResult: undefined;
 };

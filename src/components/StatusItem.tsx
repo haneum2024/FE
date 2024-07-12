@@ -57,12 +57,9 @@ const StatusItem = ({
         checked && icon
       )}
       <CustomText
+        weight={checked ? '600' : '500'}
         disabled={!isEditMode}
-        style={[
-          styles.label,
-          {color: getCheckedTextColor()},
-          checked ? styles.checkedLabel : styles.uncheckedLabel,
-        ]}>
+        style={[styles.label, {color: getCheckedTextColor()}]}>
         {label}
       </CustomText>
     </TouchableOpacity>
@@ -91,12 +88,6 @@ const styles = StyleSheet.create({
   label: {
     marginLeft: 8,
     fontSize: 13,
-  },
-  checkedLabel: {
-    fontWeight: 700,
-  },
-  uncheckedLabel: {
-    fontWeight: 400,
   },
 });
 
