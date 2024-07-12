@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
+
 import color from '../styles/color';
 import CustomText from './CustomText';
 import IconBox from './IconBox';

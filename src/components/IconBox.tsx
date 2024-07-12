@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     padding: 16,
-    marginVertical: 8,
+    marginVertical: 16,
     gap: 7,
     backgroundColor: color.white,
     borderWidth: 2,

@@ -8,6 +8,7 @@ import {
   Keyboard,
 } from 'react-native';
 import {Button, Portal, Snackbar} from 'react-native-paper';
+
 import color from '../styles/color';
 import CustomText from './CustomText';
 

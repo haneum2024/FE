@@ -1,5 +1,6 @@
 import React from 'react';
 import {Text as RNText, TextProps, StyleSheet} from 'react-native';
+
 import color from '../styles/color';
 
 interface CustomTextProps extends TextProps {

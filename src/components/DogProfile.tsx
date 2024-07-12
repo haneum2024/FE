@@ -21,7 +21,7 @@ const DogProfile = ({
   gender?: string;
   profile?: string;
   introduction?: string;
-  navigation: StackNavigationProp<AddDogPageNavigation, 'DogInfo'>;
+  navigation?: StackNavigationProp<AddDogPageNavigation, 'DogInfo'>;
 }) => {
   const addProfile = () => {
     console.log('add profile');

@@ -11,6 +11,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {useDispatch} from 'react-redux';
+
 import {logout} from '../store/reducers/authReducer';
 import {AppDispatch} from '../store';
 import CustomText from '../components/CustomText';

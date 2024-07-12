@@ -1,17 +1,17 @@
 import React, {useState, useEffect} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useDispatch} from 'react-redux';
-
-import {login} from '../store/reducers/authReducer';
-
-import NoticeIcon from '../img/NoticeIcon.svg';
 import {Button, Checkbox} from 'react-native-paper';
-import color from '../styles/color';
+
+import {userAgreeApi} from '../api/api';
 import CustomText from '../components/CustomText';
 import CollapsibleView from '../components/CollapsibleView';
 import TermsOfUseText from '../components/TermsOfUseText';
-import {userAgreeApi} from '../api/api';
 import {getAccessToken} from '../storage/auth';
+import {login} from '../store/reducers/authReducer';
+import color from '../styles/color';
+
+import NoticeIcon from '../img/NoticeIcon.svg';
 
 const TermsOfUse = () => {
   const dispatch = useDispatch();
@@ -48,8 +48,8 @@ const TermsOfUse = () => {
     setCheckDisabled(disable);
   };
 
-  const introductionText = `해피마루에 어서오세요!
-    서비스를 이용하기 위해 이용약관 동의가 필요해요.`;
+  const introductionText =
+    '해피마루에 어서오세요!\n서비스를 이용하기 위해 이용약관 동의가 필요해요.';
 
   return (
     <View style={styles.termsOfUseContainer}>

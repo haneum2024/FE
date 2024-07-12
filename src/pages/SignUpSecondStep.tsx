@@ -1,9 +1,10 @@
 import React from 'react';
 import {View, Text, Pressable, StyleSheet} from 'react-native';
 import {useDispatch} from 'react-redux';
+import {StackNavigationProp} from '@react-navigation/stack';
+
 import {login} from '../store/reducers/authReducer';
 import {AppDispatch} from '../store';
-import {StackNavigationProp} from '@react-navigation/stack';
 import {AuthPageNavigation} from '../../types/navigation';
 
 interface SignUpSecondStepProps {

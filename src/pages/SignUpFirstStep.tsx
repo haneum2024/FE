@@ -1,7 +1,8 @@
 import React from 'react';
 import {View, Text, Pressable, StyleSheet} from 'react-native';
-import {AuthPageNavigation} from '../../types/navigation';
 import {StackNavigationProp} from '@react-navigation/stack';
+
+import {AuthPageNavigation} from '../../types/navigation';
 
 interface SignUpFirstStepProps {
   navigation: StackNavigationProp<AuthPageNavigation, 'SignUpFirstStep'>;

@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
 import {Checkbox} from 'react-native-paper';
+
 import color from '../styles/color';
 import CustomText from './CustomText';
 
@@ -19,23 +20,23 @@ const StatusItem = ({
   icon,
   onPress,
 }: StatusItemProps) => {
-  const getCheckedTextColor = () => {
+  const checkedTextColor = useMemo(() => {
     if (checked && isEditMode) {
       return color.blue[600];
     } else if (checked && !isEditMode) {
       return color.gray[900];
     }
     return color.gray[400];
-  };
+  }, [checked, isEditMode]);
 
-  const getCheckedBackgroundColor = () => {
+  const checkedBackgroundColor = useMemo(() => {
     if (checked && isEditMode) {
       return color.blue[100];
     } else if (checked && !isEditMode) {
       return color.gray[100];
     }
     return color.gray[50];
-  };
+  }, [checked, isEditMode]);
 
   return (
     <TouchableOpacity
@@ -44,7 +45,7 @@ const StatusItem = ({
         isEditMode
           ? styles.statusItemContainer
           : styles.statusItemIconContainer,
-        {backgroundColor: getCheckedBackgroundColor()},
+        {backgroundColor: checkedBackgroundColor},
       ]}
       disabled={!isEditMode}
       onPress={onPress}>
@@ -59,7 +60,7 @@ const StatusItem = ({
       <CustomText
         weight={checked ? '600' : '500'}
         disabled={!isEditMode}
-        style={[styles.label, {color: getCheckedTextColor()}]}>
+        style={[styles.label, {color: checkedTextColor}]}>
         {label}
       </CustomText>
     </TouchableOpacity>

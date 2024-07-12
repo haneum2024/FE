@@ -8,6 +8,7 @@ import {
   Pressable,
 } from 'react-native';
 import {RNCamera} from 'react-native-camera';
+
 import CustomText from '../components/CustomText';
 import color from '../styles/color';
 

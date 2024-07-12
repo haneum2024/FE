@@ -1,8 +1,11 @@
 import React from 'react';
-import CustomText from './CustomText';
 import {StyleSheet} from 'react-native';
 
-const useTermsText = `제1조(목적) 이 약관은 한이음(전자상거래 사업자)이 운영하는 해피마루(이하 “해피마루”이라 한다)에서 제공하는 인터넷 관련 서비스(이하 “서비스”라 한다)를 이용함에 있어 사이버 해피마루와 이용자의 권리․의무 및 책임사항을 규정함을 목적으로 합니다.
+import CustomText from './CustomText';
+
+const useTermsText = `제1조(목적)
+
+이 약관은 한이음(전자상거래 사업자)이 운영하는 해피마루(이하 “해피마루”이라 한다)에서 제공하는 인터넷 관련 서비스(이하 “서비스”라 한다)를 이용함에 있어 사이버 해피마루와 이용자의 권리․의무 및 책임사항을 규정함을 목적으로 합니다.
 
   ※「PC통신, 무선 등을 이용하는 전자상거래에 대해서도 그 성질에 반하지 않는 한 이 약관을 준용합니다.」
 

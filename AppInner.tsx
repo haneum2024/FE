@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 import {Alert, BackHandler, StyleSheet} from 'react-native';
+import RNExitApp from 'react-native-exit-app';
 
 import Camera from './src/pages/Camera';
 import MyInfo from './src/pages/MyInfo';
@@ -82,7 +83,7 @@ function AppInner() {
         '정말로 앱을 종료하시겠습니까?',
         [
           {text: '취소', onPress: () => null, style: 'cancel'},
-          {text: '확인', onPress: () => BackHandler.exitApp()},
+          {text: '확인', onPress: () => RNExitApp.exitApp()},
         ],
         {cancelable: false},
       );
