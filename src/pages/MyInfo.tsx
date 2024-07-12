@@ -11,9 +11,11 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {useDispatch} from 'react-redux';
+
 import {logout} from '../store/reducers/authReducer';
 import {AppDispatch} from '../store';
 import CustomText from '../components/CustomText';
+import {removeAccessToken} from '../storage/auth';
 
 const ANDROID_CLIENT_ID =
   '54570271712-a2ct0tbftq1gdrnf7p9pk6m8kfs4sbsl.apps.googleusercontent.com';
@@ -26,7 +28,8 @@ const googleLogoutButton = async (dispatch: AppDispatch) => {
   try {
     await GoogleSignin.revokeAccess();
     await GoogleSignin.signOut();
-    dispatch(logout()); // 로그아웃 후 상태 업데이트
+    removeAccessToken();
+    dispatch(logout());
     console.log('로그아웃 성공');
   } catch (error) {
     console.error('로그아웃 실패:', error);
@@ -54,7 +57,7 @@ function MyInfo() {
           <Pressable
             style={styles.button}
             onPress={() => googleLogoutButton(dispatch)}>
-            <CustomText>로그아웃</CustomText>
+            <CustomText weight="500">로그아웃</CustomText>
           </Pressable>
         </View>
       </ScrollView>

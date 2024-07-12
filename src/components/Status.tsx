@@ -1,22 +1,34 @@
 import React, {useMemo, useState} from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {Button, Portal, Snackbar} from 'react-native-paper';
-import StatusItem from './StatusItem';
-import color from '../styles/color';
+
 import CustomText from './CustomText';
 import Diagnosis from './Diagnosis';
+import StatusItem from './StatusItem';
+import color from '../styles/color';
+
+import FoodIcon from '../img/FoodIcon.svg';
+import BreathIcon from '../img/BreathIcon.svg';
+import HelplessIcon from '../img/HelplessIcon.svg';
+import VomitIcon from '../img/VomitIcon.svg';
+import RefusalIcon from '../img/RefusalIcon.svg';
+import CoughIcon from '../img/CoughIcon.svg';
+import WetNoseIcon from '../img/WetNoseIcon.svg';
+import PoopAlertIcon from '../img/PoopAlertIcon.svg';
+import TeethIcon from '../img/TeethIcon.svg';
+import FatIcon from '../img/FatIcon.svg';
 
 const statusItems = [
-  '음식을 잘 못 먹음',
-  '숨소리/호흡 이상',
-  '무기력함',
-  '구토 증상',
-  '스킨쉽 거부',
-  '잦은 기침',
-  '코가 축축함',
-  '배변 색/상태 이상',
-  '잇몸색 변화',
-  '체중 변화',
+  {title: '음식을 잘 못 먹음', icon: <FoodIcon width={24} height={24} />},
+  {title: '숨소리/호흡 이상', icon: <BreathIcon width={24} height={24} />},
+  {title: '무기력함', icon: <HelplessIcon width={24} height={24} />},
+  {title: '구토 증상', icon: <VomitIcon width={24} height={24} />},
+  {title: '스킨쉽 거부', icon: <RefusalIcon width={24} height={24} />},
+  {title: '잦은 기침', icon: <CoughIcon width={24} height={24} />},
+  {title: '코가 축축함', icon: <WetNoseIcon width={24} height={24} />},
+  {title: '배변 색/상태 이상', icon: <PoopAlertIcon width={24} height={24} />},
+  {title: '잇몸색 변화', icon: <TeethIcon width={24} height={24} />},
+  {title: '체중 변화', icon: <FatIcon width={24} height={24} />},
 ];
 
 const Status = () => {
@@ -52,7 +64,6 @@ const Status = () => {
 
   const handleEditMode = () => {
     setIsEditMode(true);
-    console.log('수정하기 pressed');
   };
 
   const handleCheckboxToggle = (index: number) => {
@@ -62,7 +73,6 @@ const Status = () => {
   };
 
   const submitStatus = () => {
-    console.log(checkedItems);
     setIsEditMode(false);
     setVisible(true);
   };
@@ -71,9 +81,12 @@ const Status = () => {
     <View style={styles.statusContainer}>
       <View style={styles.titleContainer}>
         <View style={styles.statusView}>
-          <CustomText style={styles.title}>상태</CustomText>
+          <CustomText weight="700" style={styles.title}>
+            상태
+          </CustomText>
           {!isEditMode && (
             <CustomText
+              weight="500"
               style={[
                 styles.statusBox,
                 {backgroundColor: statusStyle.backgroundColor},
@@ -84,12 +97,14 @@ const Status = () => {
         </View>
         {!isEditMode && (
           <TouchableOpacity style={styles.changeBox} onPress={handleEditMode}>
-            <CustomText style={styles.change}>수정</CustomText>
+            <CustomText weight="500" style={styles.change}>
+              수정
+            </CustomText>
           </TouchableOpacity>
         )}
       </View>
       {isEditMode ? (
-        <CustomText style={styles.subTitle}>
+        <CustomText weight="500" style={styles.subTitle}>
           반려견의 상태에서 이상 증세가 발견된다면 해당하는 항목을 체크해주세요.
         </CustomText>
       ) : (
@@ -101,9 +116,10 @@ const Status = () => {
       {statusItems.map((item, index) => (
         <StatusItem
           key={index}
-          label={item}
+          label={item.title}
           checked={checkedItems[index]}
           isEditMode={isEditMode}
+          icon={item.icon}
           onPress={() => handleCheckboxToggle(index)}
         />
       ))}
@@ -157,7 +173,6 @@ const styles = StyleSheet.create({
   },
   statusBox: {
     fontSize: 12,
-    fontWeight: 500,
     paddingHorizontal: 5,
     paddingVertical: 2,
     borderRadius: 12,
@@ -165,7 +180,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 22,
-    fontWeight: 700,
+    color: color.gray[900],
   },
   changeBox: {
     display: 'flex',
@@ -179,13 +194,11 @@ const styles = StyleSheet.create({
   },
   change: {
     fontSize: 12,
-    fontWeight: 500,
     color: color.gray[600],
   },
   subTitle: {
     marginBottom: 16,
     fontSize: 13,
-    fontWeight: 500,
   },
   button: {
     borderRadius: 8,

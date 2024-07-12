@@ -1,3 +1,4 @@
+import axios, {AxiosError} from 'axios';
 import React, {useCallback, useState} from 'react';
 import {
   Alert,
@@ -14,12 +15,12 @@ import {
   useNavigation,
   useRoute,
 } from '@react-navigation/native';
-import {LoggedInParamList} from '../../AppInner';
-import ImagePicker from 'react-native-image-crop-picker';
-import ImageResizer from 'react-native-image-resizer';
-import axios, {AxiosError} from 'axios';
 import Config from 'react-native-config';
 import {useSelector} from 'react-redux';
+import ImagePicker from 'react-native-image-crop-picker';
+import ImageResizer from 'react-native-image-resizer';
+
+import {LoggedInParamList} from '../../AppInner';
 import {RootState} from '../store/reducer';
 import orderSlice from '../slices/order';
 import {useAppDispatch} from '../store';
