@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
+import {useNavigation} from '@react-navigation/native';
 import {Button} from 'react-native-paper';
 
 import color from '../styles/color';
@@ -10,19 +11,24 @@ import AddProfileIcon from '../img/AddProfileIcon.svg';
 
 import type {AddDogPageNavigation} from '../../types/navigation';
 
-const DogProfile = ({
+type AddDogProfileNavigationProp = StackNavigationProp<
+  AddDogPageNavigation,
+  'Home'
+>;
+
+const AddDogProfile = ({
   name,
   gender,
   profile,
   introduction,
-  navigation,
 }: {
   name?: string;
   gender?: string;
   profile?: string;
   introduction?: string;
-  navigation?: StackNavigationProp<AddDogPageNavigation, 'DogInfo'>;
 }) => {
+  const navigation = useNavigation<AddDogProfileNavigationProp>();
+
   const addProfile = () => {
     console.log('add profile');
     console.log(navigation);
@@ -101,4 +107,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DogProfile;
+export default AddDogProfile;

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 import {Alert, BackHandler, StyleSheet} from 'react-native';
@@ -16,6 +16,7 @@ import HomeIcon from './src/components/Icons/HomeIcon';
 import HealthIcon from './src/components/Icons/HealthIcon';
 import MissFoundIcon from './src/components/Icons/MissFoundIcon';
 import ProfileIcon from './src/components/Icons/ProfileIcon';
+import {useFocusEffect} from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -36,67 +37,65 @@ const ProfileTabBarIcon = ({color}: {color: string}) => (
   <ProfileIcon width={25} height={25} fill={color} />
 );
 
-// const HomeStack = () => {
-//   return (
-//     <Stack.Navigator>
-//       <Stack.Screen
-//         name="HomeMain"
-//         component={Home}
-//         options={{headerShown: false}}
-//       />
-//       <Stack.Screen
-//         name="CameraGuide"
-//         component={CameraGuide}
-//         options={{
-//           tabBarStyle: {display: 'none'},
-//           headerShown: false,
-//         }}
-//       />
-//       <Stack.Screen
-//         name="DogInfo"
-//         component={DogInfo}
-//         options={{
-//           tabBarStyle: {display: 'none'},
-//           headerShown: false,
-//         }}
-//       />
-//       <Stack.Screen
-//         name="DogProfileResult"
-//         component={DogProfileResult}
-//         options={{
-//           tabBarStyle: {display: 'none'},
-//           headerShown: false,
-//         }}
-//       />
-//     </Stack.Navigator>
-//   );
-// };
+const HomeStack = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="HomeMain"
+        component={Home}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="CameraGuide"
+        component={CameraGuide}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="DogInfo"
+        component={DogInfo}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="DogProfileResult"
+        component={DogProfileResult}
+        options={{
+          headerShown: false,
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
 
 function AppInner() {
   const tabBarActiveTintColor = colorType.blue[600];
   const tabBarInactiveTintColor = colorType.gray[300];
 
-  useEffect(() => {
-    const backAction = () => {
-      Alert.alert(
-        '앱 종료',
-        '정말로 앱을 종료하시겠습니까?',
-        [
-          {text: '취소', onPress: () => null, style: 'cancel'},
-          {text: '확인', onPress: () => RNExitApp.exitApp()},
-        ],
-        {cancelable: false},
-      );
-      return true;
-    };
+  useFocusEffect(
+    useCallback(() => {
+      const onBackPress = () => {
+        Alert.alert(
+          '앱 종료',
+          '정말로 앱을 종료하시겠습니까?',
+          [
+            {text: '취소', onPress: () => null, style: 'cancel'},
+            {text: '확인', onPress: () => RNExitApp.exitApp()},
+          ],
+          {cancelable: true},
+        );
+        return true;
+      };
 
-    const backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      backAction,
-    );
+      BackHandler.addEventListener('hardwareBackPress', onBackPress);
 
-    return () => backHandler.remove();
-  }, []);
+      return () => {
+        BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+      };
+    }, []),
+  );
 
   return (
     <Tab.Navigator
@@ -109,7 +108,7 @@ function AppInner() {
       }}>
       <Tab.Screen
         name="Home"
-        component={Home}
+        component={HomeStack}
         options={{
           title: '홈',
           tabBarIcon: HomeTabBarIcon,
