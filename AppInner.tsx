@@ -1,8 +1,7 @@
-import React, {useCallback, useEffect} from 'react';
+import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
-import {Alert, BackHandler, StyleSheet} from 'react-native';
-import RNExitApp from 'react-native-exit-app';
+import {StyleSheet} from 'react-native';
 
 import Camera from './src/pages/Camera';
 import MyInfo from './src/pages/MyInfo';
@@ -16,7 +15,6 @@ import HomeIcon from './src/components/Icons/HomeIcon';
 import HealthIcon from './src/components/Icons/HealthIcon';
 import MissFoundIcon from './src/components/Icons/MissFoundIcon';
 import ProfileIcon from './src/components/Icons/ProfileIcon';
-import {useFocusEffect} from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -73,29 +71,6 @@ const HomeStack = () => {
 function AppInner() {
   const tabBarActiveTintColor = colorType.blue[600];
   const tabBarInactiveTintColor = colorType.gray[300];
-
-  useFocusEffect(
-    useCallback(() => {
-      const onBackPress = () => {
-        Alert.alert(
-          '앱 종료',
-          '정말로 앱을 종료하시겠습니까?',
-          [
-            {text: '취소', onPress: () => null, style: 'cancel'},
-            {text: '확인', onPress: () => RNExitApp.exitApp()},
-          ],
-          {cancelable: true},
-        );
-        return true;
-      };
-
-      BackHandler.addEventListener('hardwareBackPress', onBackPress);
-
-      return () => {
-        BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-      };
-    }, []),
-  );
 
   return (
     <Tab.Navigator

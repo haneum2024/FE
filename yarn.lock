@@ -7791,11 +7791,6 @@ react-native-encrypted-storage@^4.0.3:
   resolved "https://registry.npmjs.org/react-native-encrypted-storage/-/react-native-encrypted-storage-4.0.3.tgz"
   integrity sha512-0pJA4Aj2S1PIJEbU7pN/Qvf7JIJx3hFywx+i+bLHtgK0/6Zryf1V2xVsWcrD50dfiu3jY1eN2gesQ5osGxE7jA==
 
-react-native-exit-app@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.npmjs.org/react-native-exit-app/-/react-native-exit-app-2.0.0.tgz"
-  integrity sha512-vr9e/8jgPcKCBw6qo0QLxfeMiTwExydghbYDqpLZYAGWR+6cbgnhvOxwdYj/JWR7ZtOALrRA4GMGSvU/ayxM7w==
-
 react-native-fast-image@^8.6.3:
   version "8.6.3"
   resolved "https://registry.npmjs.org/react-native-fast-image/-/react-native-fast-image-8.6.3.tgz"
