@@ -83,8 +83,8 @@ android {
         versionCode 1
         versionName "1.0"
         missingDimensionStrategy 'react-native-camera', 'general'
-                manifestPlaceholders = [
-            appAuthRedirectScheme: 'com.mypet'
+        manifestPlaceholders = [
+                appAuthRedirectScheme: 'com.mypet'
         ]
     }
     signingConfigs {
