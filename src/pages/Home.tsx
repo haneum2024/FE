@@ -2,8 +2,9 @@ import React from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
 import {PaperProvider} from 'react-native-paper';
 
-import Comment from '../components/Comment';
 import AddDogProfile from '../components/AddDogProfile';
+import Comment from '../components/Comment';
+import Header from '../components/Header';
 import MissFound from '../components/MissFound';
 import Status from '../components/Status';
 import color from '../styles/color';
@@ -12,6 +13,7 @@ function Home() {
   return (
     <PaperProvider>
       <ScrollView style={styles.HomeContainer}>
+        <Header />
         {true ? <AddDogProfile /> : <></>}
 
         <Status />

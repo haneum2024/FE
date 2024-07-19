@@ -37,9 +37,6 @@ const AddDogProfile = ({
 
   return (
     <View style={styles.dogProfileContainer}>
-      <CustomText weight="700" style={styles.title}>
-        반려견 프로필
-      </CustomText>
       {name ? (
         <></>
       ) : (
@@ -67,7 +64,7 @@ const AddDogProfile = ({
 const styles = StyleSheet.create({
   dogProfileContainer: {
     marginHorizontal: 24,
-    marginVertical: 32,
+    marginVertical: 10,
   },
   title: {
     fontSize: 22,
@@ -77,7 +74,7 @@ const styles = StyleSheet.create({
   addProfileContainer: {
     display: 'flex',
     flexDirection: 'row',
-    padding: 16,
+    padding: 20,
     backgroundColor: color.white,
     borderRadius: 20,
     gap: 18,
