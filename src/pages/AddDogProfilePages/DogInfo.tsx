@@ -1,87 +1,89 @@
-import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import React, {useState} from 'react';
+import {View, StyleSheet, ScrollView} from 'react-native';
 import {Button} from 'react-native-paper';
 
 import color from '../../styles/color';
-import CustomText from '../../components/CustomText';
 import AddProfileIcon from '../../img/AddProfileIcon.svg';
+import AddInfoTitle from '../../components/AddInfoTitle';
+import InputFormat from '../../components/InputFormat';
 
 const DogInfo = () => {
-  const name = undefined;
+  const [dogName, setDogName] = useState('');
+  const [dogBirth, setDogBirth] = useState('');
+  const [dogIntroduction, setDogIntroduction] = useState('');
 
-  const addProfile = () => {
-    console.log('add profile');
+  const disabledCondition =
+    dogName.length === 0 ||
+    dogBirth.length === 0 ||
+    dogIntroduction.length === 0;
+
+  const handleDogName = (name: string) => {
+    setDogName(name);
   };
 
+  const handleDogBirth = (birth: string) => {
+    setDogBirth(birth);
+  };
+
+  const handleDogIntroduction = (introduction: string) => {
+    setDogIntroduction(introduction);
+  };
+
+  const moveToNextPage = () => {};
+
   return (
-    <View style={styles.dogProfileContainer}>
-      <CustomText weight="700" style={styles.title}>
-        반려견 정보
-      </CustomText>
-      {name ? (
-        <></>
-      ) : (
-        <View style={styles.addProfileContainer}>
-          <View style={styles.iconContainer}>
-            <AddProfileIcon width={75} height={75} />
-          </View>
-          <View style={styles.addProfileBox}>
-            <CustomText weight="700" style={styles.profileText}>
-              프로필 생성
-            </CustomText>
-            <CustomText weight="500">
-              건강일지를 작성할 반려견 프로필을 만들어보세요.
-            </CustomText>
-            <Button mode="contained" style={styles.button} onPress={addProfile}>
-              프로필 만들기
-            </Button>
-          </View>
-        </View>
-      )}
-    </View>
+    <ScrollView style={styles.dogProfileContainer}>
+      <AddInfoTitle
+        icon={<AddProfileIcon width={75} height={75} />}
+        title="반려견 소개"
+        page="1/2"
+      />
+      <InputFormat
+        title="이름"
+        placeholder="반려견의 이름을 알려주세요."
+        value={dogName}
+        handleValue={handleDogName}
+      />
+      <InputFormat
+        title="생년월일"
+        placeholder="ex) 2003.09.23"
+        value={dogBirth}
+        handleValue={handleDogBirth}
+      />
+      <InputFormat
+        title="소개"
+        placeholder="반려견을 한 마디로 설명한다면?"
+        value={dogIntroduction}
+        handleValue={handleDogIntroduction}
+      />
+      <Button
+        mode="contained"
+        disabled={disabledCondition}
+        style={[
+          styles.button,
+          {
+            backgroundColor: disabledCondition
+              ? color.gray[100]
+              : color.blue[600],
+          },
+        ]}
+        onPress={moveToNextPage}>
+        다음 단계로
+      </Button>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   dogProfileContainer: {
-    marginHorizontal: 24,
-    marginVertical: 32,
-  },
-  title: {
-    fontSize: 22,
-    marginBottom: 12,
-    color: color.gray[950],
-  },
-  addProfileContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    padding: 16,
+    paddingHorizontal: 24,
+    paddingTop: 60,
     backgroundColor: color.white,
-    borderRadius: 20,
-    gap: 18,
-  },
-  iconContainer: {
-    flex: 2,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 12,
-    borderRadius: 10,
-    backgroundColor: color.blue[200],
-  },
-  addProfileBox: {
-    flex: 3,
-    display: 'flex',
-    gap: 8,
-  },
-  profileText: {
-    fontSize: 22,
-    color: color.gray[900],
   },
   button: {
     borderRadius: 8,
+    marginTop: 16,
     color: color.white,
-    backgroundColor: color.blue[600],
   },
 });
 
