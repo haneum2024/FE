@@ -21,6 +21,7 @@ const AddDogProfile = ({
   gender,
   profile,
   introduction,
+  
 }: {
   name?: string;
   gender?: string;

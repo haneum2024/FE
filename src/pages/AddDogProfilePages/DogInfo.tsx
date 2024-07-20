@@ -1,13 +1,20 @@
 import React, {useState} from 'react';
 import {View, StyleSheet, ScrollView} from 'react-native';
 import {Button} from 'react-native-paper';
+import {StackNavigationProp} from '@react-navigation/stack';
 
 import color from '../../styles/color';
 import AddProfileIcon from '../../img/AddProfileIcon.svg';
 import AddInfoTitle from '../../components/AddInfoTitle';
 import InputFormat from '../../components/InputFormat';
 
-const DogInfo = () => {
+import type {AddDogPageNavigation} from '../../../types/navigation';
+
+interface DogInfoProps {
+  navigation: StackNavigationProp<AddDogPageNavigation, 'DogInfo'>;
+}
+
+const DogInfo = ({navigation}: DogInfoProps) => {
   const [dogName, setDogName] = useState('');
   const [dogBirth, setDogBirth] = useState('');
   const [dogIntroduction, setDogIntroduction] = useState('');
@@ -29,7 +36,9 @@ const DogInfo = () => {
     setDogIntroduction(introduction);
   };
 
-  const moveToNextPage = () => {};
+  const moveToNextPage = () => {
+    navigation.navigate('CameraGuide');
+  };
 
   return (
     <ScrollView style={styles.dogProfileContainer}>
