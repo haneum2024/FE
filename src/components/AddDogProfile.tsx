@@ -21,7 +21,6 @@ const AddDogProfile = ({
   gender,
   profile,
   introduction,
-  
 }: {
   name?: string;
   gender?: string;
@@ -31,8 +30,6 @@ const AddDogProfile = ({
   const navigation = useNavigation<AddDogProfileNavigationProp>();
 
   const addProfile = () => {
-    console.log('add profile');
-    console.log(navigation);
     navigation.navigate('DogInfo');
   };
 

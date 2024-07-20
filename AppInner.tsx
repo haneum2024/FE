@@ -2,6 +2,11 @@ import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 import {StyleSheet} from 'react-native';
+import {
+  getFocusedRouteNameFromRoute,
+  ParamListBase,
+  RouteProp,
+} from '@react-navigation/native';
 
 import Camera from './src/pages/Camera';
 import MyInfo from './src/pages/MyInfo';
@@ -72,15 +77,30 @@ function AppInner() {
   const tabBarActiveTintColor = colorType.blue[600];
   const tabBarInactiveTintColor = colorType.gray[300];
 
+  const getTabBarVisibility = (route: RouteProp<ParamListBase, string>) => {
+    const routeName = getFocusedRouteNameFromRoute(route) ?? '';
+    if (
+      routeName === 'CameraGuide' ||
+      routeName === 'DogInfo' ||
+      routeName === 'DogProfileResult'
+    ) {
+      return false;
+    }
+    return true;
+  };
+
   return (
     <Tab.Navigator
-      screenOptions={{
+      screenOptions={({route}) => ({
         tabBarActiveTintColor: tabBarActiveTintColor,
         tabBarInactiveTintColor: tabBarInactiveTintColor,
-        tabBarStyle: styles.tabBar,
+        tabBarStyle: {
+          display: getTabBarVisibility(route) ? 'flex' : 'none',
+          height: 60,
+        },
         tabBarLabelStyle: styles.tabBarLabel,
         tabBarHideOnKeyboard: true,
-      }}>
+      })}>
       <Tab.Screen
         name="Home"
         component={HomeStack}
