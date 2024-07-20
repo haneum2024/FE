@@ -1,12 +1,21 @@
-import Web3, {errors} from 'web3';
+import Web3 from 'web3';
 import contractAbi from '../assets/json/HappyMaru.json';
+import {
+  INFURA_ENDPOINT,
+  ADMIN_PRIVATE_KEY,
+} from 'react-native-dotenv';
 
-const web3 = new Web3(new Web3.providers.HttpProvider('http://10.0.2.2:7545'));
-const contractAddress = '0x07fF25E299CF4F801258E89FeC9a428cAf46aE57';
+
+console.log(INFURA_ENDPOINT);
+const web3 = new Web3(new Web3.providers.HttpProvider(INFURA_ENDPOINT));
+
+const contractAddress = contractAbi.networks["11155111"].address;
+console.log(contractAddress)
 const contract = new web3.eth.Contract(contractAbi.abi, contractAddress);
 
-const account = web3.eth.accounts.wallet.add('0x5f91e96e8d9f14471cc4b417b01ed7b094bd97b37da8242d1b35865b01b54d7b');
+const account = web3.eth.accounts.wallet.add(ADMIN_PRIVATE_KEY);
 web3.eth.defaultAccount = web3.eth.accounts[0];
+
 // console.log(account.address);
 //↳ 0xd1F028Ab4c423Ee69f153D39da1768e3AF16604E
 // console.log(account.privateKey);
@@ -39,42 +48,45 @@ export const getAccount = () => {
 // };
 //
 export const getNfts = async () => {
+  const fromAddress = account[0].address
   contract.methods.getNfts().call({
-    from: account[0].address,
+    from: fromAddress,
   })
       .then(console.log)
       .catch(errors => console.log(errors));
 };
-//
-// export const createDogInfo = async (
-//     name: string,
-//     breed: string,
-//     birthDate: string,
-//     gender: string,
-//     neutraled: boolean,
-//     description: string,
-//     image: string,
-//     tokenURI: string
-// ): Promise<any> => {
-//   const fromAddress: string = account.address;
-//   const tx = contract.methods.createDogInfo(
-//       name,
-//       breed,
-//       birthDate,
-//       gender,
-//       neutraled,
-//       description,
-//       image,
-//       tokenURI
-//   );
-//   const gas: number = await tx.estimateGas({ from: fromAddress });
-//   const data: string = tx.encodeABI();
-//   const txData = {
-//     from: fromAddress,
-//     to: contractAddress,
-//     data: data,
-//     gas,
-//   };
-//
-//   return web3.eth.sendTransaction(txData);
-// };
+
+export const createDogInfo = async (
+    name,
+    breed,
+    birthDate,
+    gender,
+    neutraled,
+    description,
+    image,
+    tokenURI
+) => {
+  const fromAddress = account[0].address;
+
+  const tx = contract.methods.createDogInfo(
+      name,
+      breed,
+      birthDate,
+      gender,
+      neutraled,
+      description,
+      image,
+      tokenURI
+  );
+  const gas = await tx.estimateGas({ from: fromAddress });
+  console.log(gas);
+  const data = tx.encodeABI();
+  const txData = {
+    from: fromAddress,
+    to: contractAddress,
+    data: data,
+    gas,
+  };
+
+  return web3.eth.sendTransaction(txData);
+};

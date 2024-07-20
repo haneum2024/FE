@@ -16,7 +16,7 @@ import {logout} from '../store/reducers/authReducer';
 import {AppDispatch} from '../store';
 import CustomText from '../components/CustomText';
 import {removeAccessToken} from '../storage/auth';
-import {getAccount, getNfts} from "../services/web3Service";
+import {createDogInfo, getAccount, getNfts} from "../services/web3Service";
 
 const ANDROID_CLIENT_ID =
     '54570271712-a2ct0tbftq1gdrnf7p9pk6m8kfs4sbsl.apps.googleusercontent.com';
@@ -44,9 +44,6 @@ function MyInfo() {
     const backgroundStyle = {
         backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
     };
-    const sampleFunc = async () => {
-        const x = await getNfts()
-    }
 
     return (
         <SafeAreaView style={backgroundStyle}>
@@ -69,6 +66,15 @@ function MyInfo() {
                         onPress={async ()  =>
                             await getNfts()}>
                         <CustomText weight="500">NFT 확인</CustomText>
+                    </Pressable>
+                    <Pressable
+                        style={styles.button}
+                        onPress={async ()  =>
+                            await createDogInfo("해피",
+                                "mix",
+                                "2021-10-01",
+                                "M", true, "귀여움","image URL", "tokenURI")}>
+                        <CustomText weight="500">create dog 확인</CustomText>
                     </Pressable>
                     <Pressable
                         style={styles.button}
