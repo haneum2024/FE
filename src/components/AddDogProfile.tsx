@@ -35,7 +35,7 @@ const AddDogProfile = ({
 
   return (
     <View style={styles.dogProfileContainer}>
-      {name ? (
+      {name || gender || profile || introduction ? (
         <></>
       ) : (
         <View style={styles.addProfileContainer}>

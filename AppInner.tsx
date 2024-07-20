@@ -42,33 +42,15 @@ const ProfileTabBarIcon = ({color}: {color: string}) => (
 
 const HomeStack = () => {
   return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="HomeMain"
-        component={Home}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="CameraGuide"
-        component={CameraGuide}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="DogInfo"
-        component={DogInfo}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="DogProfileResult"
-        component={DogProfileResult}
-        options={{
-          headerShown: false,
-        }}
-      />
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+        cardStyle: {backgroundColor: colorType.white},
+      }}>
+      <Stack.Screen name="HomeMain" component={Home} />
+      <Stack.Screen name="CameraGuide" component={CameraGuide} />
+      <Stack.Screen name="DogInfo" component={DogInfo} />
+      <Stack.Screen name="DogProfileResult" component={DogProfileResult} />
     </Stack.Navigator>
   );
 };

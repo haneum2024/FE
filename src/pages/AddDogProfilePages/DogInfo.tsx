@@ -18,6 +18,7 @@ import MaleIcon from '../../components/Icons/MaleIcon';
 
 import type {AddDogPageNavigation} from '../../../types/navigation';
 import CustomText from '../../components/CustomText';
+import InputImage from '../../components/InputImage';
 
 interface DogInfoProps {
   navigation: StackNavigationProp<AddDogPageNavigation, 'DogInfo'>;
@@ -30,6 +31,7 @@ const DogInfo = ({navigation}: DogInfoProps) => {
   const [dogBirth, setDogBirth] = useState(new Date());
   const [isDogBirthSelected, setIsDogBirthSelected] = useState(false);
   const [dogIntroduction, setDogIntroduction] = useState('');
+  const [dogImage, setDogImage] = useState('');
 
   const isFemale = dogGender === 'female';
 
@@ -53,12 +55,16 @@ const DogInfo = ({navigation}: DogInfoProps) => {
     setDogIntroduction(introduction);
   };
 
+  const handleDogImage = (image: string) => {
+    setDogImage(image);
+  };
+
   const moveToNextPage = () => {
     navigation.navigate('CameraGuide');
   };
 
   return (
-    <ScrollView style={styles.dogProfileContainer}>
+    <ScrollView style={styles.dogInfoContainer}>
       <AddInfoTitle
         icon={<AddProfileIcon width={75} height={75} />}
         title="반려견 소개"
@@ -148,6 +154,8 @@ const DogInfo = ({navigation}: DogInfoProps) => {
         handleValue={handleDogIntroduction}
       />
 
+      <InputImage title="사진" handleImage={handleDogImage} />
+
       <Button
         mode="contained"
         disabled={disabledCondition}
@@ -167,10 +175,8 @@ const DogInfo = ({navigation}: DogInfoProps) => {
 };
 
 const styles = StyleSheet.create({
-  dogProfileContainer: {
+  dogInfoContainer: {
     paddingHorizontal: 24,
-    paddingTop: 60,
-    backgroundColor: color.white,
   },
   label: {
     fontSize: 16,
@@ -209,7 +215,7 @@ const styles = StyleSheet.create({
   },
   button: {
     borderRadius: 8,
-    marginTop: 16,
+    marginVertical: 16,
     color: color.white,
   },
 });

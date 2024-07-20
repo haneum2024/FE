@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
   addInfoTitleContainer: {
     display: 'flex',
     alignItems: 'center',
+    marginTop: 60,
     marginBottom: 40,
   },
   title: {
