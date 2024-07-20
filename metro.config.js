@@ -12,7 +12,7 @@ const config = {
   },
   resolver: {
     assetExts: ['png', 'jpg', 'jpeg', 'bmp', 'gif', 'tiff'],
-    sourceExts: ['js', 'json', 'ts', 'tsx', 'jsx', 'svg'],
+    sourceExts: ['js', 'json', 'ts', 'tsx', 'jsx', 'svg','cjs'],
   },
 };
 
