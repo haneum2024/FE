@@ -61,12 +61,7 @@ function MyInfo() {
                             console.log(getAccount())}>
                         <CustomText weight="500">address 확인</CustomText>
                     </Pressable>
-                    <Pressable
-                        style={styles.button}
-                        onPress={async ()  =>
-                            await getNfts()}>
-                        <CustomText weight="500">NFT 확인</CustomText>
-                    </Pressable>
+
                     <Pressable
                         style={styles.button}
                         onPress={async ()  =>
