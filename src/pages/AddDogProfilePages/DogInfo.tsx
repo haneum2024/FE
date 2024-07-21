@@ -26,6 +26,7 @@ interface DogInfoProps {
 
 const DogInfo = ({navigation}: DogInfoProps) => {
   const [dogName, setDogName] = useState('');
+  const [dogBreed, setDogBreed] = useState('');
   const [dogGender, setDogGender] = useState('female');
   const [isNeutered, setIsNeutered] = useState(false);
   const [dogBirth, setDogBirth] = useState(new Date());
@@ -36,10 +37,18 @@ const DogInfo = ({navigation}: DogInfoProps) => {
   const isFemale = dogGender === 'female';
 
   const disabledCondition =
-    dogName.length === 0 || !isDogBirthSelected || dogIntroduction.length === 0;
+    dogName.length === 0 ||
+    dogBreed.length === 0 ||
+    !isDogBirthSelected ||
+    dogIntroduction.length === 0 ||
+    dogImage.length === 0;
 
   const handleDogName = (name: string) => {
     setDogName(name);
+  };
+
+  const handleDogBreed = (breed: string) => {
+    setDogBreed(breed);
   };
 
   const handleNuetral = () => {
@@ -76,6 +85,13 @@ const DogInfo = ({navigation}: DogInfoProps) => {
         placeholder="반려견의 이름을 알려주세요."
         value={dogName}
         handleValue={handleDogName}
+      />
+
+      <InputFormat
+        title="견종"
+        placeholder="반려견의 견종을 알려주세요."
+        value={dogBreed}
+        handleValue={handleDogBreed}
       />
 
       <View style={styles.genderContainer}>

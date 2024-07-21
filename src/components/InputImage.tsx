@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
   Linking,
-  Button,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import ActionSheet, {ActionSheetRef} from 'react-native-actions-sheet';
 import {
@@ -21,6 +21,7 @@ import color from '../styles/color';
 import CustomText from './CustomText';
 
 import CameraIcon from '../img/CameraIcon.svg';
+import {convertBase64ToBlob} from '../utils/convertType';
 
 const InputImage = ({
   title,
@@ -63,16 +64,6 @@ const InputImage = ({
     } catch (error) {
       console.error('Error requesting camera permission: ', error);
     }
-  };
-
-  const base64ToBlob = (base64: string, mimeType: string) => {
-    const byteCharacters = atob(base64);
-    const byteNumbers = new Array(byteCharacters.length);
-    for (let i = 0; i < byteCharacters.length; i++) {
-      byteNumbers[i] = byteCharacters.charCodeAt(i);
-    }
-    const byteArray = new Uint8Array(byteNumbers);
-    return new Blob([byteArray], {type: mimeType});
   };
 
   const getImageFromLibrary = () => {
@@ -128,13 +119,13 @@ const InputImage = ({
         if (response.assets) {
           const imageUri = response.assets[0].uri as string;
           const base64Data = response.assets[0].base64 as string;
-          const mimeType = response.assets[0].type as string;
+          const fileName = response.assets[0].fileName as string;
           setImage(imageUri);
           handleImage(imageUri);
 
           console.log('response', response);
-          //   const imageBlob = base64ToBlob(base64Data, mimeType);
-          //   console.log('imageBlob', imageBlob);
+          const imageBlob = await convertBase64ToBlob(base64Data, fileName);
+          console.log('imageBlob', imageBlob);
         }
       }
     });
@@ -162,10 +153,29 @@ const InputImage = ({
           </View>
         )}
       </TouchableOpacity>
-      <ActionSheet ref={actionSheetRef}>
-        <Button title="Choose from Gallery" onPress={getImageFromLibrary} />
-        <Button title="Take a Photo" onPress={requestCameraPermission} />
-        <Button title="Cancel" onPress={() => actionSheetRef.current?.hide()} />
+      <ActionSheet
+        ref={actionSheetRef}
+        gestureEnabled
+        containerStyle={styles.actionSheetContainer}>
+        <View style={styles.selectContainer}>
+          <TouchableWithoutFeedback onPress={getImageFromLibrary}>
+            <View style={styles.buttonContainer}>
+              <CameraIcon width={50} height={50} />
+              <CustomText weight="600" style={styles.label}>
+                갤러리에서 선택
+              </CustomText>
+            </View>
+          </TouchableWithoutFeedback>
+
+          <TouchableWithoutFeedback onPress={requestCameraPermission}>
+            <View style={styles.buttonContainer}>
+              <CameraIcon width={50} height={50} />
+              <CustomText weight="600" style={styles.label}>
+                카메라로 촬영
+              </CustomText>
+            </View>
+          </TouchableWithoutFeedback>
+        </View>
       </ActionSheet>
     </View>
   );
@@ -198,6 +208,24 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 10,
     backgroundColor: color.white,
+  },
+  actionSheetContainer: {
+    backgroundColor: color.white,
+    borderRadius: 10,
+  },
+  selectContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    padding: 20,
+    gap: 10,
+  },
+  buttonContainer: {
+    flex: 1,
+    alignItems: 'center',
+    padding: 10,
+    borderRadius: 10,
+    gap: 10,
+    backgroundColor: color.gray[100],
   },
 });
 

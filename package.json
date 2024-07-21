@@ -19,6 +19,7 @@
     "@reduxjs/toolkit": "^2.2.5",
     "@shopify/flash-list": "^1.7.0",
     "axios": "^1.7.2",
+    "base64-blob": "^1.4.1",
     "install": "^0.13.0",
     "npm": "^10.8.2",
     "patch-package": "^8.0.0",
