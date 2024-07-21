@@ -39,6 +39,7 @@ const color = {
     950: '#27272a',
   },
   white: '#ffffff',
+  black: '#000000',
 };
 
 export default color;

@@ -1,8 +1,12 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
-import {Alert, BackHandler, StyleSheet} from 'react-native';
-import RNExitApp from 'react-native-exit-app';
+import {StyleSheet} from 'react-native';
+import {
+  getFocusedRouteNameFromRoute,
+  ParamListBase,
+  RouteProp,
+} from '@react-navigation/native';
 
 import Camera from './src/pages/Camera';
 import MyInfo from './src/pages/MyInfo';
@@ -36,80 +40,52 @@ const ProfileTabBarIcon = ({color}: {color: string}) => (
   <ProfileIcon width={25} height={25} fill={color} />
 );
 
-// const HomeStack = () => {
-//   return (
-//     <Stack.Navigator>
-//       <Stack.Screen
-//         name="HomeMain"
-//         component={Home}
-//         options={{headerShown: false}}
-//       />
-//       <Stack.Screen
-//         name="CameraGuide"
-//         component={CameraGuide}
-//         options={{
-//           tabBarStyle: {display: 'none'},
-//           headerShown: false,
-//         }}
-//       />
-//       <Stack.Screen
-//         name="DogInfo"
-//         component={DogInfo}
-//         options={{
-//           tabBarStyle: {display: 'none'},
-//           headerShown: false,
-//         }}
-//       />
-//       <Stack.Screen
-//         name="DogProfileResult"
-//         component={DogProfileResult}
-//         options={{
-//           tabBarStyle: {display: 'none'},
-//           headerShown: false,
-//         }}
-//       />
-//     </Stack.Navigator>
-//   );
-// };
+const HomeStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+        cardStyle: {backgroundColor: colorType.white},
+      }}>
+      <Stack.Screen name="HomeMain" component={Home} />
+      <Stack.Screen name="CameraGuide" component={CameraGuide} />
+      <Stack.Screen name="DogInfo" component={DogInfo} />
+      <Stack.Screen name="DogProfileResult" component={DogProfileResult} />
+    </Stack.Navigator>
+  );
+};
 
 function AppInner() {
   const tabBarActiveTintColor = colorType.blue[600];
   const tabBarInactiveTintColor = colorType.gray[300];
 
-  useEffect(() => {
-    const backAction = () => {
-      Alert.alert(
-        '앱 종료',
-        '정말로 앱을 종료하시겠습니까?',
-        [
-          {text: '취소', onPress: () => null, style: 'cancel'},
-          {text: '확인', onPress: () => RNExitApp.exitApp()},
-        ],
-        {cancelable: false},
-      );
-      return true;
-    };
-
-    const backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      backAction,
-    );
-
-    return () => backHandler.remove();
-  }, []);
+  const getTabBarVisibility = (route: RouteProp<ParamListBase, string>) => {
+    const routeName = getFocusedRouteNameFromRoute(route) ?? '';
+    if (
+      routeName === 'CameraGuide' ||
+      routeName === 'DogInfo' ||
+      routeName === 'DogProfileResult'
+    ) {
+      return false;
+    }
+    return true;
+  };
 
   return (
     <Tab.Navigator
-      screenOptions={{
+      screenOptions={({route}) => ({
         tabBarActiveTintColor: tabBarActiveTintColor,
         tabBarInactiveTintColor: tabBarInactiveTintColor,
-        tabBarStyle: styles.tabBar,
+        tabBarStyle: {
+          display: getTabBarVisibility(route) ? 'flex' : 'none',
+          height: 60,
+        },
         tabBarLabelStyle: styles.tabBarLabel,
         tabBarHideOnKeyboard: true,
-      }}>
+      })}>
       <Tab.Screen
         name="Home"
-        component={Home}
+        component={HomeStack}
         options={{
           title: '홈',
           tabBarIcon: HomeTabBarIcon,

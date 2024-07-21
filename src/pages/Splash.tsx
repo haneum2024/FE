@@ -1,12 +1,11 @@
 import React, {useEffect, useRef} from 'react';
 import {StyleSheet, Animated} from 'react-native';
 
-import CustomText from '../components/CustomText';
 import color from '../styles/color';
-import LogoIcon from '../img/LogoIcon.svg';
+import SplashLogoIcon from '../img/SplashLogoIcon.svg';
 
 const Splash = ({onFinish}: {onFinish: () => void}) => {
-  const opacity = useRef(new Animated.Value(1)).current;
+  const opacity = useRef(new Animated.Value(25)).current;
 
   useEffect(() => {
     Animated.timing(opacity, {
@@ -18,8 +17,7 @@ const Splash = ({onFinish}: {onFinish: () => void}) => {
 
   return (
     <Animated.View style={[styles.splashContainer, {opacity}]}>
-      <LogoIcon width={86} height={86} />
-      <CustomText style={styles.title}>해피마루</CustomText>
+      <SplashLogoIcon width={75} height={75} />
     </Animated.View>
   );
 };
@@ -28,14 +26,10 @@ const styles = StyleSheet.create({
   splashContainer: {
     flex: 1,
     display: 'flex',
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: color.white,
-  },
-  title: {
-    fontSize: 20,
-    fontFamily: 'Cafe24OhsquareAir-v2.0',
-    color: color.blue[600],
+    backgroundColor: color.blue[600],
   },
 });
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
+import {useNavigation} from '@react-navigation/native';
 import {Button} from 'react-native-paper';
 
 import color from '../styles/color';
@@ -10,31 +11,31 @@ import AddProfileIcon from '../img/AddProfileIcon.svg';
 
 import type {AddDogPageNavigation} from '../../types/navigation';
 
-const DogProfile = ({
+type AddDogProfileNavigationProp = StackNavigationProp<
+  AddDogPageNavigation,
+  'Home'
+>;
+
+const AddDogProfile = ({
   name,
   gender,
   profile,
   introduction,
-  navigation,
 }: {
   name?: string;
   gender?: string;
   profile?: string;
   introduction?: string;
-  navigation?: StackNavigationProp<AddDogPageNavigation, 'DogInfo'>;
 }) => {
+  const navigation = useNavigation<AddDogProfileNavigationProp>();
+
   const addProfile = () => {
-    console.log('add profile');
-    console.log(navigation);
     navigation.navigate('DogInfo');
   };
 
   return (
     <View style={styles.dogProfileContainer}>
-      <CustomText weight="700" style={styles.title}>
-        반려견 프로필
-      </CustomText>
-      {name ? (
+      {name || gender || profile || introduction ? (
         <></>
       ) : (
         <View style={styles.addProfileContainer}>
@@ -61,7 +62,7 @@ const DogProfile = ({
 const styles = StyleSheet.create({
   dogProfileContainer: {
     marginHorizontal: 24,
-    marginVertical: 32,
+    marginVertical: 10,
   },
   title: {
     fontSize: 22,
@@ -71,7 +72,7 @@ const styles = StyleSheet.create({
   addProfileContainer: {
     display: 'flex',
     flexDirection: 'row',
-    padding: 16,
+    padding: 20,
     backgroundColor: color.white,
     borderRadius: 20,
     gap: 18,
@@ -101,4 +102,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DogProfile;
+export default AddDogProfile;

@@ -127,8 +127,11 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
   return (
     <View style={styles.loginContainer}>
       <View style={styles.logoContainer}>
-        <LogoIcon width={86} height={86} />
-        <CustomText style={styles.title}>해피마루</CustomText>
+        <LogoIcon width={48} height={48} />
+        <View style={styles.titleContainer}>
+          <CustomText style={styles.title}>Happy</CustomText>
+          <CustomText style={styles.title}>Maru</CustomText>
+        </View>
       </View>
       <View style={styles.buttonContainer}>
         <Button
@@ -138,7 +141,7 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
           <View style={styles.iconTextBox}>
             <GoogleIcon width={20} height={20} />
             <CustomText weight="600" style={styles.googleText}>
-              구글 계정으로 로그인
+              구글 로그인
             </CustomText>
           </View>
         </Button>
@@ -149,7 +152,7 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
           <View style={styles.iconTextBox}>
             <NaverIcon width={20} height={20} />
             <CustomText weight="600" style={styles.naverText}>
-              네이버 계정으로 로그인
+              네이버 로그인
             </CustomText>
           </View>
         </Button>
@@ -170,11 +173,20 @@ const styles = StyleSheet.create({
     gap: 280,
   },
   logoContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
     alignItems: 'center',
+    gap: 16,
+  },
+  titleContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
   },
   title: {
     fontSize: 20,
-    fontFamily: 'Cafe24OhsquareAir-v2.0',
+    fontFamily: 'Haenam',
     color: color.blue[600],
   },
   buttonContainer: {

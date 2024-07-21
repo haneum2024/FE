@@ -6,6 +6,7 @@ export type AuthPageNavigation = {
 };
 
 export type AddDogPageNavigation = {
+  Home: undefined;
   CameraGuide: undefined;
   DogInfo: undefined;
   DogProfileResult: undefined;
