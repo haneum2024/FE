@@ -13,18 +13,21 @@ const DateTimePick = ({
 }: {
   title: string;
   placeholder: string;
-  date: Date;
-  handleValue: (date: Date) => void;
+  date: string;
+  handleValue: (date: string) => void;
 }) => {
   const [open, setOpen] = useState(false);
   const [isSelected, setIsSelected] = useState(false);
+  const stringToDate = new Date(date);
+
   const pressBirthButton = () => {
     setOpen(true);
   };
 
   const handleConfirm = (selectedDate: Date) => {
     setOpen(false);
-    handleValue(selectedDate);
+    const stringDate = selectedDate.toISOString().split('T')[0];
+    handleValue(stringDate);
     setIsSelected(true);
   };
 
@@ -35,7 +38,7 @@ const DateTimePick = ({
       </CustomText>
       <Pressable onPress={pressBirthButton}>
         <TextInput
-          value={isSelected ? date.toISOString().split('T')[0] : ''}
+          value={isSelected ? date : ''}
           placeholder={placeholder}
           editable={false}
           style={styles.input}
@@ -51,7 +54,7 @@ const DateTimePick = ({
         cancelText="취소"
         minimumDate={new Date('2000-01-01')}
         maximumDate={new Date()}
-        date={date}
+        date={stringToDate}
         buttonColor={color.blue[600]}
         dividerColor={color.blue[600]}
         onConfirm={selectedDate => {

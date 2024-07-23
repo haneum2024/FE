@@ -29,7 +29,9 @@ const DogInfo = ({navigation}: DogInfoProps) => {
   const [dogBreed, setDogBreed] = useState('');
   const [dogGender, setDogGender] = useState('female');
   const [isNeutered, setIsNeutered] = useState(false);
-  const [dogBirth, setDogBirth] = useState(new Date());
+  const [dogBirth, setDogBirth] = useState(
+    new Date().toISOString().split('T')[0],
+  );
   const [isDogBirthSelected, setIsDogBirthSelected] = useState(false);
   const [dogIntroduction, setDogIntroduction] = useState('');
   const [dogImage, setDogImage] = useState('');
@@ -55,7 +57,7 @@ const DogInfo = ({navigation}: DogInfoProps) => {
     setIsNeutered(!isNeutered);
   };
 
-  const handleDogBirth = (birth: Date) => {
+  const handleDogBirth = (birth: string) => {
     setDogBirth(birth);
     setIsDogBirthSelected(true);
   };
@@ -69,7 +71,15 @@ const DogInfo = ({navigation}: DogInfoProps) => {
   };
 
   const moveToNextPage = () => {
-    navigation.navigate('CameraGuide');
+    navigation.navigate('ProfileInfo', {
+      dogName,
+      dogBreed,
+      dogGender,
+      isNeutered,
+      dogBirth,
+      dogIntroduction,
+      dogImage,
+    });
   };
 
   return (
@@ -77,7 +87,7 @@ const DogInfo = ({navigation}: DogInfoProps) => {
       <AddInfoTitle
         icon={<AddProfileIcon width={75} height={75} />}
         title="반려견 소개"
-        page="1/2"
+        page="1/3"
       />
 
       <InputFormat
