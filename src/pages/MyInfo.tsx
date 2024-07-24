@@ -58,17 +58,18 @@ function MyInfo() {
           <Pressable
             style={styles.button}
             onPress={() => console.log(getAccount())}>
-            <CustomText weight="500">address 확인</CustomText>
+            <CustomText weight="500">관리자 address 확인</CustomText>
           </Pressable>
           <Pressable
             style={styles.button}
-            onPress={async () => await getNfts()}>
+            onPress={async () => await getNfts("0xeeA5e08087F45167C27d89b5ff7EDf618A1f8A33")}>
             <CustomText weight="500">NFT 확인</CustomText>
           </Pressable>
           <Pressable
             style={styles.button}
             onPress={async () =>
               await createDogInfo(
+                  "0xeeA5e08087F45167C27d89b5ff7EDf618A1f8A33",
                 '해피',
                 'mix',
                 '2021-10-01',
@@ -76,6 +77,7 @@ function MyInfo() {
                 true,
                 '귀여움',
                 'image URL',
+                ["image1", "image2", "image3"],
                 'tokenURI',
               )
             }>
