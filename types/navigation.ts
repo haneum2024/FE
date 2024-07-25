@@ -21,10 +21,15 @@ export interface CameraGuideType extends ProfileInfoType {
   profileImage: string;
 }
 
+export interface DogNoseCameraType extends CameraGuideType {
+  // 사진 5장에 대한 타입 추가
+}
+
 export type AddDogPageNavigation = {
   HomeMain: undefined;
-  CameraGuide: CameraGuideType;
   DogInfo: undefined;
   ProfileInfo: ProfileInfoType;
+  CameraGuide: CameraGuideType;
+  DogNoseCamera: DogNoseCameraType;
   DogProfileResult: undefined;
 };
