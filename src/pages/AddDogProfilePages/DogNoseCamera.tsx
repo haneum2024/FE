@@ -1,9 +1,11 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
-
-import type {AddDogPageNavigation} from '../../../types/navigation';
 import {RouteProp} from '@react-navigation/native';
+import {Button} from 'react-native-paper';
+
+import CustomText from '../../components/CustomText';
+import type {AddDogPageNavigation} from '../../../types/navigation';
 
 interface DogNoseCameraType {
   navigation: StackNavigationProp<AddDogPageNavigation, 'DogNoseCamera'>;
@@ -21,11 +23,12 @@ const DogNoseCamera = ({navigation, route}: DogNoseCameraType) => {
     dogImage,
     name,
     introduction,
+    address,
     profileImage,
   } = route.params;
 
   return (
-    <View style={styles.container}>
+    <View style={styles.cameraContainer}>
       <Text>Dog Name: {dogName}</Text>
       <Text>Dog Breed: {dogBreed}</Text>
       <Text>Dog Gender: {dogGender}</Text>
@@ -35,13 +38,32 @@ const DogNoseCamera = ({navigation, route}: DogNoseCameraType) => {
       <Text>Dog Image: {dogImage}</Text>
       <Text>name: {name}</Text>
       <Text>introduction: {introduction}</Text>
+      <Text>address: {address}</Text>
       <Text>profileImage: {profileImage}</Text>
+      <Button
+        onPress={() => {
+          navigation.navigate('DogProfileResult', {
+            dogName,
+            dogBreed,
+            dogGender,
+            isNeutered,
+            dogBirth,
+            dogIntroduction,
+            dogImage,
+            name,
+            introduction,
+            address,
+            profileImage,
+          });
+        }}>
+        <CustomText>Next</CustomText>
+      </Button>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  cameraContainer: {
     padding: 20,
   },
 });

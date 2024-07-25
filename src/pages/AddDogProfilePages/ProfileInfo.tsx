@@ -5,7 +5,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {RouteProp} from '@react-navigation/native';
 
 import color from '../../styles/color';
-import AddProfileIcon from '../../img/AddProfileIcon.svg';
+import AddPersonIcon from '../../img/AddPersonIcon.svg';
 import AddInfoTitle from '../../components/AddInfoTitle';
 import InputFormat from '../../components/InputFormat';
 
@@ -30,6 +30,7 @@ const ProfileInfo = ({navigation, route}: ProfileInfoProps) => {
 
   const [name, setName] = useState('');
   const [introduction, setIntroduction] = useState('');
+  const [address, setAddress] = useState('');
   const [profileImage, setProfileImage] = useState('');
 
   const disabledCondition =
@@ -41,6 +42,10 @@ const ProfileInfo = ({navigation, route}: ProfileInfoProps) => {
 
   const handleIntroduction = (value: string) => {
     setIntroduction(value);
+  };
+
+  const handleAddress = (value: string) => {
+    setAddress(value);
   };
 
   const handleProfileImage = (value: string) => {
@@ -58,6 +63,7 @@ const ProfileInfo = ({navigation, route}: ProfileInfoProps) => {
       dogImage,
       name,
       introduction,
+      address,
       profileImage,
     });
   };
@@ -65,7 +71,7 @@ const ProfileInfo = ({navigation, route}: ProfileInfoProps) => {
   return (
     <ScrollView style={styles.dogInfoContainer}>
       <AddInfoTitle
-        icon={<AddProfileIcon width={75} height={75} />}
+        icon={<AddPersonIcon width={75} height={75} />}
         title="주인 프로필"
         page="2/3"
       />
@@ -83,6 +89,17 @@ const ProfileInfo = ({navigation, route}: ProfileInfoProps) => {
         value={introduction}
         multiline
         handleValue={handleIntroduction}
+      />
+
+      <InputFormat
+        title="거주지"
+        description={
+          '위치 정보를 저장해두면,\n반려견 실종 시 신속하게 신고할 수 있어요.'
+        }
+        placeholder="거주지를 입력해주세요."
+        value={address}
+        multiline
+        handleValue={handleAddress}
       />
 
       <InputImage title="사진" handleImage={handleProfileImage} />
