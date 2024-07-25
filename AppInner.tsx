@@ -14,6 +14,7 @@ import Home from './src/pages/Home';
 import CameraGuide from './src/pages/AddDogProfilePages/CameraGuide';
 import DogInfo from './src/pages/AddDogProfilePages/DogInfo';
 import DogProfileResult from './src/pages/AddDogProfilePages/DogProfileResult';
+import DogNoseCamera from './src/pages/AddDogProfilePages/DogNoseCamera';
 import ProfileInfo from './src/pages/AddDogProfilePages/ProfileInfo';
 import colorType from './src/styles/color';
 
@@ -53,6 +54,7 @@ const HomeStack = () => {
       <Stack.Screen name="CameraGuide" component={CameraGuide} />
       <Stack.Screen name="DogInfo" component={DogInfo} />
       <Stack.Screen name="DogProfileResult" component={DogProfileResult} />
+      <Stack.Screen name="DogNoseCamera" component={DogNoseCamera} />
       <Stack.Screen name="ProfileInfo" component={ProfileInfo} />
     </Stack.Navigator>
   );
