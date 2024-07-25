@@ -22,9 +22,9 @@ import HomeIcon from './src/components/Icons/HomeIcon';
 import HealthIcon from './src/components/Icons/HealthIcon';
 import MissFoundIcon from './src/components/Icons/MissFoundIcon';
 import ProfileIcon from './src/components/Icons/ProfileIcon';
-import {AddDogPageNavigation} from './types/navigation';
+import {AddDogPageNavigation, MainPageNavigation} from './types/navigation';
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator<MainPageNavigation>();
 const Stack = createStackNavigator<AddDogPageNavigation>();
 
 const HomeTabBarIcon = ({color}: {color: string}) => (
