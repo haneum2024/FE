@@ -21,7 +21,8 @@ import color from '../styles/color';
 import CustomText from './CustomText';
 
 import CameraIcon from '../img/CameraIcon.svg';
-import {convertBase64ToBlob} from '../utils/convertType';
+import GalleryIcon from '../img/GalleryIcon.svg';
+// import {convertBase64ToBlob} from '../utils/convertType';
 
 const InputImage = ({
   title,
@@ -88,7 +89,7 @@ const InputImage = ({
           const imageUri = response.assets[0].uri as string;
           setImage(imageUri);
           handleImage(imageUri);
-
+          // console.log('response', response);
           //   const imageFile = await fetch(response.assets[0].base64 as string);
           //   const imageBlob = await imageFile.blob();
           //   console.log('imageBlob', imageBlob);
@@ -123,9 +124,9 @@ const InputImage = ({
           setImage(imageUri);
           handleImage(imageUri);
 
-          console.log('response', response);
-          const imageBlob = await convertBase64ToBlob(base64Data, fileName);
-          console.log('imageBlob', imageBlob);
+          // console.log('response', response);
+          // const imageBlob = await convertBase64ToBlob(base64Data, fileName);
+          // console.log('imageBlob', imageBlob);
         }
       }
     });
@@ -160,7 +161,7 @@ const InputImage = ({
         <View style={styles.selectContainer}>
           <TouchableWithoutFeedback onPress={getImageFromLibrary}>
             <View style={styles.buttonContainer}>
-              <CameraIcon width={50} height={50} />
+              <GalleryIcon width={50} height={50} />
               <CustomText weight="600" style={styles.label}>
                 갤러리에서 선택
               </CustomText>
@@ -224,8 +225,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 10,
     borderRadius: 10,
-    gap: 10,
-    backgroundColor: color.gray[100],
+    gap: 5,
+    backgroundColor: color.gray[50],
   },
 });
 

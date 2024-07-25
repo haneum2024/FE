@@ -13,7 +13,7 @@ import type {AddDogPageNavigation} from '../../types/navigation';
 
 type AddDogProfileNavigationProp = StackNavigationProp<
   AddDogPageNavigation,
-  'Home'
+  'HomeMain'
 >;
 
 const AddDogProfile = ({

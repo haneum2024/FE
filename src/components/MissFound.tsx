@@ -5,7 +5,7 @@ import color from '../styles/color';
 import CustomText from './CustomText';
 import IconBox from './IconBox';
 
-import CautionIcon from '../img/CautionIcon.svg';
+import ProfileIcon from './Icons/ProfileIcon';
 import SearchNoticeIcon from '../img/SearchNoticeIcon.svg';
 
 const MissFound = () => {
@@ -24,13 +24,15 @@ const MissFound = () => {
       </CustomText>
       <View style={styles.iconContainer}>
         <IconBox
-          text={'실종 신고'}
-          icon={<CautionIcon />}
+          label={'실종 신고'}
+          text={'반려견을 찾아요'}
+          icon={<ProfileIcon width={40} height={40} fill={color.blue[600]} />}
           onPress={pressMissingReport}
         />
         <IconBox
-          text={'발견 검색/신고'}
-          icon={<SearchNoticeIcon />}
+          label={'발견 신고'}
+          text={'주인을 찾아요'}
+          icon={<SearchNoticeIcon width={50} height={50} />}
           onPress={pressSearchingReport}
         />
       </View>

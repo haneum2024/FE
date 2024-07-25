@@ -5,9 +5,26 @@ export type AuthPageNavigation = {
   TermsOfUse: undefined;
 };
 
+export interface ProfileInfoType {
+  dogName: string;
+  dogBreed: string;
+  dogGender: string;
+  isNeutered: boolean;
+  dogBirth: string;
+  dogIntroduction: string;
+  dogImage: string;
+}
+
+export interface CameraGuideType extends ProfileInfoType {
+  name: string;
+  introduction: string;
+  profileImage: string;
+}
+
 export type AddDogPageNavigation = {
-  Home: undefined;
-  CameraGuide: undefined;
+  HomeMain: undefined;
+  CameraGuide: CameraGuideType;
   DogInfo: undefined;
+  ProfileInfo: ProfileInfoType;
   DogProfileResult: undefined;
 };

@@ -1,14 +1,16 @@
 import React from 'react';
-import {StyleSheet, Pressable} from 'react-native';
+import {StyleSheet, Pressable, View} from 'react-native';
 
 import CustomText from './CustomText';
 import color from '../styles/color';
 
 const IconBox = ({
+  label,
   text,
   icon,
   onPress,
 }: {
+  label: string;
   text: string;
   icon: React.ReactNode;
   onPress: () => void;
@@ -21,9 +23,16 @@ const IconBox = ({
       ]}
       onPress={onPress}>
       {icon}
-      <CustomText weight="500" style={styles.title}>
-        {text}
-      </CustomText>
+      <View style={styles.contentContainer}>
+        <View style={styles.textContainer}>
+          <CustomText weight="600" style={styles.text}>
+            {text}
+          </CustomText>
+        </View>
+        <CustomText weight="600" style={styles.label}>
+          {label}
+        </CustomText>
+      </View>
     </Pressable>
   );
 };
@@ -31,11 +40,12 @@ const IconBox = ({
 const styles = StyleSheet.create({
   iconBoxContainer: {
     display: 'flex',
+    flexDirection: 'row',
     flex: 1,
     alignItems: 'center',
     padding: 16,
     marginVertical: 16,
-    gap: 7,
+    gap: 10,
     backgroundColor: color.white,
     borderWidth: 2,
     borderColor: color.gray[200],
@@ -46,8 +56,22 @@ const styles = StyleSheet.create({
     borderColor: color.blue[300],
     backgroundColor: color.blue[50],
   },
-  title: {
-    fontSize: 14,
+  contentContainer: {
+    display: 'flex',
+    gap: 4,
+  },
+  textContainer: {
+    backgroundColor: color.blue[50],
+    borderRadius: 10,
+    paddingVertical: 2,
+    paddingHorizontal: 8,
+  },
+  text: {
+    fontSize: 10,
+    color: color.blue[600],
+  },
+  label: {
+    fontSize: 16,
     color: color.gray[950],
   },
 });
