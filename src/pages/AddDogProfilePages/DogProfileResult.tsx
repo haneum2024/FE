@@ -8,7 +8,6 @@ import CustomText from '../../components/CustomText';
 import LogoIcon from '../../img/LogoIcon.svg';
 import {AddDogPageNavigation} from '../../../types/navigation';
 
-
 interface DogProfileResultType {
   navigation: StackNavigationProp<AddDogPageNavigation, 'DogProfileResult'>;
   route: RouteProp<AddDogPageNavigation, 'DogProfileResult'>;

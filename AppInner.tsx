@@ -69,7 +69,9 @@ function AppInner() {
     if (
       routeName === 'CameraGuide' ||
       routeName === 'DogInfo' ||
-      routeName === 'DogProfileResult'
+      routeName === 'DogNoseCamera' ||
+      routeName === 'DogProfileResult' ||
+      routeName === 'ProfileInfo'
     ) {
       return false;
     }

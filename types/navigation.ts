@@ -1,7 +1,5 @@
 export type AuthPageNavigation = {
   Login: undefined;
-  SignUpFirstStep: undefined;
-  SignUpSecondStep: undefined;
   TermsOfUse: undefined;
 };
 
@@ -29,11 +27,11 @@ export interface CameraGuideType extends ProfileInfoType {
   profileImage: string;
 }
 
-export interface DogNoseCameraType extends CameraGuideType {
+export interface DogNoseCameraType extends CameraGuideType {}
+
+export interface DogProfileResultType extends DogNoseCameraType {
   // 사진 5장에 대한 타입 추가
 }
-
-export interface DogProfileResultType extends DogNoseCameraType {}
 
 export type AddDogPageNavigation = {
   HomeMain: undefined;

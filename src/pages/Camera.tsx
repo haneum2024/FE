@@ -1,12 +1,5 @@
-import React, {useState, useRef} from 'react';
-import {
-  Dimensions,
-  StyleSheet,
-  View,
-  Image,
-  ScrollView,
-  Pressable,
-} from 'react-native';
+import React, {useState, useRef, useEffect} from 'react';
+import {Dimensions, StyleSheet, View} from 'react-native';
 import {RNCamera} from 'react-native-camera';
 
 import CustomText from '../components/CustomText';
@@ -15,56 +8,50 @@ import color from '../styles/color';
 function Camera() {
   const [photos, setPhotos] = useState<string[]>([]);
   const cameraRef = useRef<RNCamera>(null);
+  const [isTakingPhotos, setIsTakingPhotos] = useState(false);
 
   const takePicture = async () => {
     if (cameraRef.current && photos.length < 5) {
-      const options = {quality: 0.5, base64: true};
+      const options = {quality: 1, base64: true, pauseAfterCapture: false};
       const data = await cameraRef.current.takePictureAsync(options);
-      setPhotos([...photos, data.uri]);
-      console.log('사진 촬영', photos.length + 1);
+      setPhotos(prevPhotos => [...prevPhotos, data.uri]);
+      console.log('사진 촬영', data.uri);
     }
   };
 
-  const handleConfirm = () => {
-    // 사진 확인 버튼을 눌렀을 때 처리할 로직을 추가하세요
-    console.log('사진 전송');
-  };
+  useEffect(() => {
+    // 테스트를 위해 오버레이 안에 특정 물체가 나타났다고 가정하고 사진을 찍기 시작합니다.
+    const startTakingPhotos = () => {
+      setIsTakingPhotos(true);
+      let photoCount = 0;
+      const interval = setInterval(async () => {
+        if (photoCount < 5) {
+          await takePicture();
+          photoCount += 1;
+          console.log('photoCount', photoCount);
+        } else {
+          clearInterval(interval);
+        }
+      }, 1000);
+    };
+
+    // 오버레이 안에 특정 물체가 나타났다고 가정하고 2초 후에 사진을 찍기 시작합니다.
+    setTimeout(startTakingPhotos, 2000);
+  }, []);
 
   return (
-    <>
-      <View style={styles.container}>
-        <RNCamera
-          ref={cameraRef}
-          style={styles.preview}
-          type={RNCamera.Constants.Type.back}
-          flashMode={RNCamera.Constants.FlashMode.off}
-          captureAudio={false}>
-          <View style={styles.overlay}>
-            <View style={styles.circle} />
-          </View>
-        </RNCamera>
-      </View>
-      <View style={styles.buttonWrapper}>
-        <ScrollView horizontal style={styles.photoContainer}>
-          {photos.map((photo, index) => (
-            <Image key={index} source={{uri: photo}} style={styles.photo} />
-          ))}
-        </ScrollView>
-        {photos.length === 5 ? (
-          <Pressable style={styles.button} onPress={handleConfirm}>
-            <CustomText weight="500" style={styles.buttonText}>
-              사진 전송
-            </CustomText>
-          </Pressable>
-        ) : (
-          <Pressable style={styles.button} onPress={takePicture}>
-            <CustomText weight="500" style={styles.buttonText}>
-              사진 촬영
-            </CustomText>
-          </Pressable>
-        )}
-      </View>
-    </>
+    <View style={styles.container}>
+      <RNCamera
+        ref={cameraRef}
+        style={styles.preview}
+        type={RNCamera.Constants.Type.back}
+        flashMode={RNCamera.Constants.FlashMode.off}
+        captureAudio={false}>
+        <View style={styles.overlay}>
+          <View style={styles.circle} />
+        </View>
+      </RNCamera>
+    </View>
   );
 }
 
@@ -76,51 +63,21 @@ const styles = StyleSheet.create({
     backgroundColor: color.gray[50],
   },
   preview: {
-    marginHorizontal: 10,
-    width: Dimensions.get('window').width - 20,
-    height: Dimensions.get('window').height / 2,
-    backgroundColor: '#D2D2D2',
-    marginBottom: 10,
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
-    top: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingBottom: 10,
   },
   circle: {
-    width: 200,
-    height: 200,
+    width: Dimensions.get('window').width / 3,
+    height: Dimensions.get('window').height / 6,
     borderRadius: 100,
     borderWidth: 2,
     borderColor: 'gray',
     backgroundColor: '#6fb61eb3',
-  },
-  photoContainer: {
-    flexDirection: 'row',
-    marginVertical: 10,
-  },
-  photo: {
-    width: 70,
-    height: 70,
-    marginHorizontal: 5,
-  },
-  buttonWrapper: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  button: {
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    width: 120,
-    alignItems: 'center',
-    backgroundColor: 'yellow',
-    borderRadius: 5,
-    margin: 5,
-  },
-  buttonText: {
-    color: 'black',
   },
 });
 
