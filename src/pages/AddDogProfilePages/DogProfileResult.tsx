@@ -1,5 +1,6 @@
 import React, {useEffect, useState, useRef} from 'react';
 import {View, StyleSheet, ActivityIndicator, Animated} from 'react-native';
+import {useDispatch} from 'react-redux';
 import {RouteProp} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 
@@ -7,6 +8,9 @@ import color from '../../styles/color';
 import CustomText from '../../components/CustomText';
 import LogoIcon from '../../img/LogoIcon.svg';
 import {AddDogPageNavigation} from '../../../types/navigation';
+import {addDogProfileApi, addUserProfileApi} from '../../api/userApi';
+import {getAccessToken} from '../../storage/auth';
+import {addProfile} from '../../store/reducers/profileReducer';
 
 interface DogProfileResultType {
   navigation: StackNavigationProp<AddDogPageNavigation, 'DogProfileResult'>;
@@ -32,12 +36,37 @@ const DogProfileResult = ({navigation, route}: DogProfileResultType) => {
 
   const [loading, setLoading] = useState(true);
   const scaleAnim = useRef(new Animated.Value(0.5)).current;
-  console.log(route.params);
+
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const accessToken = await getAccessToken();
+
         // 서버로 API 요청 보내기
-        await delay(5000);
+        const dogResponse = await addDogProfileApi({
+          accessToken: accessToken as string,
+          name: dogName,
+          breed: dogBreed,
+          gender: dogGender,
+          neutered: isNeutered,
+          birthDate: dogBirth,
+          description: dogIntroduction,
+          imageUrl: dogImage,
+        });
+        console.log('dogResponse', dogResponse);
+
+        // 이름 추가 필요
+        const userResponse = await addUserProfileApi({
+          accessToken: accessToken as string,
+          location: address,
+          description: introduction,
+          profileUrl: profileImage,
+        });
+        console.log('userResponse', userResponse);
+
+        dispatch(addProfile());
         setLoading(false);
 
         Animated.timing(scaleAnim, {
@@ -54,7 +83,8 @@ const DogProfileResult = ({navigation, route}: DogProfileResultType) => {
     };
 
     fetchData();
-  }, [navigation, scaleAnim]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [navigation]);
 
   return (
     <View style={styles.dogProfileContainer}>

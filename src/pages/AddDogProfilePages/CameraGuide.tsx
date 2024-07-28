@@ -65,7 +65,7 @@ const CameraGuide = ({navigation, route}: CameraGuideProps) => {
             비문 촬영이 시작되면 폰을 반려견을 향해 들어주세요.
           </CustomText>
           <CustomText weight="500" style={styles.text}>
-            촬영이 진행될수록 인식 게이지가 점점 차올라요.
+            비문이 인식되면 자동으로 촬영이 시작돼요.
           </CustomText>
         </View>
         <View style={styles.cautionContainer}>

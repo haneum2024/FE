@@ -27,7 +27,7 @@ interface DogInfoProps {
 const DogInfo = ({navigation}: DogInfoProps) => {
   const [dogName, setDogName] = useState('');
   const [dogBreed, setDogBreed] = useState('');
-  const [dogGender, setDogGender] = useState('female');
+  const [dogGender, setDogGender] = useState<'MALE' | 'FEMALE'>('FEMALE');
   const [isNeutered, setIsNeutered] = useState(false);
   const [dogBirth, setDogBirth] = useState(
     new Date().toISOString().split('T')[0],
@@ -36,7 +36,7 @@ const DogInfo = ({navigation}: DogInfoProps) => {
   const [dogIntroduction, setDogIntroduction] = useState('');
   const [dogImage, setDogImage] = useState('');
 
-  const isFemale = dogGender === 'female';
+  const isFemale = dogGender === 'FEMALE';
 
   const disabledCondition =
     dogName.length === 0 ||
@@ -119,7 +119,7 @@ const DogInfo = ({navigation}: DogInfoProps) => {
         </TouchableWithoutFeedback>
       </View>
       <View style={styles.toggleGroup}>
-        <TouchableWithoutFeedback onPress={() => setDogGender('female')}>
+        <TouchableWithoutFeedback onPress={() => setDogGender('FEMALE')}>
           <View
             style={[
               styles.toggleElement,
@@ -141,7 +141,7 @@ const DogInfo = ({navigation}: DogInfoProps) => {
             </CustomText>
           </View>
         </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress={() => setDogGender('male')}>
+        <TouchableWithoutFeedback onPress={() => setDogGender('MALE')}>
           <View
             style={[
               styles.toggleElement,

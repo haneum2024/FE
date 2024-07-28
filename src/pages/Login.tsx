@@ -16,7 +16,7 @@ import {
 //   GetProfileResponse,
 // } from '@react-native-seoul/naver-login';
 
-import {getUserApi, loginApi} from '../api/api';
+import {getUserApi, loginApi} from '../api/userApi';
 import CustomText from '../components/CustomText';
 import {getAccessToken, saveAccessToken} from '../storage/auth';
 import {login} from '../store/reducers/authReducer';

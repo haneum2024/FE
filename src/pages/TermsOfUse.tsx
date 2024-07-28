@@ -3,7 +3,7 @@ import {View, StyleSheet} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {Button, Checkbox} from 'react-native-paper';
 
-import {userAgreeApi} from '../api/api';
+import {userAgreeApi} from '../api/userApi';
 import CustomText from '../components/CustomText';
 import CollapsibleView from '../components/CollapsibleView';
 import TermsOfUseText from '../components/TermsOfUseText';

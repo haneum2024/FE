@@ -24,15 +24,15 @@ const MissFound = () => {
       </CustomText>
       <View style={styles.iconContainer}>
         <IconBox
-          label={'실종 신고'}
+          label={'반려견 실종'}
           text={'반려견을 찾아요'}
           icon={<ProfileIcon width={40} height={40} fill={color.blue[600]} />}
           onPress={pressMissingReport}
         />
         <IconBox
-          label={'발견 신고'}
+          label={'유기견 발견'}
           text={'주인을 찾아요'}
-          icon={<SearchNoticeIcon width={50} height={50} />}
+          icon={<SearchNoticeIcon width={40} height={40} />}
           onPress={pressSearchingReport}
         />
       </View>
