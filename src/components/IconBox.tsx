@@ -65,12 +65,15 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingVertical: 2,
     paddingHorizontal: 8,
+    alignItems: 'center',
   },
   text: {
     fontSize: 10,
     color: color.blue[600],
   },
   label: {
+    alignItems: 'flex-start',
+    marginLeft: 2,
     fontSize: 16,
     color: color.gray[950],
   },

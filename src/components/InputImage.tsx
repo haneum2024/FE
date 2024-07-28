@@ -162,8 +162,8 @@ const InputImage = ({
           <TouchableWithoutFeedback onPress={getImageFromLibrary}>
             <View style={styles.buttonContainer}>
               <GalleryIcon width={50} height={50} />
-              <CustomText weight="600" style={styles.label}>
-                갤러리에서 선택
+              <CustomText weight="600" style={styles.imageText}>
+                갤러리
               </CustomText>
             </View>
           </TouchableWithoutFeedback>
@@ -171,8 +171,8 @@ const InputImage = ({
           <TouchableWithoutFeedback onPress={requestCameraPermission}>
             <View style={styles.buttonContainer}>
               <CameraIcon width={50} height={50} />
-              <CustomText weight="600" style={styles.label}>
-                카메라로 촬영
+              <CustomText weight="600" style={styles.imageText}>
+                카메라
               </CustomText>
             </View>
           </TouchableWithoutFeedback>

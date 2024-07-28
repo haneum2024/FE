@@ -13,7 +13,7 @@ export type MainPageNavigation = {
 export interface ProfileInfoType {
   dogName: string;
   dogBreed: string;
-  dogGender: string;
+  dogGender: 'MALE' | 'FEMALE';
   isNeutered: boolean;
   dogBirth: string;
   dogIntroduction: string;

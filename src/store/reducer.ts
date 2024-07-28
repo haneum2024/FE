@@ -1,11 +1,11 @@
 import {combineReducers} from 'redux';
 
-import userSlice from '../slices/user';
-import orderSlice from '../slices/order';
+import authSlice from './reducers/authReducer';
+import profileSlice from './reducers/profileReducer';
 
 const rootReducer = combineReducers({
-  user: userSlice.reducer,
-  order: orderSlice.reducer,
+  auth: authSlice,
+  profile: profileSlice,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
