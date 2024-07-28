@@ -174,7 +174,7 @@ const DogInfo = ({navigation}: DogInfoProps) => {
 
       <InputFormat
         title="소개"
-        placeholder="반려견을 한 마디로 설명한다면?"
+        placeholder="반려견을 한 마디로 설명하자면?"
         value={dogIntroduction}
         multiline
         handleValue={handleDogIntroduction}

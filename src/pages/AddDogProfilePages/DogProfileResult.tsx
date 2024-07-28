@@ -32,7 +32,7 @@ const DogProfileResult = ({navigation, route}: DogProfileResultType) => {
 
   const [loading, setLoading] = useState(true);
   const scaleAnim = useRef(new Animated.Value(0.5)).current;
-
+  console.log(route.params);
   useEffect(() => {
     const fetchData = async () => {
       try {
