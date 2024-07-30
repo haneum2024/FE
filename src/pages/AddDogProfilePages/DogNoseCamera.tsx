@@ -2,10 +2,32 @@ import React, {useState, useRef, useEffect} from 'react';
 import {Dimensions, StyleSheet, View} from 'react-native';
 import {RNCamera} from 'react-native-camera';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RouteProp} from '@react-navigation/native';
 
-import color from '../styles/color';
+import color from '../../styles/color';
+import {AddDogPageNavigation} from '../../../types/navigation';
 
-function Camera() {
+interface DogNoseCameraType {
+  navigation: StackNavigationProp<AddDogPageNavigation, 'DogNoseCamera'>;
+  route: RouteProp<AddDogPageNavigation, 'DogNoseCamera'>;
+}
+
+const DogNoseCamera = ({navigation, route}: DogNoseCameraType) => {
+  const {
+    dogName,
+    dogBreed,
+    dogGender,
+    isNeutered,
+    dogBirth,
+    dogIntroduction,
+    dogImage,
+    name,
+    introduction,
+    address,
+    profileImage,
+  } = route.params;
+
   const [photos, setPhotos] = useState<string[]>([]);
   const [fillAmount, setFillAmount] = useState(0);
   const cameraRef = useRef<RNCamera>(null);
@@ -33,7 +55,7 @@ function Camera() {
       } else {
         clearInterval(interval);
       }
-    }, 1000);
+    }, 2000);
 
     return () => clearInterval(interval);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -41,6 +63,19 @@ function Camera() {
 
   const moveToNextPage = () => {
     console.log('사진 촬영 완료');
+    navigation.navigate('DogProfileResult', {
+      dogName,
+      dogBreed,
+      dogGender,
+      isNeutered,
+      dogBirth,
+      dogIntroduction,
+      dogImage,
+      name,
+      introduction,
+      address,
+      profileImage,
+    });
   };
 
   return (
@@ -69,7 +104,7 @@ function Camera() {
       </RNCamera>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -89,4 +124,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Camera;
+export default DogNoseCamera;

@@ -27,14 +27,16 @@ interface DogInfoProps {
 const DogInfo = ({navigation}: DogInfoProps) => {
   const [dogName, setDogName] = useState('');
   const [dogBreed, setDogBreed] = useState('');
-  const [dogGender, setDogGender] = useState('female');
+  const [dogGender, setDogGender] = useState<'MALE' | 'FEMALE'>('FEMALE');
   const [isNeutered, setIsNeutered] = useState(false);
-  const [dogBirth, setDogBirth] = useState(new Date());
+  const [dogBirth, setDogBirth] = useState(
+    new Date().toISOString().split('T')[0],
+  );
   const [isDogBirthSelected, setIsDogBirthSelected] = useState(false);
   const [dogIntroduction, setDogIntroduction] = useState('');
   const [dogImage, setDogImage] = useState('');
 
-  const isFemale = dogGender === 'female';
+  const isFemale = dogGender === 'FEMALE';
 
   const disabledCondition =
     dogName.length === 0 ||
@@ -55,7 +57,7 @@ const DogInfo = ({navigation}: DogInfoProps) => {
     setIsNeutered(!isNeutered);
   };
 
-  const handleDogBirth = (birth: Date) => {
+  const handleDogBirth = (birth: string) => {
     setDogBirth(birth);
     setIsDogBirthSelected(true);
   };
@@ -69,7 +71,15 @@ const DogInfo = ({navigation}: DogInfoProps) => {
   };
 
   const moveToNextPage = () => {
-    navigation.navigate('CameraGuide');
+    navigation.navigate('ProfileInfo', {
+      dogName,
+      dogBreed,
+      dogGender,
+      isNeutered,
+      dogBirth,
+      dogIntroduction,
+      dogImage,
+    });
   };
 
   return (
@@ -77,7 +87,7 @@ const DogInfo = ({navigation}: DogInfoProps) => {
       <AddInfoTitle
         icon={<AddProfileIcon width={75} height={75} />}
         title="반려견 소개"
-        page="1/2"
+        page="1/3"
       />
 
       <InputFormat
@@ -109,7 +119,7 @@ const DogInfo = ({navigation}: DogInfoProps) => {
         </TouchableWithoutFeedback>
       </View>
       <View style={styles.toggleGroup}>
-        <TouchableWithoutFeedback onPress={() => setDogGender('female')}>
+        <TouchableWithoutFeedback onPress={() => setDogGender('FEMALE')}>
           <View
             style={[
               styles.toggleElement,
@@ -131,7 +141,7 @@ const DogInfo = ({navigation}: DogInfoProps) => {
             </CustomText>
           </View>
         </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress={() => setDogGender('male')}>
+        <TouchableWithoutFeedback onPress={() => setDogGender('MALE')}>
           <View
             style={[
               styles.toggleElement,
@@ -164,7 +174,7 @@ const DogInfo = ({navigation}: DogInfoProps) => {
 
       <InputFormat
         title="소개"
-        placeholder="반려견을 한 마디로 설명한다면?"
+        placeholder="반려견을 한 마디로 설명하자면?"
         value={dogIntroduction}
         multiline
         handleValue={handleDogIntroduction}

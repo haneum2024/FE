@@ -14,15 +14,18 @@ import Home from './src/pages/Home';
 import CameraGuide from './src/pages/AddDogProfilePages/CameraGuide';
 import DogInfo from './src/pages/AddDogProfilePages/DogInfo';
 import DogProfileResult from './src/pages/AddDogProfilePages/DogProfileResult';
+import DogNoseCamera from './src/pages/AddDogProfilePages/DogNoseCamera';
+import ProfileInfo from './src/pages/AddDogProfilePages/ProfileInfo';
 import colorType from './src/styles/color';
 
 import HomeIcon from './src/components/Icons/HomeIcon';
 import HealthIcon from './src/components/Icons/HealthIcon';
 import MissFoundIcon from './src/components/Icons/MissFoundIcon';
 import ProfileIcon from './src/components/Icons/ProfileIcon';
+import {AddDogPageNavigation, MainPageNavigation} from './types/navigation';
 
-const Tab = createBottomTabNavigator();
-const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator<MainPageNavigation>();
+const Stack = createStackNavigator<AddDogPageNavigation>();
 
 const HomeTabBarIcon = ({color}: {color: string}) => (
   <HomeIcon width={25} height={25} fill={color} />
@@ -51,6 +54,8 @@ const HomeStack = () => {
       <Stack.Screen name="CameraGuide" component={CameraGuide} />
       <Stack.Screen name="DogInfo" component={DogInfo} />
       <Stack.Screen name="DogProfileResult" component={DogProfileResult} />
+      <Stack.Screen name="DogNoseCamera" component={DogNoseCamera} />
+      <Stack.Screen name="ProfileInfo" component={ProfileInfo} />
     </Stack.Navigator>
   );
 };
@@ -64,7 +69,9 @@ function AppInner() {
     if (
       routeName === 'CameraGuide' ||
       routeName === 'DogInfo' ||
-      routeName === 'DogProfileResult'
+      routeName === 'DogNoseCamera' ||
+      routeName === 'DogProfileResult' ||
+      routeName === 'ProfileInfo'
     ) {
       return false;
     }

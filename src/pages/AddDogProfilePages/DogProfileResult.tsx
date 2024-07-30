@@ -1,40 +1,114 @@
-import React from 'react';
-import {View, StyleSheet} from 'react-native';
-import {Button} from 'react-native-paper';
+import React, {useEffect, useState, useRef} from 'react';
+import {View, StyleSheet, ActivityIndicator, Animated} from 'react-native';
+import {useDispatch} from 'react-redux';
+import {RouteProp} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
 
 import color from '../../styles/color';
 import CustomText from '../../components/CustomText';
-import AddProfileIcon from '../../img/AddProfileIcon.svg';
+import LogoIcon from '../../img/LogoIcon.svg';
+import {AddDogPageNavigation} from '../../../types/navigation';
+import {addDogProfileApi, addUserProfileApi} from '../../api/userApi';
+import {getAccessToken} from '../../storage/auth';
+import {addProfile} from '../../store/reducers/profileReducer';
 
-const DogProfileResult = ({name}: {name?: string}) => {
-  const addProfile = () => {
-    console.log('add profile');
-  };
+interface DogProfileResultType {
+  navigation: StackNavigationProp<AddDogPageNavigation, 'DogProfileResult'>;
+  route: RouteProp<AddDogPageNavigation, 'DogProfileResult'>;
+}
+
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+const DogProfileResult = ({navigation, route}: DogProfileResultType) => {
+  const {
+    dogName,
+    dogBreed,
+    dogGender,
+    isNeutered,
+    dogBirth,
+    dogIntroduction,
+    dogImage,
+    name,
+    introduction,
+    address,
+    profileImage,
+  } = route.params;
+
+  const [loading, setLoading] = useState(true);
+  const scaleAnim = useRef(new Animated.Value(0.5)).current;
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const accessToken = await getAccessToken();
+
+        // 서버로 API 요청 보내기
+        const dogResponse = await addDogProfileApi({
+          accessToken: accessToken as string,
+          name: dogName,
+          breed: dogBreed,
+          gender: dogGender,
+          neutered: isNeutered,
+          birthDate: dogBirth,
+          description: dogIntroduction,
+          imageUrl: dogImage,
+        });
+        console.log('dogResponse', dogResponse);
+
+        // 이름 추가 필요
+        const userResponse = await addUserProfileApi({
+          accessToken: accessToken as string,
+          location: address,
+          description: introduction,
+          profileUrl: profileImage,
+        });
+        console.log('userResponse', userResponse);
+
+        dispatch(addProfile());
+        setLoading(false);
+
+        Animated.timing(scaleAnim, {
+          toValue: 1,
+          duration: 1500,
+          useNativeDriver: true,
+        }).start();
+        await delay(1500);
+        navigation.navigate('HomeMain');
+      } catch (error) {
+        setLoading(false);
+        console.error(error);
+      }
+    };
+
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [navigation]);
 
   return (
     <View style={styles.dogProfileContainer}>
-      <CustomText weight="700" style={styles.title}>
-        반려견 정보 입력 결과
-      </CustomText>
-      {name ? (
-        <></>
+      {loading ? (
+        <>
+          <ActivityIndicator
+            style={styles.loading}
+            size={80}
+            color={color.blue[600]}
+          />
+          <CustomText weight="600" style={styles.label}>
+            반려견 프로필 생성 중...
+          </CustomText>
+        </>
       ) : (
-        <View style={styles.addProfileContainer}>
-          <View style={styles.iconContainer}>
-            <AddProfileIcon width={75} height={75} />
-          </View>
-          <View style={styles.addProfileBox}>
-            <CustomText weight="700" style={styles.profileText}>
-              프로필 생성
-            </CustomText>
-            <CustomText weight="500">
-              건강일지를 작성할 반려견 프로필을 만들어보세요.
-            </CustomText>
-            <Button mode="contained" style={styles.button} onPress={addProfile}>
-              프로필 만들기
-            </Button>
-          </View>
-        </View>
+        <>
+          <Animated.View
+            style={[styles.loading, {transform: [{scale: scaleAnim}]}]}>
+            <LogoIcon width={100} height={100} fill={color.blue[600]} />
+          </Animated.View>
+          <CustomText weight="600" style={styles.label}>
+            반려견 프로필 생성 완료!
+          </CustomText>
+        </>
       )}
     </View>
   );
@@ -42,44 +116,18 @@ const DogProfileResult = ({name}: {name?: string}) => {
 
 const styles = StyleSheet.create({
   dogProfileContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     marginHorizontal: 24,
     marginVertical: 32,
   },
-  title: {
-    fontSize: 22,
-    marginBottom: 12,
-    color: color.gray[950],
+  loading: {
+    marginBottom: 20,
   },
-  addProfileContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    padding: 16,
-    backgroundColor: color.white,
-    borderRadius: 20,
-    gap: 18,
-  },
-  iconContainer: {
-    flex: 2,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 12,
-    borderRadius: 10,
-    backgroundColor: color.blue[200],
-  },
-  addProfileBox: {
-    flex: 3,
-    display: 'flex',
-    gap: 8,
-  },
-  profileText: {
-    fontSize: 22,
-    color: color.gray[900],
-  },
-  button: {
-    borderRadius: 8,
-    color: color.white,
-    backgroundColor: color.blue[600],
+  label: {
+    color: color.black,
+    fontSize: 16,
   },
 });
 

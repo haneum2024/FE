@@ -12,12 +12,14 @@ import CustomText from './CustomText';
 
 const InputFormat = ({
   title,
+  description,
   placeholder,
   value,
   multiline = false,
   handleValue,
 }: {
   title: string;
+  description?: string;
   placeholder: string;
   value: string;
   multiline?: boolean;
@@ -36,6 +38,11 @@ const InputFormat = ({
         <CustomText weight="600" style={styles.label}>
           {title}
         </CustomText>
+        {description && (
+          <CustomText weight="500" style={styles.description}>
+            {description}
+          </CustomText>
+        )}
         <TextInput
           value={value}
           placeholder={placeholder}
@@ -63,6 +70,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 8,
     color: color.gray[950],
+  },
+  description: {
+    fontSize: 12,
+    marginBottom: 8,
+    color: color.gray[700],
   },
   input: {
     padding: 10,
