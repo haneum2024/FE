@@ -21,19 +21,25 @@ const DogNoseCamera = ({navigation, route}: DogNoseCameraType) => {
   );
   const [predictions, setPredictions] = useState<any>(null);
   const cameraRef = useRef<any | null>(null);
+  const [currentState, setCurrentState] = useState('');
 
   const runInference = async (input: any) => {
     if (tfModel.state !== 'loaded' || tf.model === undefined) {
+      setCurrentState('Model is not loaded');
       return null;
     }
     const output = tfModel.model.runSync([input]);
+    setCurrentState('Inference done');
     setPredictions(output);
   };
 
   const handleCameraStream = async (images: any) => {
+    setCurrentState('Camera is ready');
+
     const loop = async () => {
       const nextImageTensor = images.next().value;
       if (nextImageTensor) {
+        setCurrentState('Running inference');
         await runInference(nextImageTensor);
         tf.dispose([nextImageTensor]);
       }
@@ -64,19 +70,18 @@ const DogNoseCamera = ({navigation, route}: DogNoseCameraType) => {
 
   return (
     <View style={styles.cameraContainer}>
-      <View style={styles.container}>
-        <RNCamera
-          style={styles.camera}
-          type={RNCamera.Constants.Type.back}
-          onCameraReady={() => {
-            if (cameraRef.current) {
-              const images = cameraRef.current.getPreviewData();
-              handleCameraStream(images);
-            }
-          }}
-        />
-        {predictions && <Text>{JSON.stringify(predictions)}</Text>}
-      </View>
+      <RNCamera
+        style={styles.camera}
+        type={RNCamera.Constants.Type.back}
+        onCameraReady={() => {
+          if (cameraRef.current) {
+            const images = cameraRef.current.getPreviewData();
+            handleCameraStream(images);
+          }
+        }}
+      />
+      <Text>{currentState}</Text>
+      {predictions && <Text>{JSON.stringify(predictions)}</Text>}
       <Text>Dog Name: {dogName}</Text>
       <Text>Dog Breed: {dogBreed}</Text>
       <Text>Dog Gender: {dogGender}</Text>
