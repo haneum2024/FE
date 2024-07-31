@@ -11,6 +11,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {useDispatch} from 'react-redux';
+import {GOOGLE_CLIENT_ID} from 'react-native-dotenv';
 
 import {logout} from '../store/reducers/authReducer';
 import {AppDispatch} from '../store';
@@ -18,11 +19,8 @@ import CustomText from '../components/CustomText';
 import {removeAccessToken} from '../storage/auth';
 import {createDogInfo, getAccount, getNfts} from '../services/web3Service';
 
-const ANDROID_CLIENT_ID =
-  '54570271712-a2ct0tbftq1gdrnf7p9pk6m8kfs4sbsl.apps.googleusercontent.com';
-
 GoogleSignin.configure({
-  webClientId: ANDROID_CLIENT_ID,
+  webClientId: GOOGLE_CLIENT_ID,
 });
 
 const googleLogoutButton = async (dispatch: AppDispatch) => {

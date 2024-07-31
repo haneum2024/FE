@@ -91,7 +91,7 @@ const DogInfo = ({navigation}: DogInfoProps) => {
       />
 
       <InputFormat
-        title="이름"
+        title="반려견 이름"
         placeholder="반려견의 이름을 알려주세요."
         value={dogName}
         handleValue={handleDogName}

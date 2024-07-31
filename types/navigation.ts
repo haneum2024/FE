@@ -6,8 +6,13 @@ export type AuthPageNavigation = {
 export type MainPageNavigation = {
   Home: undefined;
   Health: undefined;
-  Camera: undefined;
+  MissFound: undefined;
   MyInfo: undefined;
+};
+
+export type MissFoundPageNavigation = {
+  Found: undefined;
+  Miss: undefined;
 };
 
 export interface ProfileInfoType {

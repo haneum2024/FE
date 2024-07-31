@@ -9,6 +9,7 @@ import {
 } from '@react-navigation/native';
 
 import Camera from './src/pages/Camera';
+import MissFound from './src/pages/MissFoundPages/MissFound';
 import MyInfo from './src/pages/MyInfo';
 import Home from './src/pages/Home';
 import CameraGuide from './src/pages/AddDogProfilePages/CameraGuide';
@@ -111,8 +112,8 @@ function AppInner() {
         }}
       />
       <Tab.Screen
-        name="Camera"
-        component={Camera}
+        name="MissFound"
+        component={MissFound}
         options={{
           title: '실종/발견 신고',
           tabBarIcon: MissFoundTabBarIcon,
