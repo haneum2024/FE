@@ -38,12 +38,14 @@ const DogInfo = ({navigation}: DogInfoProps) => {
 
   const isFemale = dogGender === 'female';
 
-  const disabledCondition =
-    dogName.length === 0 ||
-    dogBreed.length === 0 ||
-    !isDogBirthSelected ||
-    dogIntroduction.length === 0 ||
-    dogImage.length === 0;
+  // const disabledCondition =
+  //   dogName.length === 0 ||
+  //   dogBreed.length === 0 ||
+  //   !isDogBirthSelected ||
+  //   dogIntroduction.length === 0 ||
+  //   dogImage.length === 0;
+
+  const disabledCondition = false;
 
   const handleDogName = (name: string) => {
     setDogName(name);

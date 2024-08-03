@@ -33,8 +33,10 @@ const ProfileInfo = ({navigation, route}: ProfileInfoProps) => {
   const [address, setAddress] = useState('');
   const [profileImage, setProfileImage] = useState('');
 
-  const disabledCondition =
-    name.length === 0 || introduction.length === 0 || profileImage.length === 0;
+  // const disabledCondition =
+  //   name.length === 0 || introduction.length === 0 || profileImage.length === 0;
+
+  const disabledCondition = false;
 
   const handleName = (value: string) => {
     setName(value);
