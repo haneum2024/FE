@@ -2,6 +2,12 @@ module.exports = {
   presets: ['module:@react-native/babel-preset'],
   plugins: [
     [
+      'react-native-reanimated/plugin',
+      {
+        globals: ['__detectObjects'],
+      },
+    ],
+    [
       'module:react-native-dotenv',
       {
         moduleName: 'react-native-dotenv',
@@ -12,6 +18,7 @@ module.exports = {
         allowUndefined: true,
       },
     ],
+    ['react-native-worklets-core/plugin'],
     ['react-native-paper/babel'],
   ],
 };
