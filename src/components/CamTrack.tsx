@@ -1,5 +1,4 @@
-import 'react-native-reanimated'
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import {
   Camera,
@@ -7,45 +6,45 @@ import {
   useCameraDevices,
   useFrameProcessor,
 } from 'react-native-vision-camera';
-import {
-  detectObjects,
-  FrameProcessorConfig,
-} from 'vision-camera-realtime-object-detection';
-const frameProcessorConfig: FrameProcessorConfig = {
-  modelFile: '/model/yolov5su_saved_model/yolov5su_float32.tflite',
-  scoreThreshold: 0.5,
-};
+import { DetectedObject, detectObjects, FrameProcessorConfig } from 'vision-camera-realtime-object-detection';
 
 interface Props { }
 
-const CamTrack = (props: Props) => {
+const CamTrack = () => {
   const devices = useCameraDevices();
-  const device = useMemo(() => findBestDevice(devices), [devices]);
+  const [data, setData] = useState<any | null>(null);
+  // const device = useMemo(() => findBestDevice(devices), [devices]);
 
-  const findBestDevice = (devices: CameraDevice[]) => {
-    if (devices.length > 0) {
-      return devices[0];
-    }
-    return null;
-  };
+  // const findBestDevice = (devices: CameraDevice[]) => {
+  //   if (devices.length > 0) {
+  //     return devices[0];
+  //   }
+  //   return null;
+  // };
 
-  const frameProcessor = useFrameProcessor(frame => {
+  const frameProcessor = useFrameProcessor((frame) => {
     'worklet';
-    const detectedObjects = detectObjects(frame, frameProcessorConfig);
-    console.log(detectedObjects);
+    const detectedObjects: DetectedObject[] = detectObjects(frame, {
+      modelFile: './yolov5su_float32.tflite',
+      scoreThreshold: 0.5,
+    });
+    setData(detectedObjects);
   }, []);
 
-  if (device == null) {
-    return <Text>Loading...</Text>;
-  }
+  // if (device == null) {
+  //   return <Text>Loading...</Text>;
+  // }
 
   return (
-    <Camera
-      device={device}
-      isActive={true}
-      frameProcessor={frameProcessor}
-      style={StyleSheet.absoluteFill}
-    />
+    <View>
+      <Camera
+        device={devices[0]}
+        isActive={true}
+        frameProcessor={frameProcessor}
+        style={StyleSheet.absoluteFill}
+      />
+      {data && JSON.stringify(data)}
+    </View>
   );
 };
 

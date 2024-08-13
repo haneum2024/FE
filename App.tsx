@@ -1,9 +1,10 @@
-import React, {useState, useEffect} from 'react';
-import {View, StyleSheet} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
-import {Provider, useSelector} from 'react-redux';
+import 'react-native-reanimated';
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { Provider, useSelector } from 'react-redux';
 
-import store, {RootState} from './src/store';
+import store, { RootState } from './src/store';
 import AppInner from './AppInner';
 import AppSignIn from './AppSignIn';
 import Splash from './src/pages/Splash';
