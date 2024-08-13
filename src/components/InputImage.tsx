@@ -87,12 +87,9 @@ const InputImage = ({
       } else {
         if (response.assets) {
           const imageUri = response.assets[0].uri as string;
+          const base64Data = response.assets[0].base64 as string;
           setImage(imageUri);
-          handleImage(imageUri);
-          // console.log('response', response);
-          //   const imageFile = await fetch(response.assets[0].base64 as string);
-          //   const imageBlob = await imageFile.blob();
-          //   console.log('imageBlob', imageBlob);
+          handleImage(base64Data);
         }
       }
     });
@@ -120,13 +117,8 @@ const InputImage = ({
         if (response.assets) {
           const imageUri = response.assets[0].uri as string;
           const base64Data = response.assets[0].base64 as string;
-          const fileName = response.assets[0].fileName as string;
           setImage(imageUri);
-          handleImage(imageUri);
-
-          // console.log('response', response);
-          // const imageBlob = await convertBase64ToBlob(base64Data, fileName);
-          // console.log('imageBlob', imageBlob);
+          handleImage(base64Data);
         }
       }
     });

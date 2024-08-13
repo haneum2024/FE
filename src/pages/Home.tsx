@@ -37,7 +37,7 @@ function Home() {
 
       setOwnerName(userData.name);
       setOwnerIntroduction(userData.description);
-      setOwnerProfileImage(userData.profileUrl);
+      setOwnerProfileImage(userData.profileImageUrl);
       setDogName(dogData.name);
       setDogGender(dogData.gender);
       setDogIntroduction(dogData.description);

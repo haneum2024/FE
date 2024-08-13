@@ -27,11 +27,11 @@ const DogProfileResult = ({navigation, route}: DogProfileResultType) => {
     isNeutered,
     dogBirth,
     dogIntroduction,
-    dogImage,
+    base64Image,
     name,
     introduction,
     address,
-    profileImage,
+    base64ProfileImage,
   } = route.params;
 
   const [loading, setLoading] = useState(true);
@@ -44,8 +44,7 @@ const DogProfileResult = ({navigation, route}: DogProfileResultType) => {
       try {
         const accessToken = await getAccessToken();
 
-        // 서버로 API 요청 보내기
-        const dogResponse = await addDogProfileApi({
+        await addDogProfileApi({
           accessToken: accessToken as string,
           name: dogName,
           breed: dogBreed,
@@ -53,18 +52,17 @@ const DogProfileResult = ({navigation, route}: DogProfileResultType) => {
           neutered: isNeutered,
           birthDate: dogBirth,
           description: dogIntroduction,
-          imageUrl: dogImage,
+          base64Image: base64Image,
         });
-        console.log('dogResponse', dogResponse);
 
-        // 이름 추가 필요
-        const userResponse = await addUserProfileApi({
+        await addUserProfileApi({
           accessToken: accessToken as string,
+          name: name,
           location: address,
           description: introduction,
-          profileUrl: profileImage,
+          base64ProfileImage:
+            base64ProfileImage === '' ? null : base64ProfileImage,
         });
-        console.log('userResponse', userResponse);
 
         dispatch(addProfile());
         setLoading(false);

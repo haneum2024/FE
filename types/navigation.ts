@@ -22,14 +22,14 @@ export interface ProfileInfoType {
   isNeutered: boolean;
   dogBirth: string;
   dogIntroduction: string;
-  dogImage: string;
+  base64Image: string;
 }
 
 export interface CameraGuideType extends ProfileInfoType {
   name: string;
   introduction: string;
   address: string;
-  profileImage: string;
+  base64ProfileImage: string;
 }
 
 export interface DogNoseCameraType extends CameraGuideType {}
@@ -45,4 +45,27 @@ export type AddDogPageNavigation = {
   CameraGuide: CameraGuideType;
   DogNoseCamera: DogNoseCameraType;
   DogProfileResult: DogProfileResultType;
+};
+
+export type ReportDogPageNavigation = {
+  MissFoundMain: undefined;
+  Miss: undefined;
+  MissPost: undefined;
+  Found: undefined;
+  FoundCameraGuide: undefined;
+  FoundDogNoseCamera: undefined;
+  FoundPost: undefined;
+  FoundResult: undefined;
+  FoundResultFail: undefined;
+  FoundResultSuccess: undefined;
+};
+
+export type FoundDogPageNavigation = {
+  FoundBoard: undefined;
+  FoundDetail: undefined;
+};
+
+export type MissDogPageNavigation = {
+  MissBoard: undefined;
+  MissDetail: undefined;
 };

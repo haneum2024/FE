@@ -24,7 +24,7 @@ interface DogInfoProps {
   navigation: StackNavigationProp<AddDogPageNavigation, 'DogInfo'>;
 }
 
-const DogInfo = ({navigation}: DogInfoProps) => {
+const FoundPost = ({navigation}: DogInfoProps) => {
   const [dogName, setDogName] = useState('');
   const [dogBreed, setDogBreed] = useState('');
   const [dogGender, setDogGender] = useState<'MALE' | 'FEMALE'>('FEMALE');
@@ -246,4 +246,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DogInfo;
+export default FoundPost;
