@@ -22,6 +22,7 @@ const MissCard = ({
   dogAge,
   missingLocation,
   missingDate,
+  callback,
 }: {
   isMyPost?: boolean;
   id: string;
@@ -32,6 +33,7 @@ const MissCard = ({
   dogAge: number;
   missingLocation: string;
   missingDate: string;
+  callback?: () => void;
 }) => {
   const navigation = useNavigation<MissDogProp>();
 
@@ -49,9 +51,12 @@ const MissCard = ({
         accessToken: accessToken as string,
         petSearchBoardId: id,
       });
+
+      callback && callback();
     } catch (error) {
       console.log(error);
     }
+    console.log('delete');
     setIsLoading(false);
   };
 

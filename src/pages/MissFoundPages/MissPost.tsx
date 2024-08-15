@@ -144,7 +144,6 @@ const MissPost = () => {
       const userDogInfo = await getUserApi(accessToken as string);
       const userDogData = userDogInfo.data.pets[0];
 
-      handleBase64Image(userDogData.imageUrl);
       handleDogName(userDogData.name);
       handleDogBreed(userDogData.breed);
       handleDogBirth(userDogData.birthDate);
@@ -207,7 +206,6 @@ const MissPost = () => {
           </View>
           <InputImage
             text={'반려견 사진 업로드'}
-            inputImage={base64Image}
             handleImage={handleBase64Image}
           />
           <InputFormat

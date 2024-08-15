@@ -1,10 +1,9 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useCallback, useRef, useState} from 'react';
 import {View, ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {useNavigation} from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 
 import {getOtherMissApi, getUserMissApi} from '../../api/petSearchApi';
-import CustomText from '../../components/CustomText';
 import MissCard from '../../components/MissCard';
 import ReportIcon from '../../components/Icons/ReportIcon';
 import {getAccessToken} from '../../storage/auth';
@@ -40,13 +39,16 @@ function Miss() {
     navigation.navigate('MissPost');
   };
 
-  useEffect(() => {
-    const getMissBoard = async () => {
+  const callbackFunction = () => {
+    fetchMissBoards();
+  };
+
+  const fetchMissBoards = async () => {
+    try {
       const accessToken = await getAccessToken();
       const userMissPost = await getUserMissApi({
         accessToken: accessToken as string,
       });
-
       const otherMissPost = await getOtherMissApi({
         accessToken: accessToken as string,
         page: 1,
@@ -54,11 +56,16 @@ function Miss() {
       });
       setUserMissBoard(userMissPost.data);
       setOtherMissBoard(otherMissPost.data);
-      console.log(userMissPost.data);
-    };
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-    getMissBoard();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      fetchMissBoards();
+    }, []),
+  );
 
   return (
     <View>
@@ -80,6 +87,7 @@ function Miss() {
               dogAge={post.age}
               missingLocation={post.specificLocation}
               missingDate={post.lostDateTime.replace('T', ' ').slice(0, 16)}
+              callback={callbackFunction}
             />
           ))}
         {otherMissBoard.length > 0 &&

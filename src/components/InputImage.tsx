@@ -26,12 +26,10 @@ import GalleryIcon from '../img/GalleryIcon.svg';
 const InputImage = ({
   title,
   text,
-  inputImage,
   handleImage,
 }: {
   title?: string;
   text?: string;
-  inputImage?: string;
   handleImage: (image: string) => void;
 }) => {
   const actionSheetRef = useRef<ActionSheetRef>(null);
@@ -140,8 +138,8 @@ const InputImage = ({
         </CustomText>
       )}
       <TouchableOpacity onPress={getImage} activeOpacity={0.8}>
-        {inputImage || image ? (
-          <Image source={{uri: inputImage || image}} style={styles.imageBox} />
+        {image ? (
+          <Image source={{uri: image}} style={styles.imageBox} />
         ) : (
           <View style={styles.imageBox}>
             <CameraIcon width={50} height={50} />
