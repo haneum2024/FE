@@ -3,7 +3,7 @@ import {View, ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {useNavigation} from '@react-navigation/native';
 
-import {getBoardApi} from '../../api/missFoundApi';
+import {getBoardApi} from '../../api/petSearchApi';
 import CustomText from '../../components/CustomText';
 import MissCard from '../../components/MissCard';
 import ReportIcon from '../../components/Icons/ReportIcon';

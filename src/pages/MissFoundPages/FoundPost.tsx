@@ -169,6 +169,7 @@ const FoundPost = ({navigation}: DogInfoProps) => {
         title="생년월일"
         placeholder="생년월일을 선택해주세요."
         date={dogBirth}
+        mode="date"
         handleValue={handleDogBirth}
       />
 

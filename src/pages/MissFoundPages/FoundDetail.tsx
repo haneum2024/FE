@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
     marginTop: 24,
     marginBottom: 10,
     borderRadius: 4,
-    backgroundColor: color.blue[50],
+    backgroundColor: color.blue[100],
   },
   subTitle: {
     fontSize: 16,

@@ -29,9 +29,7 @@ const DogInfo = ({navigation}: DogInfoProps) => {
   const [dogBreed, setDogBreed] = useState('');
   const [dogGender, setDogGender] = useState<'MALE' | 'FEMALE'>('FEMALE');
   const [isNeutered, setIsNeutered] = useState(false);
-  const [dogBirth, setDogBirth] = useState(
-    new Date().toISOString().split('T')[0],
-  );
+  const [dogBirth, setDogBirth] = useState(new Date().toString());
   const [isDogBirthSelected, setIsDogBirthSelected] = useState(false);
   const [dogIntroduction, setDogIntroduction] = useState('');
   const [base64Image, setBase64Image] = useState('');
@@ -169,6 +167,7 @@ const DogInfo = ({navigation}: DogInfoProps) => {
         title="생년월일"
         placeholder="생년월일을 선택해주세요."
         date={dogBirth}
+        mode="date"
         handleValue={handleDogBirth}
       />
 

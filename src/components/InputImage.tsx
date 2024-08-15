@@ -26,9 +26,11 @@ import GalleryIcon from '../img/GalleryIcon.svg';
 
 const InputImage = ({
   title,
+  text,
   handleImage,
 }: {
-  title: string;
+  title?: string;
+  text?: string;
   handleImage: (image: string) => void;
 }) => {
   const actionSheetRef = useRef<ActionSheetRef>(null);
@@ -131,17 +133,19 @@ const InputImage = ({
 
   return (
     <View style={styles.imageContainer}>
-      <CustomText weight="600" style={styles.label}>
-        {title}
-      </CustomText>
-      <TouchableOpacity onPress={getImage}>
+      {title && (
+        <CustomText weight="600" style={styles.label}>
+          {title}
+        </CustomText>
+      )}
+      <TouchableOpacity onPress={getImage} activeOpacity={0.8}>
         {image ? (
           <Image source={{uri: image}} style={styles.imageBox} />
         ) : (
           <View style={styles.imageBox}>
             <CameraIcon width={50} height={50} />
             <CustomText weight="600" style={styles.imageText}>
-              사진 업로드
+              {text ? text : '사진 업로드'}
             </CustomText>
           </View>
         )}
