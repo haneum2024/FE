@@ -27,6 +27,8 @@ export const postMissDogApi = ({
   name,
   contact,
   specificLocation,
+  latitude,
+  longitude,
   lostDateTime,
   situation,
   petGender,
@@ -42,6 +44,8 @@ export const postMissDogApi = ({
   name: string;
   contact: string;
   specificLocation: string;
+  latitude: number;
+  longitude: number;
   lostDateTime: string;
   situation: string;
   petGender: string;
@@ -63,6 +67,8 @@ export const postMissDogApi = ({
       name: name,
       contact: contact,
       specificLocation: specificLocation,
+      latitude: latitude,
+      longitude: longitude,
       lostDateTime: lostDateTime,
       situation: situation,
       petGender: petGender,

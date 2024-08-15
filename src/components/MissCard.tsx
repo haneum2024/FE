@@ -56,7 +56,6 @@ const MissCard = ({
     } catch (error) {
       console.log(error);
     }
-    console.log('delete');
     setIsLoading(false);
   };
 

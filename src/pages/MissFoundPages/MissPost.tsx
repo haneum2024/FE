@@ -168,6 +168,8 @@ const MissPost = () => {
         name: username,
         contact,
         specificLocation: missLocation,
+        latitude: 37.413294,
+        longitude: 126.734086,
         lostDateTime: missDate,
         situation: missSituation,
         petGender: dogGender,
@@ -243,7 +245,7 @@ const MissPost = () => {
           </View>
           <InputFormat
             title="실종 장소"
-            placeholder="발견 위치 찾기"
+            placeholder="실종 위치 찾기"
             value={missLocation}
             handleValue={handleMissLocation}
           />

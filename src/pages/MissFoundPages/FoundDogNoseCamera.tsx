@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React from 'react';
 import {Dimensions, StyleSheet, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -15,13 +15,18 @@ type FoundNavigationProp = StackNavigationProp<
 const FoundDogNoseCamera = () => {
   const navigation = useNavigation<FoundNavigationProp>();
 
-  const moveToNextPage = () => {
-    navigation.navigate('FoundResult');
+  const moveToSuccessPage = () => {
+    navigation.navigate('FoundResultSuccess');
+  };
+
+  const moveToFailPage = () => {
+    navigation.navigate('FoundResultFail');
   };
 
   return (
     <View style={styles.container}>
-      <Button onPress={moveToNextPage}>다음</Button>
+      <Button onPress={moveToSuccessPage}>성공</Button>
+      <Button onPress={moveToFailPage}>실패</Button>
     </View>
   );
 };
@@ -29,9 +34,10 @@ const FoundDogNoseCamera = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: color.gray[50],
+    gap: 20,
   },
   preview: {
     width: Dimensions.get('window').width,

@@ -21,6 +21,8 @@ import Found from './src/pages/MissFoundPages/Found';
 import FoundCameraGuide from './src/pages/MissFoundPages/FoundCameraGuide';
 import FoundDogNoseCamera from './src/pages/MissFoundPages/FoundDogNoseCamera';
 import FoundPost from './src/pages/MissFoundPages/FoundPost';
+import FoundResultFail from './src/pages/MissFoundPages/FoundResultFail';
+import FoundResultSuccess from './src/pages/MissFoundPages/FoundResultSuccess';
 import Miss from './src/pages/MissFoundPages/Miss';
 import MissPost from './src/pages/MissFoundPages/MissPost';
 import colorType from './src/styles/color';
@@ -95,6 +97,14 @@ const MissFoundStack = () => {
         component={FoundDogNoseCamera}
       />
       <ReportDogStack.Screen name="FoundPost" component={FoundPost} />
+      <ReportDogStack.Screen
+        name="FoundResultFail"
+        component={FoundResultFail}
+      />
+      <ReportDogStack.Screen
+        name="FoundResultSuccess"
+        component={FoundResultSuccess}
+      />
     </ReportDogStack.Navigator>
   );
 };
@@ -114,7 +124,9 @@ function AppInner() {
       routeName === 'MissPost' ||
       routeName === 'FoundPost' ||
       routeName === 'FoundCameraGuide' ||
-      routeName === 'FoundDogNoseCamera'
+      routeName === 'FoundDogNoseCamera' ||
+      routeName === 'FoundResultFail' ||
+      routeName === 'FoundResultSuccess'
     ) {
       return false;
     }
