@@ -9,12 +9,14 @@ const DateTimePick = ({
   title,
   placeholder,
   date,
+  inputDate,
   mode,
   handleValue,
 }: {
   title: string;
   placeholder: string;
   date: string;
+  inputDate?: string;
   mode: 'date' | 'datetime';
   handleValue: (date: string) => void;
 }) => {
@@ -57,7 +59,9 @@ const DateTimePick = ({
       </CustomText>
       <Pressable onPress={pressBirthButton}>
         <TextInput
-          value={isSelected ? date.toString() : ''}
+          value={
+            inputDate ? inputDate.toString() : isSelected ? date.toString() : ''
+          }
           placeholder={placeholder}
           editable={false}
           style={styles.input}

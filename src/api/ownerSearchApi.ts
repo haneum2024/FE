@@ -82,14 +82,13 @@ export const getDetailFoundApi = ({
   ownerSearchBoardId,
 }: {
   accessToken: string;
-  ownerSearchBoardId: number;
+  ownerSearchBoardId: string;
 }) => {
   const getDetailFoundConfig = {
     method: 'get',
-    url: '/board/owner-search',
+    url: `/board/owner-search/${ownerSearchBoardId}`,
     headers: {
       Authorization: `Bearer ${accessToken}`,
-      ownerSearchBoardId: ownerSearchBoardId,
     },
   };
 
@@ -105,10 +104,9 @@ export const deleteFoundApi = ({
 }) => {
   const deleteFoundConfig = {
     method: 'delete',
-    url: '/board/owner-search',
+    url: `/board/owner-search/${ownerSearchBoardId}`,
     headers: {
-      Authorization: accessToken,
-      ownerSearchBoardId: ownerSearchBoardId,
+      Authorization: `Bearer ${accessToken}`,
     },
   };
 

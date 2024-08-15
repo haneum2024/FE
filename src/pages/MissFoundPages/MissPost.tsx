@@ -12,6 +12,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {useNavigation} from '@react-navigation/native';
 
 import {postMissDogApi} from '../../api/petSearchApi';
+import {getUserApi} from '../../api/userApi';
 import DateTimePick from '../../components/DateTimePick';
 import InputFormat from '../../components/InputFormat';
 import BornIcon from '../../components/Icons/BornIcon';
@@ -135,8 +136,25 @@ const MissPost = () => {
     setContent(input);
   };
 
-  const loadDogInfo = () => {
-    console.log('반려견 정보 불러오기');
+  const loadDogInfo = async () => {
+    try {
+      setIsLoading(true);
+      const accessToken = await getAccessToken();
+
+      const userDogInfo = await getUserApi(accessToken as string);
+      const userDogData = userDogInfo.data.pets[0];
+
+      handleBase64Image(userDogData.imageUrl);
+      handleDogName(userDogData.name);
+      handleDogBreed(userDogData.breed);
+      handleDogBirth(userDogData.birthDate);
+      setDogGender(userDogData.gender);
+      setIsNeutered(userDogData.neutered);
+
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const postMissReport = async () => {
@@ -189,6 +207,7 @@ const MissPost = () => {
           </View>
           <InputImage
             text={'반려견 사진 업로드'}
+            inputImage={base64Image}
             handleImage={handleBase64Image}
           />
           <InputFormat
@@ -327,6 +346,7 @@ const MissPost = () => {
             title="생년월일"
             placeholder="생년월일을 선택해주세요."
             date={dogBirth}
+            inputDate={isDogBirthSelected ? dogBirth : ''}
             mode="date"
             handleValue={handleDogBirth}
           />
@@ -348,7 +368,7 @@ const MissPost = () => {
 
         <Button
           mode="contained"
-          disabled={disabledCondition}
+          disabled={disabledCondition || isLoading}
           style={[
             styles.button,
             {
@@ -369,11 +389,20 @@ const MissPost = () => {
       {showButton && (
         <TouchableOpacity
           style={styles.absoluteButton}
+          disabled={isLoading}
           onPress={loadDogInfo}
           activeOpacity={0.8}>
-          <CustomText weight="500" style={styles.bottomText}>
-            강아지 정보 불러오기
-          </CustomText>
+          {isLoading ? (
+            <ActivityIndicator
+              size={25}
+              style={styles.loading}
+              color={color.white}
+            />
+          ) : (
+            <CustomText weight="500" style={styles.bottomText}>
+              강아지 정보 불러오기
+            </CustomText>
+          )}
         </TouchableOpacity>
       )}
     </View>
@@ -393,6 +422,16 @@ const styles = StyleSheet.create({
     gap: 6,
     marginTop: 25,
     marginBottom: 6,
+  },
+  imageBox: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    height: 250,
+    backgroundColor: color.gray[100],
+    borderRadius: 10,
+    marginBottom: 20,
   },
   foundText: {
     fontSize: 14,
@@ -463,6 +502,9 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  loading: {
+    paddingVertical: 18,
   },
   bottomText: {
     color: color.white,

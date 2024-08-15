@@ -1,16 +1,20 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {useNavigation} from '@react-navigation/native';
 
 import color from '../styles/color';
 import CustomText from './CustomText';
-import {Divider} from 'react-native-paper';
+import {ActivityIndicator, Button, Divider} from 'react-native-paper';
 import type {MissDogPageNavigation} from '../../types/navigation';
+import {deleteMissApi} from '../api/petSearchApi';
+import {getAccessToken} from '../storage/auth';
 
 type MissDogProp = StackNavigationProp<MissDogPageNavigation, 'MissDetail'>;
 
 const MissCard = ({
+  isMyPost = false,
+  id,
   image,
   title,
   dogGender,
@@ -19,6 +23,8 @@ const MissCard = ({
   missingLocation,
   missingDate,
 }: {
+  isMyPost?: boolean;
+  id: string;
   image: string;
   title: string;
   dogGender: string;
@@ -29,12 +35,30 @@ const MissCard = ({
 }) => {
   const navigation = useNavigation<MissDogProp>();
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const moveToDetailPage = () => {
-    navigation.navigate('MissDetail');
+    navigation.navigate('MissDetail', {id});
   };
+
+  const deleteMissPost = async () => {
+    setIsLoading(true);
+    try {
+      const accessToken = await getAccessToken();
+      await deleteMissApi({
+        accessToken: accessToken as string,
+        petSearchBoardId: id,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+    setIsLoading(false);
+  };
+
   return (
     <TouchableOpacity onPress={moveToDetailPage} activeOpacity={0.8}>
-      <View style={styles.foundContainer}>
+      <View
+        style={[styles.foundContainer, isMyPost && styles.noMarginContainer]}>
         <Image source={{uri: image}} style={styles.imageBox} />
         <CustomText weight="700" style={styles.title}>
           {title}
@@ -72,6 +96,22 @@ const MissCard = ({
           </CustomText>
           <CustomText weight="500">{missingDate}</CustomText>
         </View>
+        {isMyPost && (
+          <Button
+            mode="contained"
+            disabled={isLoading}
+            style={styles.button}
+            onPress={deleteMissPost}
+            rippleColor="transparent">
+            {isLoading ? (
+              <ActivityIndicator size={25} color={color.blue[600]} />
+            ) : (
+              <CustomText weight="500" style={styles.buttonText}>
+                실종 공고 내리기
+              </CustomText>
+            )}
+          </Button>
+        )}
       </View>
     </TouchableOpacity>
   );
@@ -86,6 +126,10 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginHorizontal: 24,
     marginVertical: 12,
+  },
+  noMarginContainer: {
+    paddingHorizontal: 40,
+    marginHorizontal: 0,
   },
   title: {
     fontSize: 22,
@@ -120,6 +164,18 @@ const styles = StyleSheet.create({
   divider: {
     marginVertical: 8,
     color: color.gray[100],
+  },
+  button: {
+    borderWidth: 1,
+    borderColor: color.gray[200],
+    borderRadius: 8,
+    marginVertical: 16,
+    paddingVertical: 6,
+    backgroundColor: color.white,
+  },
+  buttonText: {
+    fontSize: 14,
+    color: color.gray[800],
   },
 });
 

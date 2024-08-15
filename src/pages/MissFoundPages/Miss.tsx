@@ -3,7 +3,7 @@ import {View, ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {useNavigation} from '@react-navigation/native';
 
-import {getBoardApi} from '../../api/petSearchApi';
+import {getOtherMissApi, getUserMissApi} from '../../api/petSearchApi';
 import CustomText from '../../components/CustomText';
 import MissCard from '../../components/MissCard';
 import ReportIcon from '../../components/Icons/ReportIcon';
@@ -21,7 +21,8 @@ function Miss() {
   const navigation = useNavigation<MissNavigationProp>();
 
   const scrollViewRef = useRef<ScrollView>(null);
-  const [missBoard, setMissBoard] = useState([]);
+  const [userMissBoard, setUserMissBoard] = useState<any[]>([]);
+  const [otherMissBoard, setOtherMissBoard] = useState<any[]>([]);
   const [showButton, setShowButton] = useState(false);
 
   const scrollToTop = () => {
@@ -39,31 +40,25 @@ function Miss() {
     navigation.navigate('MissPost');
   };
 
-  const getMissDog = async () => {
-    const accessToken = await getAccessToken();
-    const missDog = await getBoardApi({
-      accessToken: accessToken as string,
-      postType: 'OWNER',
-      page: 1,
-      size: 100,
-    });
-    console.log(missDog.data);
-  };
+  useEffect(() => {
+    const getMissBoard = async () => {
+      const accessToken = await getAccessToken();
+      const userMissPost = await getUserMissApi({
+        accessToken: accessToken as string,
+      });
 
-  // useEffect(() => {
-  //   const getMissBoard = async () => {
-  //     const accessToken = await getAccessToken();
-  //     const missBoardPosts = await getBoardApi({
-  //       accessToken: accessToken as string,
-  //       postType: 'OWNER',
-  //       page: 1,
-  //       size: 100,
-  //     });
-  //     console.log(missBoardPosts.data);
-  //   };
+      const otherMissPost = await getOtherMissApi({
+        accessToken: accessToken as string,
+        page: 1,
+        size: 100,
+      });
+      setUserMissBoard(userMissPost.data);
+      setOtherMissBoard(otherMissPost.data);
+      console.log(userMissPost.data);
+    };
 
-  //   getMissBoard();
-  // }, []);
+    getMissBoard();
+  }, []);
 
   return (
     <View>
@@ -72,7 +67,37 @@ function Miss() {
         style={styles.missFoundContainer}
         onScroll={handleScroll}
         scrollEventThrottle={16}>
+        {userMissBoard.length > 0 &&
+          userMissBoard.map(post => (
+            <MissCard
+              key={post.id}
+              id={post.id}
+              isMyPost={true}
+              image={post.imageUrlList[0] || ''}
+              title={post.title}
+              dogGender={post.petGender === 'MALE' ? '수컷' : '암컷'}
+              dogBreed={post.petBreed}
+              dogAge={post.age}
+              missingLocation={post.specificLocation}
+              missingDate={post.lostDateTime.replace('T', ' ').slice(0, 16)}
+            />
+          ))}
+        {otherMissBoard.length > 0 &&
+          otherMissBoard.map(post => (
+            <MissCard
+              key={post.id}
+              id={post.id}
+              image={post.imageUrlList[0] || ''}
+              title={post.title}
+              dogGender={post.petGender === 'MALE' ? '수컷' : '암컷'}
+              dogBreed={post.petBreed}
+              dogAge={post.age}
+              missingLocation={post.specificLocation}
+              missingDate={post.lostDateTime.replace('T', ' ').slice(0, 16)}
+            />
+          ))}
         <MissCard
+          id="1"
           image={
             'https://happymaru-bucket.s3.ap-northeast-2.amazonaws.com/random-person/person-4.png'
           }
@@ -84,6 +109,7 @@ function Miss() {
           missingDate="2023년 12월 23일"
         />
         <MissCard
+          id="2"
           image={
             'https://happymaru-bucket.s3.ap-northeast-2.amazonaws.com/random-person/person-5.png'
           }
@@ -95,6 +121,7 @@ function Miss() {
           missingDate="2023년 12월 23일"
         />
         <MissCard
+          id="3"
           image={
             'https://happymaru-bucket.s3.ap-northeast-2.amazonaws.com/random-person/person-6.png'
           }
@@ -106,6 +133,7 @@ function Miss() {
           missingDate="2023년 12월 23일"
         />
         <MissCard
+          id="4"
           image={
             'https://happymaru-bucket.s3.ap-northeast-2.amazonaws.com/random-person/person-1.png'
           }

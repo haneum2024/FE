@@ -60,12 +60,16 @@ export type ReportDogPageNavigation = {
   FoundResultSuccess: undefined;
 };
 
+export type MissFoundDetailType = {
+  id: string;
+};
+
 export type FoundDogPageNavigation = {
   FoundBoard: undefined;
-  FoundDetail: undefined;
+  FoundDetail: MissFoundDetailType;
 };
 
 export type MissDogPageNavigation = {
   MissBoard: undefined;
-  MissDetail: undefined;
+  MissDetail: MissFoundDetailType;
 };

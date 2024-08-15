@@ -82,14 +82,13 @@ export const getDetailMissApi = ({
   petSearchBoardId,
 }: {
   accessToken: string;
-  petSearchBoardId: number;
+  petSearchBoardId: string;
 }) => {
   const getDetailMissConfig = {
     method: 'get',
-    url: '/board/pet-search',
+    url: `/board/pet-search/${petSearchBoardId}`,
     headers: {
       Authorization: `Bearer ${accessToken}`,
-      petSearchBoardId: petSearchBoardId,
     },
   };
 
@@ -105,10 +104,9 @@ export const deleteMissApi = ({
 }) => {
   const deleteMissConfig = {
     method: 'delete',
-    url: '/board/pet-search',
+    url: `/board/pet-search/${petSearchBoardId}`,
     headers: {
-      Authorization: accessToken,
-      petSearchBoardId: petSearchBoardId,
+      Authorization: `Bearer ${accessToken}`,
     },
   };
 
