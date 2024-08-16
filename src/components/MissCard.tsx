@@ -2,13 +2,13 @@ import React, {useState} from 'react';
 import {View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {useNavigation} from '@react-navigation/native';
+import {ActivityIndicator, Button, Divider} from 'react-native-paper';
 
+import {deleteMissApi} from '../api/petSearchApi';
 import color from '../styles/color';
 import CustomText from './CustomText';
-import {ActivityIndicator, Button, Divider} from 'react-native-paper';
-import type {MissDogPageNavigation} from '../../types/navigation';
-import {deleteMissApi} from '../api/petSearchApi';
 import {getAccessToken} from '../storage/auth';
+import type {MissDogPageNavigation} from '../../types/navigation';
 
 type MissDogProp = StackNavigationProp<MissDogPageNavigation, 'MissDetail'>;
 

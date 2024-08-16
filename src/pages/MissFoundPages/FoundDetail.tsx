@@ -1,25 +1,55 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, ScrollView, Image} from 'react-native';
+import {RouteProp} from '@react-navigation/native';
 
-import color from '../../styles/color';
+import {getDetailFoundApi} from '../../api/ownerSearchApi';
 import CustomText from '../../components/CustomText';
 import BornIcon from '../../components/Icons/BornIcon';
+import {getAccessToken} from '../../storage/auth';
+import color from '../../styles/color';
+import type {FoundDogPageNavigation} from '../../../types/navigation';
 
-const FoundDetail = () => {
-  const image =
-    'https://happymaru-bucket.s3.ap-northeast-2.amazonaws.com/random-person/person-1.png';
-  const title = '주인을 찾습니다!!';
-  const name = '홍창현';
-  const contact = '010-1234-5678으로 연락주세요';
-  const foundLocation = '동작구';
-  const foundDate = '2023년 12월 23일';
-  const foundSituation = '길가다가 우연히 발견';
-  const dogBreed = '푸들';
-  const dogGender = '수컷';
-  const appearance =
-    '잘생김 어쩌구저쩌구 어쩌구저쩌구2 어쩌구저쩌구3ㄴㄴㄴㄴㄴㄴㄴㄴ';
-  const content =
-    '푸들을 찾습니다. 주인분께서 연락주시면 감사하겠습니다.123123';
+interface FoundDetailProps {
+  route: RouteProp<FoundDogPageNavigation, 'FoundDetail'>;
+}
+
+const FoundDetail = ({route}: FoundDetailProps) => {
+  const id = route.params.id;
+
+  const [foundDetail, setFoundDetail] = useState<any>(null);
+
+  useEffect(() => {
+    const fetchFoundDetail = async () => {
+      const accessToken = await getAccessToken();
+      const missdetail = await getDetailFoundApi({
+        accessToken: accessToken as string,
+        ownerSearchBoardId: id,
+      });
+      setFoundDetail(missdetail.data);
+    };
+
+    fetchFoundDetail();
+  }, [id]);
+
+  if (!foundDetail) {
+    return (
+      <View style={styles.loadingContainer}>
+        <CustomText>Loading...</CustomText>
+      </View>
+    );
+  }
+
+  const image = foundDetail.imageUrlList[0];
+  const title = foundDetail.title;
+  const name = foundDetail.name;
+  const contact = foundDetail.reporterContact;
+  const foundLocation = foundDetail.specificLocation;
+  const foundDate = foundDetail.foundDateTime;
+  const foundSituation = foundDetail.situation;
+  const dogBreed = foundDetail.petBreed;
+  const dogGender = foundDetail.petGender === 'FEMALE' ? '암컷' : '수컷';
+  const appearance = foundDetail.petDescription;
+  const content = foundDetail.content;
 
   return (
     <ScrollView style={styles.detailContainer}>
@@ -169,6 +199,12 @@ const styles = StyleSheet.create({
   },
   blank: {
     height: 60,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: color.white,
   },
 });
 

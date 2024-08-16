@@ -1,16 +1,20 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {useNavigation} from '@react-navigation/native';
+import {ActivityIndicator, Button, Divider} from 'react-native-paper';
 
+import {deleteFoundApi} from '../api/ownerSearchApi';
 import color from '../styles/color';
 import CustomText from './CustomText';
-import {Divider} from 'react-native-paper';
+import {getAccessToken} from '../storage/auth';
 import type {FoundDogPageNavigation} from '../../types/navigation';
 
 type FoundDogProp = StackNavigationProp<FoundDogPageNavigation, 'FoundDetail'>;
 
 const FoundCard = ({
+  isMyPost = false,
+  id,
   image,
   title,
   dogGender,
@@ -18,7 +22,10 @@ const FoundCard = ({
   appearance,
   foundLocation,
   foundDate,
+  callback,
 }: {
+  isMyPost?: boolean;
+  id: string;
   image: string;
   title: string;
   dogGender: string;
@@ -26,11 +33,30 @@ const FoundCard = ({
   appearance: string;
   foundLocation: string;
   foundDate: string;
+  callback?: () => void;
 }) => {
   const navigation = useNavigation<FoundDogProp>();
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const moveToDetailPage = () => {
-    navigation.navigate('FoundDetail');
+    navigation.navigate('FoundDetail', {id});
+  };
+
+  const deleteFoundPost = async () => {
+    setIsLoading(true);
+    try {
+      const accessToken = await getAccessToken();
+      await deleteFoundApi({
+        accessToken: accessToken as string,
+        ownerSearchBoardId: id,
+      });
+
+      callback && callback();
+    } catch (error) {
+      console.log(error);
+    }
+    setIsLoading(false);
   };
 
   return (
@@ -75,6 +101,22 @@ const FoundCard = ({
           </CustomText>
           <CustomText weight="500">{foundDate}</CustomText>
         </View>
+        {isMyPost && (
+          <Button
+            mode="contained"
+            disabled={isLoading}
+            style={styles.button}
+            onPress={deleteFoundPost}
+            rippleColor="transparent">
+            {isLoading ? (
+              <ActivityIndicator size={25} color={color.blue[600]} />
+            ) : (
+              <CustomText weight="500" style={styles.buttonText}>
+                발견 공고 내리기
+              </CustomText>
+            )}
+          </Button>
+        )}
       </View>
     </TouchableOpacity>
   );
@@ -123,6 +165,18 @@ const styles = StyleSheet.create({
   divider: {
     marginVertical: 8,
     color: color.gray[100],
+  },
+  button: {
+    borderWidth: 1,
+    borderColor: color.gray[200],
+    borderRadius: 8,
+    marginVertical: 16,
+    paddingVertical: 6,
+    backgroundColor: color.white,
+  },
+  buttonText: {
+    fontSize: 14,
+    color: color.gray[800],
   },
 });
 
