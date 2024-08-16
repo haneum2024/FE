@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 24,
+    backgroundColor: color.gray[50],
   },
   contentBox: {
     width: '100%',

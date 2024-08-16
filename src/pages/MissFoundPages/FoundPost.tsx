@@ -21,10 +21,13 @@ import color from '../../styles/color';
 import {getAccessToken} from '../../storage/auth';
 import type {ReportDogPageNavigation} from '../../../types/navigation';
 
-type MissNavigationProp = StackNavigationProp<ReportDogPageNavigation, 'Miss'>;
+type FoundNavigationProp = StackNavigationProp<
+  ReportDogPageNavigation,
+  'Found'
+>;
 
 const FoundPost = () => {
-  const navigation = useNavigation<MissNavigationProp>();
+  const navigation = useNavigation<FoundNavigationProp>();
   const scrollViewRef = useRef<ScrollView>(null);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -32,13 +35,13 @@ const FoundPost = () => {
   const [title, setTitle] = useState('');
   const [username, setUsername] = useState('');
   const [contact, setContact] = useState('');
-  const [missLocation, setMissLocation] = useState('');
-  const [missDate, setMissDate] = useState(new Date().toString());
-  const [missSituation, setMissSituation] = useState('');
+  const [foundLocation, setFoundLocation] = useState('');
+  const [foundDate, setFoundDate] = useState(new Date().toString());
+  const [foundSituation, setFoundSituation] = useState('');
   const [dogBreed, setDogBreed] = useState('');
   const [dogGender, setDogGender] = useState<'MALE' | 'FEMALE'>('FEMALE');
   const [isNeutered, setIsNeutered] = useState(false);
-  const [isMissDateSelected, setIsMissDateSelected] = useState(false);
+  const [isFoundDateSelected, setIsFoundDateSelected] = useState(false);
   const [appearance, setAppearance] = useState('');
   const [content, setContent] = useState('');
 
@@ -49,9 +52,9 @@ const FoundPost = () => {
     title.length === 0 ||
     username.length === 0 ||
     contact.length === 0 ||
-    missLocation.length === 0 ||
-    !isMissDateSelected ||
-    missSituation.length === 0 ||
+    foundLocation.length === 0 ||
+    !isFoundDateSelected ||
+    foundSituation.length === 0 ||
     dogBreed.length === 0 ||
     appearance.length === 0 ||
     content.length === 0;
@@ -68,17 +71,17 @@ const FoundPost = () => {
     setContact(input);
   };
 
-  const handleMissLocation = (input: string) => {
-    setMissLocation(input);
+  const handleFoundLocation = (input: string) => {
+    setFoundLocation(input);
   };
 
-  const handleMissDate = (input: string) => {
-    setMissDate(input);
-    setIsMissDateSelected(true);
+  const handleFoundDate = (input: string) => {
+    setFoundDate(input);
+    setIsFoundDateSelected(true);
   };
 
-  const handleMissSituation = (input: string) => {
-    setMissSituation(input);
+  const handleFoundSituation = (input: string) => {
+    setFoundSituation(input);
   };
 
   const handleDogBreed = (input: string) => {
@@ -101,7 +104,7 @@ const FoundPost = () => {
     setContent(input);
   };
 
-  const postMissReport = async () => {
+  const postFoundReport = async () => {
     try {
       setIsLoading(true);
       const accessToken = await getAccessToken();
@@ -112,11 +115,11 @@ const FoundPost = () => {
         base64ImageList: [base64Image],
         name: username,
         reporterContact: contact,
-        specificLocation: missLocation,
+        specificLocation: foundLocation,
         latitude: 37.413294,
         longitude: 126.734086,
-        foundDateTime: missDate,
-        situation: missSituation,
+        foundDateTime: foundDate,
+        situation: foundSituation,
         petGender: dogGender,
         petBreed: dogBreed,
         petDescription: appearance,
@@ -189,21 +192,21 @@ const FoundPost = () => {
           <InputFormat
             title="발견 장소"
             placeholder="발견 위치 찾기"
-            value={missLocation}
-            handleValue={handleMissLocation}
+            value={foundLocation}
+            handleValue={handleFoundLocation}
           />
           <DateTimePick
             title="발견 일시"
             placeholder="발견 날짜와 시간을 알려주세요."
-            date={missDate}
+            date={foundDate}
             mode="datetime"
-            handleValue={handleMissDate}
+            handleValue={handleFoundDate}
           />
           <InputFormat
             title="발견 경위"
             placeholder="발견 당시의 상황을 알려주세요."
-            value={missSituation}
-            handleValue={handleMissSituation}
+            value={foundSituation}
+            handleValue={handleFoundSituation}
           />
         </View>
 
@@ -306,7 +309,7 @@ const FoundPost = () => {
                 : color.blue[600],
             },
           ]}
-          onPress={postMissReport}>
+          onPress={postFoundReport}>
           {isLoading ? (
             <ActivityIndicator size={25} color={color.white} />
           ) : (

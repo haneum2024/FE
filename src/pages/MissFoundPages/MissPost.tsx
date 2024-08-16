@@ -230,8 +230,8 @@ const MissPost = () => {
             handleValue={handleUsername}
           />
           <InputFormat
-            title="연락 수단"
-            placeholder="연락 수단을 알려주세요. (카톡 아이디, 전화번호 등)"
+            title="연락처"
+            placeholder="연락처를 알려주세요."
             value={contact}
             handleValue={handleContact}
           />
