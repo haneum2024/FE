@@ -27,9 +27,9 @@ const ProfileCard = ({
 }) => {
   const genderIcon =
     dogGender === 'FEMALE' ? (
-      <FemaleIcon width={20} height={20} fill={color.blue[400]} />
+      <FemaleIcon width={20} height={20} fill={color.orange[400]} />
     ) : (
-      <MaleIcon width={20} height={20} fill={color.orange[400]} />
+      <MaleIcon width={20} height={20} fill={color.blue[400]} />
     );
 
   return (

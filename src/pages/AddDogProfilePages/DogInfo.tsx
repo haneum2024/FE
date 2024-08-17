@@ -127,7 +127,7 @@ const DogInfo = ({navigation}: DogInfoProps) => {
             <FemaleIcon
               width={20}
               height={20}
-              fill={isFemale ? color.white : color.blue[400]}
+              fill={isFemale ? color.white : color.orange[400]}
             />
             <CustomText
               weight="500"
