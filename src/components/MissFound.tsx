@@ -1,5 +1,7 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {useNavigation} from '@react-navigation/native';
 
 import color from '../styles/color';
 import CustomText from './CustomText';
@@ -7,14 +9,18 @@ import IconBox from './IconBox';
 
 import ProfileIcon from './Icons/ProfileIcon';
 import SearchNoticeIcon from '../img/SearchNoticeIcon.svg';
+import type {MainPageNavigation} from '../../types/navigation';
+
+type MissFoundDogProp = StackNavigationProp<MainPageNavigation, 'Home'>;
 
 const MissFound = () => {
-  const pressMissingReport = () => {
-    console.log('missing report');
+  const navigation = useNavigation<MissFoundDogProp>();
+  const moveToFoundPage = () => {
+    navigation.navigate('MissFound');
   };
 
-  const pressSearchingReport = () => {
-    console.log('searching report');
+  const moveToMissPage = () => {
+    navigation.navigate('MissFound');
   };
 
   return (
@@ -24,16 +30,16 @@ const MissFound = () => {
       </CustomText>
       <View style={styles.iconContainer}>
         <IconBox
-          label={'반려견 실종'}
-          text={'반려견을 찾아요'}
-          icon={<ProfileIcon width={40} height={40} fill={color.blue[600]} />}
-          onPress={pressMissingReport}
-        />
-        <IconBox
           label={'유기견 발견'}
           text={'주인을 찾아요'}
           icon={<SearchNoticeIcon width={40} height={40} />}
-          onPress={pressSearchingReport}
+          onPress={moveToFoundPage}
+        />
+        <IconBox
+          label={'반려견 실종'}
+          text={'반려견을 찾아요'}
+          icon={<ProfileIcon width={40} height={40} fill={color.blue[600]} />}
+          onPress={moveToMissPage}
         />
       </View>
     </View>

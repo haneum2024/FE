@@ -6,8 +6,13 @@ export type AuthPageNavigation = {
 export type MainPageNavigation = {
   Home: undefined;
   Health: undefined;
-  Camera: undefined;
+  MissFound: undefined;
   MyInfo: undefined;
+};
+
+export type MissFoundPageNavigation = {
+  Found: undefined;
+  Miss: undefined;
 };
 
 export interface ProfileInfoType {
@@ -17,14 +22,14 @@ export interface ProfileInfoType {
   isNeutered: boolean;
   dogBirth: string;
   dogIntroduction: string;
-  dogImage: string;
+  base64Image: string;
 }
 
 export interface CameraGuideType extends ProfileInfoType {
   name: string;
   introduction: string;
   address: string;
-  profileImage: string;
+  base64ProfileImage: string;
 }
 
 export interface DogNoseCameraType extends CameraGuideType {}
@@ -40,4 +45,31 @@ export type AddDogPageNavigation = {
   CameraGuide: CameraGuideType;
   DogNoseCamera: DogNoseCameraType;
   DogProfileResult: DogProfileResultType;
+};
+
+export type ReportDogPageNavigation = {
+  MissFoundMain: undefined;
+  Miss: undefined;
+  MissPost: undefined;
+  Found: undefined;
+  FoundCameraGuide: undefined;
+  FoundDogNoseCamera: undefined;
+  FoundPost: undefined;
+  FoundResult: undefined;
+  FoundResultFail: undefined;
+  FoundResultSuccess: undefined;
+};
+
+export type MissFoundDetailType = {
+  id: string;
+};
+
+export type FoundDogPageNavigation = {
+  FoundBoard: undefined;
+  FoundDetail: MissFoundDetailType;
+};
+
+export type MissDogPageNavigation = {
+  MissBoard: undefined;
+  MissDetail: MissFoundDetailType;
 };

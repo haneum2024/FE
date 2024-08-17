@@ -25,16 +25,15 @@ const ProfileInfo = ({navigation, route}: ProfileInfoProps) => {
     isNeutered,
     dogBirth,
     dogIntroduction,
-    dogImage,
+    base64Image,
   } = route.params;
 
   const [name, setName] = useState('');
   const [introduction, setIntroduction] = useState('');
   const [address, setAddress] = useState('');
-  const [profileImage, setProfileImage] = useState('');
+  const [base64ProfileImage, setBase64ProfileImage] = useState('');
 
-  const disabledCondition =
-    name.length === 0 || introduction.length === 0 || profileImage.length === 0;
+  const disabledCondition = name.length === 0 || introduction.length === 0;
 
   const handleName = (value: string) => {
     setName(value);
@@ -48,8 +47,8 @@ const ProfileInfo = ({navigation, route}: ProfileInfoProps) => {
     setAddress(value);
   };
 
-  const handleProfileImage = (value: string) => {
-    setProfileImage(value);
+  const handleBase64ProfileImage = (value: string) => {
+    setBase64ProfileImage(value);
   };
 
   const moveToNextPage = () => {
@@ -60,11 +59,11 @@ const ProfileInfo = ({navigation, route}: ProfileInfoProps) => {
       isNeutered,
       dogBirth,
       dogIntroduction,
-      dogImage,
+      base64Image,
       name,
       introduction,
       address,
-      profileImage,
+      base64ProfileImage,
     });
   };
 
@@ -102,7 +101,7 @@ const ProfileInfo = ({navigation, route}: ProfileInfoProps) => {
         handleValue={handleAddress}
       />
 
-      <InputImage title="사진" handleImage={handleProfileImage} />
+      <InputImage title="사진" handleImage={handleBase64ProfileImage} />
 
       <Button
         mode="contained"
