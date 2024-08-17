@@ -29,12 +29,10 @@ const DogInfo = ({navigation}: DogInfoProps) => {
   const [dogBreed, setDogBreed] = useState('');
   const [dogGender, setDogGender] = useState<'MALE' | 'FEMALE'>('FEMALE');
   const [isNeutered, setIsNeutered] = useState(false);
-  const [dogBirth, setDogBirth] = useState(
-    new Date().toISOString().split('T')[0],
-  );
+  const [dogBirth, setDogBirth] = useState(new Date().toString());
   const [isDogBirthSelected, setIsDogBirthSelected] = useState(false);
   const [dogIntroduction, setDogIntroduction] = useState('');
-  const [dogImage, setDogImage] = useState('');
+  const [base64Image, setBase64Image] = useState('');
 
   const isFemale = dogGender === 'FEMALE';
 
@@ -43,7 +41,7 @@ const DogInfo = ({navigation}: DogInfoProps) => {
     dogBreed.length === 0 ||
     !isDogBirthSelected ||
     dogIntroduction.length === 0 ||
-    dogImage.length === 0;
+    base64Image.length === 0;
 
   const handleDogName = (name: string) => {
     setDogName(name);
@@ -67,7 +65,7 @@ const DogInfo = ({navigation}: DogInfoProps) => {
   };
 
   const handleDogImage = (image: string) => {
-    setDogImage(image);
+    setBase64Image(image);
   };
 
   const moveToNextPage = () => {
@@ -78,7 +76,7 @@ const DogInfo = ({navigation}: DogInfoProps) => {
       isNeutered,
       dogBirth,
       dogIntroduction,
-      dogImage,
+      base64Image,
     });
   };
 
@@ -91,7 +89,7 @@ const DogInfo = ({navigation}: DogInfoProps) => {
       />
 
       <InputFormat
-        title="이름"
+        title="반려견 이름"
         placeholder="반려견의 이름을 알려주세요."
         value={dogName}
         handleValue={handleDogName}
@@ -169,6 +167,7 @@ const DogInfo = ({navigation}: DogInfoProps) => {
         title="생년월일"
         placeholder="생년월일을 선택해주세요."
         date={dogBirth}
+        mode="date"
         handleValue={handleDogBirth}
       />
 

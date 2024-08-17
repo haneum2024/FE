@@ -78,7 +78,7 @@ export const addDogProfileApi = ({
   breed,
   description,
   neutered,
-  imageUrl,
+  base64Image,
 }: {
   accessToken: string;
   name: string;
@@ -87,11 +87,11 @@ export const addDogProfileApi = ({
   breed: string;
   description: string;
   neutered: boolean;
-  imageUrl: string;
+  base64Image: string;
 }) => {
   const addDogProfileConfig = {
     method: 'post',
-    url: '/api/pets',
+    url: '/pets',
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
@@ -102,7 +102,7 @@ export const addDogProfileApi = ({
       breed: breed,
       description: description,
       neutered: neutered,
-      imageUrl: imageUrl,
+      base64Image: base64Image,
     },
   };
 
@@ -111,14 +111,16 @@ export const addDogProfileApi = ({
 
 export const addUserProfileApi = ({
   accessToken,
+  name,
   location,
   description,
-  profileUrl,
+  base64ProfileImage,
 }: {
   accessToken: string;
+  name: string;
   location: string;
   description: string;
-  profileUrl: string;
+  base64ProfileImage: string | null;
 }) => {
   const userProfileConfig = {
     method: 'put',
@@ -127,9 +129,10 @@ export const addUserProfileApi = ({
       Authorization: `Bearer ${accessToken}`,
     },
     data: {
+      username: name,
       location: location,
       description: description,
-      profileUrl: profileUrl,
+      base64ProfileImage: base64ProfileImage,
     },
   };
 
@@ -139,7 +142,7 @@ export const addUserProfileApi = ({
 export const getDogsApi = (accessToken: string) => {
   const getDogsConfig = {
     method: 'get',
-    url: '/api/pets',
+    url: '/pets',
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
@@ -157,7 +160,7 @@ export const getDogApi = ({
 }) => {
   const getDogConfig = {
     method: 'get',
-    url: `/api/pet/${petId}`,
+    url: `/pet/${petId}`,
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },

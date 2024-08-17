@@ -21,11 +21,11 @@ const DogNoseCamera = ({navigation, route}: DogNoseCameraType) => {
     isNeutered,
     dogBirth,
     dogIntroduction,
-    dogImage,
+    base64Image,
     name,
     introduction,
     address,
-    profileImage,
+    base64ProfileImage,
   } = route.params;
 
   const [photos, setPhotos] = useState<string[]>([]);
@@ -70,11 +70,11 @@ const DogNoseCamera = ({navigation, route}: DogNoseCameraType) => {
       isNeutered,
       dogBirth,
       dogIntroduction,
-      dogImage,
+      base64Image,
       name,
       introduction,
       address,
-      profileImage,
+      base64ProfileImage,
     });
   };
 

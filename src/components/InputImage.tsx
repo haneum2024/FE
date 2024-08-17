@@ -22,13 +22,14 @@ import CustomText from './CustomText';
 
 import CameraIcon from '../img/CameraIcon.svg';
 import GalleryIcon from '../img/GalleryIcon.svg';
-// import {convertBase64ToBlob} from '../utils/convertType';
 
 const InputImage = ({
   title,
+  text,
   handleImage,
 }: {
-  title: string;
+  title?: string;
+  text?: string;
   handleImage: (image: string) => void;
 }) => {
   const actionSheetRef = useRef<ActionSheetRef>(null);
@@ -87,12 +88,9 @@ const InputImage = ({
       } else {
         if (response.assets) {
           const imageUri = response.assets[0].uri as string;
+          const base64Data = response.assets[0].base64 as string;
           setImage(imageUri);
-          handleImage(imageUri);
-          // console.log('response', response);
-          //   const imageFile = await fetch(response.assets[0].base64 as string);
-          //   const imageBlob = await imageFile.blob();
-          //   console.log('imageBlob', imageBlob);
+          handleImage(base64Data);
         }
       }
     });
@@ -120,13 +118,8 @@ const InputImage = ({
         if (response.assets) {
           const imageUri = response.assets[0].uri as string;
           const base64Data = response.assets[0].base64 as string;
-          const fileName = response.assets[0].fileName as string;
           setImage(imageUri);
-          handleImage(imageUri);
-
-          // console.log('response', response);
-          // const imageBlob = await convertBase64ToBlob(base64Data, fileName);
-          // console.log('imageBlob', imageBlob);
+          handleImage(base64Data);
         }
       }
     });
@@ -139,17 +132,19 @@ const InputImage = ({
 
   return (
     <View style={styles.imageContainer}>
-      <CustomText weight="600" style={styles.label}>
-        {title}
-      </CustomText>
-      <TouchableOpacity onPress={getImage}>
+      {title && (
+        <CustomText weight="600" style={styles.label}>
+          {title}
+        </CustomText>
+      )}
+      <TouchableOpacity onPress={getImage} activeOpacity={0.8}>
         {image ? (
           <Image source={{uri: image}} style={styles.imageBox} />
         ) : (
           <View style={styles.imageBox}>
             <CameraIcon width={50} height={50} />
             <CustomText weight="600" style={styles.imageText}>
-              사진 업로드
+              {text ? text : '사진 업로드'}
             </CustomText>
           </View>
         )}

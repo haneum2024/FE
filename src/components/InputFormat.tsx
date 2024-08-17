@@ -18,7 +18,7 @@ const InputFormat = ({
   multiline = false,
   handleValue,
 }: {
-  title: string;
+  title?: string;
   description?: string;
   placeholder: string;
   value: string;
@@ -35,9 +35,11 @@ const InputFormat = ({
   return (
     <TouchableWithoutFeedback onPress={dismissKeyboard}>
       <View style={styles.inputContainer}>
-        <CustomText weight="600" style={styles.label}>
-          {title}
-        </CustomText>
+        {title && (
+          <CustomText weight="600" style={styles.label}>
+            {title}
+          </CustomText>
+        )}
         {description && (
           <CustomText weight="500" style={styles.description}>
             {description}
@@ -77,8 +79,9 @@ const styles = StyleSheet.create({
     color: color.gray[700],
   },
   input: {
-    padding: 10,
-    borderWidth: 2,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderWidth: 1,
     borderRadius: 10,
     backgroundColor: color.white,
   },

@@ -13,8 +13,8 @@ import {Divider} from 'react-native-paper';
 import color from '../styles/color';
 import CustomText from './CustomText';
 
-import BottomArrow from '../img/BottomArrow.svg';
-import TopArrow from '../img/TopArrow.svg';
+import BottomArrowIcon from '../img/BottomArrowIcon.svg';
+import TopArrowIcon from '../img/TopArrowIcon.svg';
 
 const CollapsibleView = ({
   title,
@@ -68,9 +68,9 @@ const CollapsibleView = ({
               {title}
             </CustomText>
             {collapsed ? (
-              <BottomArrow width={15} height={15} />
+              <BottomArrowIcon width={15} height={15} />
             ) : (
-              <TopArrow width={15} height={15} />
+              <TopArrowIcon width={15} height={15} />
             )}
           </View>
         </TouchableWithoutFeedback>

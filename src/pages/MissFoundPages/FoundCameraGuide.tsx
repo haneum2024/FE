@@ -2,59 +2,32 @@ import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {Button} from 'react-native-paper';
-
-import type {AddDogPageNavigation} from '../../../types/navigation';
-import {RouteProp} from '@react-navigation/native';
-import CustomText from '../../components/CustomText';
+import {useNavigation} from '@react-navigation/native';
 
 import AddInfoTitle from '../../components/AddInfoTitle';
-
-import SearchNoticeIcon from '../../img/SearchNoticeIcon.svg';
+import CustomText from '../../components/CustomText';
 import CautionIcon from '../../img/CautionIcon.svg';
+import SearchNoticeIcon from '../../img/SearchNoticeIcon.svg';
 import color from '../../styles/color';
+import type {ReportDogPageNavigation} from '../../../types/navigation';
 
-interface CameraGuideProps {
-  navigation: StackNavigationProp<AddDogPageNavigation, 'CameraGuide'>;
-  route: RouteProp<AddDogPageNavigation, 'CameraGuide'>;
-}
+type FoundNavigationProp = StackNavigationProp<
+  ReportDogPageNavigation,
+  'FoundCameraGuide'
+>;
 
-const CameraGuide = ({navigation, route}: CameraGuideProps) => {
-  const {
-    dogName,
-    dogBreed,
-    dogGender,
-    isNeutered,
-    dogBirth,
-    dogIntroduction,
-    base64Image,
-    name,
-    introduction,
-    address,
-    base64ProfileImage,
-  } = route.params;
+const FoundCameraGuide = () => {
+  const navigation = useNavigation<FoundNavigationProp>();
 
   const moveToNextPage = () => {
-    navigation.navigate('DogNoseCamera', {
-      dogName,
-      dogBreed,
-      dogGender,
-      isNeutered,
-      dogBirth,
-      dogIntroduction,
-      base64Image,
-      name,
-      introduction,
-      address,
-      base64ProfileImage,
-    });
+    navigation.navigate('FoundDogNoseCamera');
   };
 
   return (
     <View style={styles.cameraGuideContainer}>
       <AddInfoTitle
         icon={<SearchNoticeIcon width={50} height={50} />}
-        title="비문 등록"
-        page="3/3"
+        title="유기견 비문 조회"
       />
       <View style={styles.textContainer}>
         <View style={styles.cautionContainer}>
@@ -88,7 +61,7 @@ const CameraGuide = ({navigation, route}: CameraGuideProps) => {
         mode="contained"
         style={[styles.button, {backgroundColor: color.blue[600]}]}
         onPress={moveToNextPage}>
-        비문 촬영하기
+        비문 촬영으로 유기견 조회하기
       </Button>
     </View>
   );
@@ -126,4 +99,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CameraGuide;
+export default FoundCameraGuide;
