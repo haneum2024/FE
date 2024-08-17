@@ -7,7 +7,7 @@ import {
   Image,
 } from 'react-native';
 import {PaperProvider} from 'react-native-paper';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import Swiper from 'react-native-swiper';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {useNavigation} from '@react-navigation/native';
@@ -20,6 +20,7 @@ import MissFound from '../components/MissFound';
 import ProfileCard from '../components/ProfileCard';
 import Status from '../components/Status';
 import {RootState} from '../store';
+import {addProfile} from '../store/reducers/profileReducer';
 import {getAccessToken} from '../storage/auth';
 import color from '../styles/color';
 import BannerImage1 from '../img/BannerImage1.png';
@@ -31,7 +32,7 @@ type MissFoundDogProp = StackNavigationProp<MainPageNavigation, 'Home'>;
 
 function Home() {
   const navigation = useNavigation<MissFoundDogProp>();
-
+  const dispatch = useDispatch();
   const isProfile = useSelector((state: RootState) => state.profile.isProfile);
 
   const [ownerName, setOwnerName] = useState('');
@@ -45,28 +46,33 @@ function Home() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const accessToken = await getAccessToken();
-      const dogsInfo = await getDogsApi(accessToken as string);
-      const userInfo = await getUserApi(accessToken as string);
+      try {
+        const accessToken = await getAccessToken();
+        const dogsInfo = await getDogsApi(accessToken as string);
+        const userInfo = await getUserApi(accessToken as string);
 
-      const userData = userInfo.data;
-      const dogData = dogsInfo.data[0];
+        const userData = userInfo.data;
+        const dogData = dogsInfo.data[0];
 
-      setOwnerName(userData.name);
-      setOwnerIntroduction(userData.description);
-      setOwnerProfileImage(userData.profileImageUrl);
-      setDogName(dogData.name);
-      setDogGender(dogData.gender);
-      setDogIntroduction(dogData.description);
-      setDogProfileImage(dogData.imageUrl);
+        setOwnerName(userData.name);
+        setOwnerIntroduction(userData.description);
+        setOwnerProfileImage(userData.profileImageUrl);
+        setDogName(dogData.name);
+        setDogGender(dogData.gender);
+        setDogIntroduction(dogData.description);
+        setDogProfileImage(dogData.imageUrl);
 
-      setIsLoading(false);
+        setIsLoading(false);
+        dispatch(addProfile());
+      } catch (error) {
+        console.error('Failed to fetch data:', error);
+        setIsLoading(false);
+      }
     };
 
-    if (isProfile) {
-      fetchData();
-    }
-  }, [isProfile]);
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleImagePress = (index: number) => {
     if (index === 0) {
@@ -104,8 +110,8 @@ function Home() {
             </TouchableOpacity>
           </Swiper>
         </View>
-        {isProfile ? (
-          !isLoading ? (
+        {!isLoading ? (
+          isProfile ? (
             <ProfileCard
               ownerName={ownerName}
               ownerIntroduction={ownerIntroduction}
@@ -116,10 +122,10 @@ function Home() {
               dogProfileImage={dogProfileImage}
             />
           ) : (
-            <></>
+            <AddDogProfile />
           )
         ) : (
-          <AddDogProfile />
+          <View style={styles.skeletonContainer} />
         )}
 
         <Status />
@@ -147,8 +153,10 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   skeletonContainer: {
-    flex: 1,
-    width: 300,
+    marginHorizontal: 24,
+    marginVertical: 8,
+    height: 200,
+    borderRadius: 20,
     backgroundColor: color.gray[200],
   },
 });

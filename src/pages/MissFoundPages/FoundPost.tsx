@@ -295,7 +295,7 @@ const FoundPost = () => {
                     isFemale
                       ? color.white
                       : isMale
-                      ? color.blue[400]
+                      ? color.orange[400]
                       : color.gray[500]
                   }
                 />

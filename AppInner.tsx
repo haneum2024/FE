@@ -8,7 +8,7 @@ import {
   RouteProp,
 } from '@react-navigation/native';
 
-import Camera from './src/pages/Camera';
+import Health from './src/pages/Health';
 import MissFound from './src/pages/MissFoundPages/MissFound';
 import MyInfo from './src/pages/MyInfo';
 import Home from './src/pages/Home';
@@ -160,7 +160,7 @@ function AppInner() {
       />
       <Tab.Screen
         name="Health"
-        component={Camera}
+        component={Health}
         options={{
           title: '건강 일지',
           tabBarIcon: HealthTabBarIcon,
