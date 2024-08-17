@@ -80,7 +80,7 @@ const MissFoundTab = () => {
         component={FoundStack}
         options={{
           tabBarIcon: ProfileTabBarIcon,
-          tabBarLabel: '주인을 찾아요',
+          tabBarLabel: '유기견 발견',
           tabBarLabelStyle: {fontSize: 14, fontWeight: '500'},
         }}
       />
@@ -89,7 +89,7 @@ const MissFoundTab = () => {
         component={MissStack}
         options={{
           tabBarIcon: LogoTabBarIcon,
-          tabBarLabel: '반려견을 찾아요',
+          tabBarLabel: '반려견 실종',
           tabBarLabelStyle: {fontSize: 14, fontWeight: '500'},
         }}
       />

@@ -1,7 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, ScrollView} from 'react-native';
+import {
+  StyleSheet,
+  ScrollView,
+  View,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
 import {PaperProvider} from 'react-native-paper';
 import {useSelector} from 'react-redux';
+import Swiper from 'react-native-swiper';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {useNavigation} from '@react-navigation/native';
 
 import {getDogsApi, getUserApi} from '../api/userApi';
 import AddDogProfile from '../components/AddDogProfile';
@@ -13,8 +22,16 @@ import Status from '../components/Status';
 import {RootState} from '../store';
 import {getAccessToken} from '../storage/auth';
 import color from '../styles/color';
+import BannerImage1 from '../img/BannerImage1.png';
+import BannerImage2 from '../img/BannerImage2.png';
+
+import type {MainPageNavigation} from '../../types/navigation';
+
+type MissFoundDogProp = StackNavigationProp<MainPageNavigation, 'Home'>;
 
 function Home() {
+  const navigation = useNavigation<MissFoundDogProp>();
+
   const isProfile = useSelector((state: RootState) => state.profile.isProfile);
 
   const [ownerName, setOwnerName] = useState('');
@@ -51,10 +68,42 @@ function Home() {
     }
   }, [isProfile]);
 
+  const handleImagePress = (index: number) => {
+    if (index === 0) {
+      navigation.navigate('MissFound');
+    } else if (index === 1) {
+      navigation.navigate('MissFound');
+    }
+  };
+
   return (
     <PaperProvider>
       <ScrollView style={styles.homeContainer}>
         <Header />
+        <View style={styles.swiperContainer}>
+          <Swiper loop={true} showsPagination={false}>
+            <TouchableOpacity
+              onPress={() => handleImagePress(0)}
+              activeOpacity={1}
+              style={styles.slide}>
+              <Image
+                source={BannerImage1}
+                style={styles.image}
+                resizeMode="cover"
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => handleImagePress(1)}
+              activeOpacity={1}
+              style={styles.slide}>
+              <Image
+                source={BannerImage2}
+                style={styles.image}
+                resizeMode="cover"
+              />
+            </TouchableOpacity>
+          </Swiper>
+        </View>
         {isProfile ? (
           !isLoading ? (
             <ProfileCard
@@ -85,6 +134,17 @@ const styles = StyleSheet.create({
   homeContainer: {
     display: 'flex',
     backgroundColor: color.gray[50],
+  },
+  swiperContainer: {
+    height: 175,
+    marginBottom: 22,
+  },
+  slide: {
+    flex: 1,
+  },
+  image: {
+    width: '100%',
+    height: '100%',
   },
   skeletonContainer: {
     flex: 1,

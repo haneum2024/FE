@@ -4,6 +4,7 @@ import {
   StyleSheet,
   ScrollView,
   TouchableWithoutFeedback,
+  TouchableOpacity,
 } from 'react-native';
 import {ActivityIndicator, Button, Checkbox} from 'react-native-paper';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -39,13 +40,17 @@ const FoundPost = () => {
   const [foundDate, setFoundDate] = useState(new Date().toString());
   const [foundSituation, setFoundSituation] = useState('');
   const [dogBreed, setDogBreed] = useState('');
-  const [dogGender, setDogGender] = useState<'MALE' | 'FEMALE'>('FEMALE');
-  const [isNeutered, setIsNeutered] = useState(false);
+  // const [prevDogBreed, setPrevDogBreed] = useState('');
+  // const [noDogBreed, setNoDogBreed] = useState(false);
+  const [dogGender, setDogGender] = useState('FEMALE');
+  const [prevDogGender, setPrevDogGender] = useState('FEMALE');
+  const [noDogGender, setNoDogGender] = useState(false);
   const [isFoundDateSelected, setIsFoundDateSelected] = useState(false);
   const [appearance, setAppearance] = useState('');
   const [content, setContent] = useState('');
 
   const isFemale = dogGender === 'FEMALE';
+  const isMale = dogGender === 'MALE';
 
   const disabledCondition =
     base64Image.length === 0 ||
@@ -86,10 +91,35 @@ const FoundPost = () => {
 
   const handleDogBreed = (input: string) => {
     setDogBreed(input);
+    // setPrevDogBreed(input);
   };
 
-  const handleNuetral = () => {
-    setIsNeutered(!isNeutered);
+  // const checkDogBreed = () => {
+  //   if (noDogBreed) {
+  //     setNoDogBreed(false);
+  //     setDogBreed(prevDogBreed);
+  //   } else {
+  //     setNoDogBreed(true);
+  //     setDogBreed('잘 모르겠음');
+  //   }
+  // };
+
+  const handleDogGender = (input: string) => {
+    if (dogGender === 'NOT_SURE') {
+      return;
+    }
+    setDogGender(input);
+    setPrevDogGender(input);
+  };
+
+  const checkDogGender = () => {
+    if (noDogGender) {
+      setNoDogGender(false);
+      setDogGender(prevDogGender);
+    } else {
+      setNoDogGender(true);
+      setDogGender('NOT_SURE');
+    }
   };
 
   const handleAppearance = (input: string) => {
@@ -226,61 +256,113 @@ const FoundPost = () => {
             <CustomText weight="600" style={styles.label}>
               성별
             </CustomText>
-            <TouchableWithoutFeedback onPress={handleNuetral}>
-              <View style={styles.neutralBox}>
+            <TouchableWithoutFeedback onPress={checkDogGender}>
+              <View style={styles.checkBox}>
                 <Checkbox
-                  status={isNeutered ? 'checked' : 'unchecked'}
+                  status={noDogGender ? 'checked' : 'unchecked'}
                   color={color.blue[600]}
                 />
-                <CustomText weight="500">중성화 여부</CustomText>
+                <CustomText weight="500">잘 모르겠어요</CustomText>
               </View>
             </TouchableWithoutFeedback>
           </View>
           <View style={styles.toggleGroup}>
-            <TouchableWithoutFeedback onPress={() => setDogGender('FEMALE')}>
+            <TouchableOpacity
+              onPress={() => handleDogGender('FEMALE')}
+              activeOpacity={1}
+              disabled={noDogGender}
+              style={styles.toggleButton}>
               <View
                 style={[
                   styles.toggleElement,
-                  {backgroundColor: isFemale ? color.blue[600] : color.white},
-                  {borderColor: isFemale ? color.blue[600] : color.gray[200]},
+                  {
+                    backgroundColor: isFemale
+                      ? color.blue[600]
+                      : isMale
+                      ? color.white
+                      : color.gray[100],
+                    borderColor: isFemale
+                      ? color.blue[600]
+                      : isMale
+                      ? color.gray[200]
+                      : color.gray[100],
+                  },
                 ]}>
                 <FemaleIcon
                   width={20}
                   height={20}
-                  fill={isFemale ? color.white : color.blue[400]}
+                  fill={
+                    isFemale
+                      ? color.white
+                      : isMale
+                      ? color.blue[400]
+                      : color.gray[500]
+                  }
                 />
                 <CustomText
                   weight="500"
                   style={[
                     styles.genderLabel,
-                    {color: isFemale ? color.white : color.gray[800]},
+                    {
+                      color: isFemale
+                        ? color.white
+                        : isMale
+                        ? color.gray[800]
+                        : color.gray[500],
+                    },
                   ]}>
                   암컷
                 </CustomText>
               </View>
-            </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onPress={() => setDogGender('MALE')}>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => handleDogGender('MALE')}
+              activeOpacity={1}
+              disabled={noDogGender}
+              style={styles.toggleButton}>
               <View
                 style={[
                   styles.toggleElement,
-                  {backgroundColor: isFemale ? color.white : color.blue[600]},
-                  {borderColor: isFemale ? color.gray[200] : color.blue[600]},
+                  {
+                    backgroundColor: isFemale
+                      ? color.white
+                      : isMale
+                      ? color.blue[600]
+                      : color.gray[100],
+                    borderColor: isFemale
+                      ? color.gray[200]
+                      : isMale
+                      ? color.blue[600]
+                      : color.gray[100],
+                  },
                 ]}>
                 <MaleIcon
                   width={20}
                   height={20}
-                  fill={isFemale ? color.blue[400] : color.white}
+                  fill={
+                    isFemale
+                      ? color.blue[400]
+                      : isMale
+                      ? color.white
+                      : color.gray[500]
+                  }
                 />
                 <CustomText
                   weight="500"
                   style={[
                     styles.genderLabel,
-                    {color: isFemale ? color.gray[800] : color.white},
+                    {
+                      color: isFemale
+                        ? color.gray[800]
+                        : isMale
+                        ? color.white
+                        : color.gray[500],
+                    },
                   ]}>
                   수컷
                 </CustomText>
               </View>
-            </TouchableWithoutFeedback>
+            </TouchableOpacity>
           </View>
           <InputFormat
             title="외형"
@@ -377,7 +459,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  neutralBox: {
+  checkBox: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
@@ -387,6 +469,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 8,
     marginBottom: 20,
+  },
+  toggleButton: {
+    flex: 1,
   },
   toggleElement: {
     display: 'flex',
