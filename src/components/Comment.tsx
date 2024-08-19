@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -7,14 +7,17 @@ import {
   TouchableOpacity,
   Keyboard,
 } from 'react-native';
-import {Button, Portal, Snackbar} from 'react-native-paper';
+import {ActivityIndicator, Button, Portal, Snackbar} from 'react-native-paper';
 
+import {getCommentApi, postCommentApi} from '../api/commentApi';
+import {getAccessToken} from '../storage/auth';
 import color from '../styles/color';
 import CustomText from './CustomText';
 
-const Comment = () => {
+const Comment = ({date}: {date: string}) => {
   const [isFocused, setIsFocused] = useState(false);
   const [isEditMode, setIsEditMode] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [commentText, setCommentText] = useState('');
   const [visible, setVisible] = useState(false);
 
@@ -26,11 +29,46 @@ const Comment = () => {
     setIsEditMode(true);
   };
 
-  const submitComment = () => {
-    setVisible(true);
-    setIsFocused(false);
-    setIsEditMode(false);
+  const submitComment = async () => {
+    setIsLoading(true);
+    try {
+      const accessToken = await getAccessToken();
+      await postCommentApi({
+        accessToken: accessToken as string,
+        date: date,
+        comment: commentText,
+      });
+      setIsLoading(false);
+      setVisible(true);
+      setIsFocused(false);
+      setIsEditMode(false);
+    } catch (error) {
+      console.error(error);
+      setIsLoading(false);
+    }
   };
+
+  useEffect(() => {
+    const fetchComment = async () => {
+      const accessToken = await getAccessToken();
+      const comment = await getCommentApi({
+        accessToken: accessToken as string,
+        date: date,
+      });
+      const commentData = comment.data;
+
+      if (commentData) {
+        setCommentText(commentData.comment);
+        setIsEditMode(false);
+      } else {
+        setCommentText('');
+        setIsEditMode(true);
+      }
+    };
+    if (date !== '') {
+      fetchComment();
+    }
+  }, [date]);
 
   const dismissKeyboard = () => {
     Keyboard.dismiss();
@@ -90,7 +128,11 @@ const Comment = () => {
               },
             ]}
             onPress={submitComment}>
-            기록하기
+            {isLoading ? (
+              <ActivityIndicator size={25} color={color.white} />
+            ) : (
+              '기록하기'
+            )}
           </Button>
         )}
         <Portal>
@@ -172,7 +214,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   snackbarContainer: {
-    backgroundColor: color.blue[900],
+    backgroundColor: color.orange[600],
     borderRadius: 8,
   },
 });

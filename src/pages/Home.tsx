@@ -19,14 +19,16 @@ import Header from '../components/Header';
 import MissFound from '../components/MissFound';
 import ProfileCard from '../components/ProfileCard';
 import Status from '../components/Status';
+import WeeklyCalendar from '../components/WeeklyCalendar';
+import BannerImage1 from '../img/BannerImage1.png';
+import BannerImage2 from '../img/BannerImage2.png';
 import {RootState} from '../store';
 import {addProfile} from '../store/reducers/profileReducer';
 import {getAccessToken} from '../storage/auth';
 import color from '../styles/color';
-import BannerImage1 from '../img/BannerImage1.png';
-import BannerImage2 from '../img/BannerImage2.png';
 
 import type {MainPageNavigation} from '../../types/navigation';
+import CustomText from '../components/CustomText';
 
 type MissFoundDogProp = StackNavigationProp<MainPageNavigation, 'Home'>;
 
@@ -42,6 +44,7 @@ function Home() {
   const [dogGender, setDogGender] = useState('');
   const [dogIntroduction, setDogIntroduction] = useState('');
   const [dogProfileImage, setDogProfileImage] = useState('');
+  const [selectedDate, setSeletedDate] = useState('');
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -80,6 +83,10 @@ function Home() {
     } else if (index === 1) {
       navigation.navigate('MissFound');
     }
+  };
+
+  const handleDate = (date: string) => {
+    setSeletedDate(date);
   };
 
   return (
@@ -127,9 +134,12 @@ function Home() {
         ) : (
           <View style={styles.skeletonContainer} />
         )}
-
-        <Status />
-        <Comment />
+        <CustomText weight="700" style={styles.title}>
+          건강 일지
+        </CustomText>
+        <WeeklyCalendar handleDate={handleDate} />
+        <Status date={selectedDate} />
+        <Comment date={selectedDate} />
         <MissFound />
       </ScrollView>
     </PaperProvider>
@@ -157,7 +167,14 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     height: 200,
     borderRadius: 20,
-    backgroundColor: color.gray[200],
+    backgroundColor: color.gray[100],
+  },
+  title: {
+    fontSize: 22,
+    color: color.gray[950],
+    marginHorizontal: 24,
+    marginTop: 22,
+    marginBottom: 4,
   },
 });
 
