@@ -1,21 +1,42 @@
 import React, {useState, useEffect} from 'react';
-import {ScrollView, StyleSheet, View} from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  Modal,
+} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 import {PaperProvider} from 'react-native-paper';
+import {useNavigation} from '@react-navigation/native';
 
+import {getDogsApi} from '../api/userApi';
+import CustomText from '../components/CustomText';
 import Comment from '../components/Comment';
 import DogCard from '../components/DogCard';
 import Header from '../components/Header';
 import Status from '../components/Status';
-import {getDogsApi} from '../api/userApi';
 import {getAccessToken} from '../storage/auth';
+import {RootState} from '../store';
+import {addProfile} from '../store/reducers/profileReducer';
 import color from '../styles/color';
+import {MainPageNavigation} from '../../types/navigation';
+import {StackNavigationProp} from '@react-navigation/stack';
+import MonthlyCalendar from '../components/MonthlyCalendar';
+
+type HealthProp = StackNavigationProp<MainPageNavigation, 'Home'>;
 
 function Health() {
+  const navigation = useNavigation<HealthProp>();
+  const dispatch = useDispatch();
+  const isProfile = useSelector((state: RootState) => state.profile.isProfile);
+
   const [dogName, setDogName] = useState('');
   const [dogGender, setDogGender] = useState('');
   const [dogBreed, setDogBreed] = useState('');
   const [dogBirth, setDogBirth] = useState('');
   const [dogProfileImage, setDogProfileImage] = useState('');
+  const [selectedDate, setSeletedDate] = useState('');
 
   useEffect(() => {
     const fetchDogData = async () => {
@@ -28,32 +49,99 @@ function Health() {
       setDogBreed(dogData.breed);
       setDogBirth(dogData.birthDate);
       setDogProfileImage(dogData.imageUrl);
+
+      dispatch(addProfile());
     };
 
     fetchDogData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleNavigateHome = () => {
+    navigation.navigate('Home');
+  };
+
+  const handleDate = (date: string) => {
+    setSeletedDate(date);
+  };
 
   return (
     <PaperProvider>
-      <ScrollView style={styles.healthContainer}>
+      <ScrollView
+        style={[styles.healthContainer, !isProfile && styles.transparent]}>
         <Header />
-        <DogCard
-          image={dogProfileImage}
-          dogName={dogName}
-          dogGender={dogGender}
-          dogBreed={dogBreed}
-          dogBirth={dogBirth}
-        />
-        <Status />
-        <Comment />
+        {isProfile ? (
+          <DogCard
+            image={dogProfileImage}
+            dogName={dogName}
+            dogGender={dogGender}
+            dogBreed={dogBreed}
+            dogBirth={dogBirth}
+          />
+        ) : null}
+        <MonthlyCalendar handleDate={handleDate} />
+        <Status date={selectedDate} />
+        <Comment date={selectedDate} />
       </ScrollView>
+
+      {!isProfile && (
+        <Modal transparent={true} animationType="fade" visible={!isProfile}>
+          <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              <CustomText weight="600" style={styles.modalText}>
+                건강일지 작성은 프로필 생성 후에 가능해요
+              </CustomText>
+              <TouchableOpacity
+                style={styles.homeButton}
+                onPress={handleNavigateHome}
+                activeOpacity={0.8}>
+                <CustomText weight="600" style={styles.homeButtonText}>
+                  홈 화면으로 이동
+                </CustomText>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+      )}
     </PaperProvider>
   );
 }
 
 const styles = StyleSheet.create({
   healthContainer: {
-    display: 'flex',
+    flex: 1,
+  },
+  transparent: {
+    opacity: 0.3,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 24,
+    backgroundColor: color.black + '80',
+  },
+  modalContent: {
+    backgroundColor: 'white',
+    padding: 20,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  modalText: {
+    fontSize: 18,
+    marginBottom: 20,
+    fontWeight: 'bold',
+    color: color.gray[900],
+  },
+  homeButton: {
+    backgroundColor: color.blue[600],
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+  },
+  homeButtonText: {
+    color: 'white',
+    fontSize: 16,
   },
 });
 

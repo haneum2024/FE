@@ -1,12 +1,12 @@
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
-import {Button, Portal, Snackbar} from 'react-native-paper';
+import {ActivityIndicator, Button, Portal, Snackbar} from 'react-native-paper';
 
 import CustomText from './CustomText';
 import Diagnosis from './Diagnosis';
 import StatusItem from './StatusItem';
-import color from '../styles/color';
 
+import {getDailyStatusApi, postStatusApi} from '../api/statusApi';
 import FoodIcon from '../img/FoodIcon.svg';
 import BreathIcon from '../img/BreathIcon.svg';
 import HelplessIcon from '../img/HelplessIcon.svg';
@@ -17,50 +17,72 @@ import WetNoseIcon from '../img/WetNoseIcon.svg';
 import PoopAlertIcon from '../img/PoopAlertIcon.svg';
 import TeethIcon from '../img/TeethIcon.svg';
 import FatIcon from '../img/FatIcon.svg';
+import {getAccessToken} from '../storage/auth';
+import color from '../styles/color';
 
 const statusItems = [
-  {title: '음식을 잘 못 먹음', icon: <FoodIcon width={24} height={24} />},
-  {title: '숨소리/호흡 이상', icon: <BreathIcon width={24} height={24} />},
-  {title: '무기력함', icon: <HelplessIcon width={24} height={24} />},
-  {title: '구토 증상', icon: <VomitIcon width={24} height={24} />},
-  {title: '스킨쉽 거부', icon: <RefusalIcon width={24} height={24} />},
-  {title: '잦은 기침', icon: <CoughIcon width={24} height={24} />},
-  {title: '코가 축축함', icon: <WetNoseIcon width={24} height={24} />},
-  {title: '배변 색/상태 이상', icon: <PoopAlertIcon width={24} height={24} />},
-  {title: '잇몸색 변화', icon: <TeethIcon width={24} height={24} />},
-  {title: '체중 변화', icon: <FatIcon width={24} height={24} />},
+  {
+    title: '음식을 잘 못 먹음',
+    icon: <FoodIcon width={24} height={24} />,
+    content: 'POOR_APPETITE',
+  },
+  {
+    title: '숨소리/호흡 이상',
+    icon: <BreathIcon width={24} height={24} />,
+    content: 'ABNORMAL_BREATHING',
+  },
+  {
+    title: '무기력함',
+    icon: <HelplessIcon width={24} height={24} />,
+    content: 'LETHARGY',
+  },
+  {
+    title: '구토 증상',
+    icon: <VomitIcon width={24} height={24} />,
+    content: 'VOMITING',
+  },
+  {
+    title: '스킨쉽 거부',
+    icon: <RefusalIcon width={24} height={24} />,
+    content: 'REFUSING_AFFECTION',
+  },
+  {
+    title: '잦은 기침',
+    icon: <CoughIcon width={24} height={24} />,
+    content: 'FREQUENT_COUGH',
+  },
+  {
+    title: '코가 축축함',
+    icon: <WetNoseIcon width={24} height={24} />,
+    content: 'WET_NOSE',
+  },
+  {
+    title: '배변 색/상태 이상',
+    icon: <PoopAlertIcon width={24} height={24} />,
+    content: 'ABNORMAL_STOOL',
+  },
+  {
+    title: '잇몸색 변화',
+    icon: <TeethIcon width={24} height={24} />,
+    content: 'GUM_COLOR_CHANGE',
+  },
+  {
+    title: '체중 변화',
+    icon: <FatIcon width={24} height={24} />,
+    content: 'WEIGHT_CHANGE',
+  },
 ];
 
-const Status = () => {
+const Status = ({date}: {date: string}) => {
   const [checkedItems, setCheckedItems] = useState(
     new Array(statusItems.length).fill(false),
   );
   const [isEditMode, setIsEditMode] = useState(true);
   const [visible, setVisible] = useState(false);
-
-  const statusStyle = useMemo(() => {
-    const trueCount = checkedItems.filter(Boolean).length;
-
-    let text = '';
-    let backgroundColor = '';
-    if (trueCount === 0) {
-      text = '좋음';
-      backgroundColor = color.blue[600];
-    } else if (trueCount <= 2) {
-      text = '보통';
-      backgroundColor = color.blue[400];
-    } else if (trueCount <= 5) {
-      text = '주의';
-      backgroundColor = color.orange[400];
-    } else if (trueCount <= 8) {
-      text = '경계';
-      backgroundColor = color.orange[600];
-    } else {
-      text = '위험';
-      backgroundColor = color.orange[800];
-    }
-    return {text, backgroundColor};
-  }, [checkedItems]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [diagnosis, setDiagnosis] = useState('');
+  const [statusLevel, setStatusLevel] = useState('');
+  const [symptomColor, setSymptomColor] = useState('');
 
   const handleEditMode = () => {
     setIsEditMode(true);
@@ -72,10 +94,60 @@ const Status = () => {
     setCheckedItems(newCheckedItems);
   };
 
-  const submitStatus = () => {
-    setIsEditMode(false);
-    setVisible(true);
+  const submitStatus = async () => {
+    setIsLoading(true);
+    try {
+      const accessToken = await getAccessToken();
+
+      const selectedSymptoms = statusItems
+        .filter((_, index) => checkedItems[index])
+        .map(item => item.content);
+
+      const status = await postStatusApi({
+        accessToken: accessToken as string,
+        date: date,
+        symptoms: selectedSymptoms,
+      });
+      const statusData = status.data;
+      setDiagnosis(statusData.diagnosis);
+      setStatusLevel(statusData.statusLevel);
+      setSymptomColor(statusData.symptomColor);
+      setIsLoading(false);
+      setIsEditMode(false);
+      setVisible(true);
+    } catch (error) {
+      console.error(error);
+      setIsLoading(false);
+    }
   };
+
+  useEffect(() => {
+    const fetchStatus = async () => {
+      const accessToken = await getAccessToken();
+      const status = await getDailyStatusApi({
+        accessToken: accessToken as string,
+        date: date,
+      });
+      const statusData = status.data;
+      setDiagnosis(statusData.diagnosis);
+      setStatusLevel(statusData.statusLevel);
+      setSymptomColor(statusData.symptomColor);
+      console.log('statusData', statusData);
+      if (statusData) {
+        const updatedCheckedItems = statusItems.map(item =>
+          statusData.symptoms.includes(item.content),
+        );
+        setCheckedItems(updatedCheckedItems);
+        setIsEditMode(false);
+      } else {
+        setCheckedItems(new Array(statusItems.length).fill(false));
+        setIsEditMode(true);
+      }
+    };
+    if (date !== '') {
+      fetchStatus();
+    }
+  }, [date]);
 
   return (
     <View style={styles.statusContainer}>
@@ -87,11 +159,8 @@ const Status = () => {
           {!isEditMode && (
             <CustomText
               weight="500"
-              style={[
-                styles.statusBox,
-                {backgroundColor: statusStyle.backgroundColor},
-              ]}>
-              {statusStyle.text}
+              style={[styles.statusBox, {backgroundColor: symptomColor}]}>
+              {statusLevel}
             </CustomText>
           )}
         </View>
@@ -108,10 +177,7 @@ const Status = () => {
           반려견의 상태에서 이상 증세가 발견된다면 해당하는 항목을 체크해주세요.
         </CustomText>
       ) : (
-        <Diagnosis
-          type={statusStyle.text}
-          borderColor={statusStyle.backgroundColor}
-        />
+        <Diagnosis diagnosis={diagnosis} borderColor={symptomColor} />
       )}
       {statusItems.map((item, index) => (
         <StatusItem
@@ -125,7 +191,11 @@ const Status = () => {
       ))}
       {isEditMode && (
         <Button mode="contained" style={styles.button} onPress={submitStatus}>
-          기록하기
+          {isLoading ? (
+            <ActivityIndicator size={25} color={color.white} />
+          ) : (
+            '기록하기'
+          )}
         </Button>
       )}
       <Portal>
@@ -206,7 +276,7 @@ const styles = StyleSheet.create({
     backgroundColor: color.blue[600],
   },
   snackbarContainer: {
-    backgroundColor: color.blue[900],
+    backgroundColor: color.orange[600],
     borderRadius: 8,
   },
 });

@@ -65,7 +65,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: color.gray[200],
     backgroundColor: color.white,
-    elevation: 5,
+    shadowColor: color.black,
+    shadowOpacity: 0.1,
+    shadowOffset: {width: 0, height: 2},
+    shadowRadius: 4,
+    elevation: 3,
   },
   category: {
     display: 'flex',
