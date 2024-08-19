@@ -24,8 +24,6 @@ GoogleSignin.configure({
   webClientId: GOOGLE_CLIENT_ID,
 });
 
-
-
 const getToken = async () => {
   const fcmToken = await messaging().getToken();
   if (fcmToken) {
@@ -102,9 +100,7 @@ function MyInfo() {
             onPress={() => googleLogoutButton(dispatch)}>
             <CustomText weight="500">로그아웃</CustomText>
           </Pressable>
-          <Pressable
-            style={styles.button}
-            onPress={() => getToken()}>
+          <Pressable style={styles.button} onPress={() => getToken()}>
             <CustomText weight="500">GET FCM TOKEN</CustomText>
           </Pressable>
           <Pressable
@@ -112,8 +108,6 @@ function MyInfo() {
             onPress={() => getAccessTokenButton()}>
             <CustomText weight="500">GET ACCESS TOKEN</CustomText>
           </Pressable>
-
-
         </View>
       </ScrollView>
     </SafeAreaView>
