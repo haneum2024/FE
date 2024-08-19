@@ -61,7 +61,8 @@ const FoundCard = ({
 
   return (
     <TouchableOpacity onPress={moveToDetailPage} activeOpacity={0.8}>
-      <View style={styles.foundContainer}>
+      <View
+        style={[styles.foundContainer, isMyPost && styles.noMarginContainer]}>
         <Image source={{uri: image}} style={styles.imageBox} />
         <CustomText weight="700" style={styles.title}>
           {title}
@@ -131,6 +132,10 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginHorizontal: 24,
     marginVertical: 12,
+  },
+  noMarginContainer: {
+    paddingHorizontal: 40,
+    marginHorizontal: 0,
   },
   title: {
     fontSize: 22,
