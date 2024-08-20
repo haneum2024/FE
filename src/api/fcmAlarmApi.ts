@@ -6,7 +6,7 @@ export const sendFcmTokenToServer = ({
   fcmToken,
 }: {
   accessToken: string;
-  fcmToken: String;
+  fcmToken: string;
 }) => {
   const sendFcmTokenConfig = {
     method: 'post',

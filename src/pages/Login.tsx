@@ -1,46 +1,26 @@
 import React, {useEffect} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Text} from 'react-native';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {useDispatch} from 'react-redux';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {authorize} from 'react-native-app-auth';
 import {Button} from 'react-native-paper';
-import {
-  GOOGLE_CLIENT_ID,
-  NAVER_CLIENT_ID,
-  NAVER_CLIENT_SECRET,
-  NAVER_REDIRECT_URI,
-} from 'react-native-dotenv';
-// import NaverLogin, {
-//   NaverLoginResponse,
-//   GetProfileResponse,
-// } from '@react-native-seoul/naver-login';
+import {GOOGLE_CLIENT_ID} from 'react-native-dotenv';
 
 import {getUserApi, loginApi} from '../api/userApi';
 import CustomText from '../components/CustomText';
+import GoogleIcon from '../img/GoogleIcon.svg';
+import AppIcon from '../img/AppIcon.svg';
 import {getAccessToken, saveAccessToken} from '../storage/auth';
 import {login} from '../store/reducers/authReducer';
-
+import color from '../styles/color';
 import type {AuthPageNavigation} from '../../types/navigation';
 import type {LoginResponse, UserResponse} from '../../types/auth';
-import color from '../styles/color';
-
-import GoogleIcon from '../img/GoogleIcon.svg';
-import LogoIcon from '../img/LogoIcon.svg';
-import NaverIcon from '../img/NaverIcon.svg';
+import {getFCMToken} from '../utils/getFCMToken';
+import {sendFcmTokenToServer} from '../api/fcmAlarmApi';
 
 interface LoginProps {
   navigation: StackNavigationProp<AuthPageNavigation, 'TermsOfUse'>;
 }
-
-const naverConfig = {
-  issuer: 'https://nid.naver.com',
-  clientId: NAVER_CLIENT_ID,
-  clientSecret: NAVER_CLIENT_SECRET,
-  redirectUrl: NAVER_REDIRECT_URI,
-  scopes: ['profile', 'email'],
-};
-
 const Login: React.FC<LoginProps> = ({navigation}) => {
   const dispatch = useDispatch();
 
@@ -50,6 +30,11 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
       if (accessToken) {
         try {
           const userResponse = await getUserApi(accessToken);
+          const fcmToken = await getFCMToken();
+          await sendFcmTokenToServer({
+            accessToken: accessToken as string,
+            fcmToken: fcmToken,
+          });
           const userData: UserResponse = userResponse.data;
           console.log('userData:', userData);
 
@@ -88,6 +73,11 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
       await saveAccessToken(loginData.accessToken);
 
       const userResponse = await getUserApi(loginData.accessToken);
+      const fcmToken = await getFCMToken();
+      await sendFcmTokenToServer({
+        accessToken: loginData.accessToken,
+        fcmToken: fcmToken,
+      });
       const userData: UserResponse = userResponse.data;
       console.log('userData:', userData);
 
@@ -102,35 +92,12 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
     }
   };
 
-  const naverLoginButton = async () => {
-    try {
-      const result = await authorize({
-        ...naverConfig,
-      });
-
-      console.log('Naver Authorization result:', result);
-
-      // 서버로 code_verifier 및 result.accessToken을 보내서 JWT 발급
-      // const response = await loginApi({
-      //   provider: 'naver',
-      //   authorization: result.accessToken,
-      // });
-
-      // console.log('Server response:', response.data);
-
-      dispatch(login());
-    } catch (error) {
-      console.error('Naver login error', error);
-    }
-  };
-
   return (
     <View style={styles.loginContainer}>
       <View style={styles.logoContainer}>
-        <LogoIcon width={48} height={48} />
+        <AppIcon width={60} height={60} />
         <View style={styles.titleContainer}>
-          <CustomText style={styles.title}>Happy</CustomText>
-          <CustomText style={styles.title}>Maru</CustomText>
+          <Text style={styles.title}>Happy Maru</Text>
         </View>
       </View>
       <View style={styles.buttonContainer}>
@@ -142,17 +109,6 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
             <GoogleIcon width={20} height={20} />
             <CustomText weight="600" style={styles.googleText}>
               구글 로그인
-            </CustomText>
-          </View>
-        </Button>
-        <Button
-          mode="contained"
-          style={styles.naverButton}
-          onPress={naverLoginButton}>
-          <View style={styles.iconTextBox}>
-            <NaverIcon width={20} height={20} />
-            <CustomText weight="600" style={styles.naverText}>
-              네이버 로그인
             </CustomText>
           </View>
         </Button>
@@ -170,11 +126,10 @@ const styles = StyleSheet.create({
     paddingBottom: 68,
     paddingHorizontal: 24,
     backgroundColor: color.white,
-    gap: 280,
+    gap: 320,
   },
   logoContainer: {
     display: 'flex',
-    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     gap: 16,
@@ -185,8 +140,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
-    fontSize: 20,
-    fontFamily: 'Haenam',
+    fontSize: 24,
+    fontStyle: 'italic',
+    fontFamily: 'Inter-ExtraBold',
     color: color.blue[600],
   },
   buttonContainer: {
@@ -194,10 +150,10 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    gap: 20,
   },
   googleButton: {
     display: 'flex',
+    position: 'absolute',
     justifyContent: 'center',
     width: '100%',
     height: 50,

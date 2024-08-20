@@ -33,7 +33,7 @@
 		9FFCF50655F0404A8CBA7F11 /* Pretendard-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A00AEBFF663043CD9A461774 /* Pretendard-Regular.ttf */; };
 		0065996FC550454F918C4A5F /* Pretendard-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D493EA21127D4455BDF6DDB5 /* Pretendard-SemiBold.ttf */; };
 		079B69C80D874169840AA90E /* Pretendard-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5D62F4F2A18448DC8A371B65 /* Pretendard-Thin.ttf */; };
-		15FBAB44D2504286B6B1D26A /* Heanam.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 828B1B998A3443C6AC6C4B13 /* Heanam.ttf */; };
+		A0D246F81BAD466DBE0EFE2C /* Inter-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E543A833B270456BADCA01E8 /* Inter-ExtraBold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,7 +84,7 @@
 		A00AEBFF663043CD9A461774 /* Pretendard-Regular.ttf */ = {isa = PBXFileReference; name = "Pretendard-Regular.ttf"; path = "../src/assets/fonts/Pretendard-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		D493EA21127D4455BDF6DDB5 /* Pretendard-SemiBold.ttf */ = {isa = PBXFileReference; name = "Pretendard-SemiBold.ttf"; path = "../src/assets/fonts/Pretendard-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		5D62F4F2A18448DC8A371B65 /* Pretendard-Thin.ttf */ = {isa = PBXFileReference; name = "Pretendard-Thin.ttf"; path = "../src/assets/fonts/Pretendard-Thin.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		828B1B998A3443C6AC6C4B13 /* Heanam.ttf */ = {isa = PBXFileReference; name = "Heanam.ttf"; path = "../src/assets/fonts/Heanam.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		E543A833B270456BADCA01E8 /* Inter-ExtraBold.ttf */ = {isa = PBXFileReference; name = "Inter-ExtraBold.ttf"; path = "../src/assets/fonts/Inter-ExtraBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -213,7 +213,7 @@
 				A00AEBFF663043CD9A461774 /* Pretendard-Regular.ttf */,
 				D493EA21127D4455BDF6DDB5 /* Pretendard-SemiBold.ttf */,
 				5D62F4F2A18448DC8A371B65 /* Pretendard-Thin.ttf */,
-				828B1B998A3443C6AC6C4B13 /* Heanam.ttf */,
+				E543A833B270456BADCA01E8 /* Inter-ExtraBold.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -333,7 +333,7 @@
 				9FFCF50655F0404A8CBA7F11 /* Pretendard-Regular.ttf in Resources */,
 				0065996FC550454F918C4A5F /* Pretendard-SemiBold.ttf in Resources */,
 				079B69C80D874169840AA90E /* Pretendard-Thin.ttf in Resources */,
-				15FBAB44D2504286B6B1D26A /* Heanam.ttf in Resources */,
+				A0D246F81BAD466DBE0EFE2C /* Inter-ExtraBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

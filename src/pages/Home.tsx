@@ -5,6 +5,7 @@ import {
   View,
   TouchableOpacity,
   Image,
+  PermissionsAndroid,
 } from 'react-native';
 import {PaperProvider} from 'react-native-paper';
 import {useDispatch, useSelector} from 'react-redux';
@@ -76,6 +77,16 @@ function Home() {
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    requestNotificationPermission();
+  }, []);
+
+  async function requestNotificationPermission() {
+    await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+    );
+  }
 
   const handleImagePress = (index: number) => {
     if (index === 0) {
