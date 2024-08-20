@@ -31,6 +31,8 @@ function Health() {
   const dispatch = useDispatch();
   const isProfile = useSelector((state: RootState) => state.profile.isProfile);
 
+  const [message, setMessage] = useState('');
+  const [isShowMessage, setIsShowMessage] = useState(false);
   const [dogName, setDogName] = useState('');
   const [dogGender, setDogGender] = useState('');
   const [dogBreed, setDogBreed] = useState('');
@@ -65,6 +67,14 @@ function Health() {
     setSeletedDate(date);
   };
 
+  const handleMessage = (text: string) => {
+    setMessage(text);
+    setIsShowMessage(true);
+    setTimeout(() => {
+      setIsShowMessage(false);
+    }, 3000);
+  };
+
   return (
     <PaperProvider>
       <ScrollView
@@ -80,8 +90,8 @@ function Health() {
           />
         ) : null}
         <MonthlyCalendar handleDate={handleDate} />
-        <Status date={selectedDate} />
-        <Comment date={selectedDate} />
+        <Status date={selectedDate} handleMessage={handleMessage} />
+        <Comment date={selectedDate} handleMessage={handleMessage} />
       </ScrollView>
 
       {!isProfile && (
@@ -102,6 +112,13 @@ function Health() {
             </View>
           </View>
         </Modal>
+      )}
+      {isShowMessage && (
+        <View style={styles.noticeTooltip}>
+          <CustomText weight="500" style={styles.noticeText}>
+            {message}
+          </CustomText>
+        </View>
       )}
     </PaperProvider>
   );
@@ -142,6 +159,20 @@ const styles = StyleSheet.create({
   homeButtonText: {
     color: 'white',
     fontSize: 16,
+  },
+  noticeTooltip: {
+    position: 'absolute',
+    bottom: 30,
+    left: '35%',
+    backgroundColor: color.blue[900],
+    borderRadius: 4,
+    paddingVertical: 6,
+    paddingHorizontal: 14,
+  },
+  noticeText: {
+    fontSize: 12,
+    color: color.white,
+    textAlign: 'center',
   },
 });
 

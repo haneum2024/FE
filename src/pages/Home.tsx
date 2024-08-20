@@ -38,6 +38,8 @@ function Home() {
   const dispatch = useDispatch();
   const isProfile = useSelector((state: RootState) => state.profile.isProfile);
 
+  const [message, setMessage] = useState('');
+  const [isShowMessage, setIsShowMessage] = useState(false);
   const [ownerName, setOwnerName] = useState('');
   const [ownerIntroduction, setOwnerIntroduction] = useState('');
   const [ownerProfileImage, setOwnerProfileImage] = useState('');
@@ -100,6 +102,14 @@ function Home() {
     setSeletedDate(date);
   };
 
+  const handleMessage = (text: string) => {
+    setMessage(text);
+    setIsShowMessage(true);
+    setTimeout(() => {
+      setIsShowMessage(false);
+    }, 3000);
+  };
+
   return (
     <PaperProvider>
       <ScrollView style={styles.homeContainer}>
@@ -151,12 +161,12 @@ function Home() {
         {isProfile ? (
           <>
             <WeeklyCalendar handleDate={handleDate} />
-            <Status date={selectedDate} />
-            <Comment date={selectedDate} />
+            <Status date={selectedDate} handleMessage={handleMessage} />
+            <Comment date={selectedDate} handleMessage={handleMessage} />
           </>
         ) : (
           <View style={styles.noticeContainer}>
-            <CustomText weight="700" style={styles.noticeText}>
+            <CustomText weight="700" style={styles.noticeTitle}>
               건강일지 작성은 프로필 생성 후 이용 가능합니다
             </CustomText>
           </View>
@@ -164,6 +174,13 @@ function Home() {
 
         <MissFound />
       </ScrollView>
+      {isShowMessage && (
+        <View style={styles.noticeTooltip}>
+          <CustomText weight="500" style={styles.noticeText}>
+            {message}
+          </CustomText>
+        </View>
+      )}
     </PaperProvider>
   );
 }
@@ -201,7 +218,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: color.gray[100],
   },
-  noticeText: {
+  noticeTitle: {
     fontSize: 16,
     color: color.gray[500],
   },
@@ -211,6 +228,20 @@ const styles = StyleSheet.create({
     marginHorizontal: 24,
     marginTop: 22,
     marginBottom: 4,
+  },
+  noticeTooltip: {
+    position: 'absolute',
+    bottom: 30,
+    left: '35%',
+    backgroundColor: color.blue[900],
+    borderRadius: 4,
+    paddingVertical: 6,
+    paddingHorizontal: 14,
+  },
+  noticeText: {
+    fontSize: 12,
+    color: color.white,
+    textAlign: 'center',
   },
 });
 
