@@ -42,13 +42,12 @@ const WeeklyCalendar = ({handleDate}: {handleDate: (date: string) => void}) => {
   useEffect(() => {
     const fetchStatus = async () => {
       const accessToken = await getAccessToken();
-      console.log('selectedDate', selectedDate.format('YYYY-MM-DD'));
+
       const status = await getWeeklyStatusApi({
         accessToken: accessToken as string,
         date: selectedDate.format('YYYY-MM-DD'),
       });
       const statusInfo = status.data;
-      console.log('statusInfo', statusInfo);
       setStatusData(statusInfo);
     };
 

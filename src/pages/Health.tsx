@@ -89,7 +89,7 @@ function Health() {
           <View style={styles.modalContainer}>
             <View style={styles.modalContent}>
               <CustomText weight="600" style={styles.modalText}>
-                건강일지 작성은 프로필 생성 후에 가능해요
+                건강일지 작성은 프로필 생성 후 이용 가능합니다
               </CustomText>
               <TouchableOpacity
                 style={styles.homeButton}

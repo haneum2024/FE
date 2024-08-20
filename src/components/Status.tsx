@@ -132,7 +132,7 @@ const Status = ({date}: {date: string}) => {
       setDiagnosis(statusData.diagnosis);
       setStatusLevel(statusData.statusLevel);
       setSymptomColor(statusData.symptomColor);
-      console.log('statusData', statusData);
+
       if (statusData) {
         const updatedCheckedItems = statusItems.map(item =>
           statusData.symptoms.includes(item.content),

@@ -16,7 +16,7 @@ import color from '../styles/color';
 import type {AuthPageNavigation} from '../../types/navigation';
 import type {LoginResponse, UserResponse} from '../../types/auth';
 import {getFCMToken} from '../utils/getFCMToken';
-import {sendFcmTokenToServer} from '../api/fcmAlarmApi';
+import {postFCMTokenApi} from '../api/fcmAlarmApi';
 
 interface LoginProps {
   navigation: StackNavigationProp<AuthPageNavigation, 'TermsOfUse'>;
@@ -31,7 +31,7 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
         try {
           const userResponse = await getUserApi(accessToken);
           const fcmToken = await getFCMToken();
-          await sendFcmTokenToServer({
+          await postFCMTokenApi({
             accessToken: accessToken as string,
             fcmToken: fcmToken,
           });
@@ -74,7 +74,7 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
 
       const userResponse = await getUserApi(loginData.accessToken);
       const fcmToken = await getFCMToken();
-      await sendFcmTokenToServer({
+      await postFCMTokenApi({
         accessToken: loginData.accessToken,
         fcmToken: fcmToken,
       });
@@ -141,8 +141,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    fontStyle: 'italic',
-    fontFamily: 'Inter-ExtraBold',
+    fontFamily: 'Inter_24pt-ExtraBoldItalic',
     color: color.blue[600],
   },
   buttonContainer: {
@@ -172,18 +171,6 @@ const styles = StyleSheet.create({
   googleText: {
     fontSize: 16,
     color: color.gray[950],
-  },
-  naverButton: {
-    display: 'flex',
-    justifyContent: 'center',
-    width: '100%',
-    height: 50,
-    borderRadius: 10,
-    backgroundColor: '#03C75A',
-  },
-  naverText: {
-    fontSize: 16,
-    color: color.white,
   },
 });
 

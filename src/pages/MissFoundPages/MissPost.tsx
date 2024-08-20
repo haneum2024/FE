@@ -11,6 +11,7 @@ import {ActivityIndicator, Button, Checkbox} from 'react-native-paper';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {useNavigation} from '@react-navigation/native';
 
+import {postAlarmApi} from '../../api/fcmAlarmApi';
 import {postMissDogApi} from '../../api/petSearchApi';
 import {getUserApi} from '../../api/userApi';
 import DateTimePick from '../../components/DateTimePick';
@@ -161,7 +162,7 @@ const MissPost = () => {
       setIsLoading(true);
       const accessToken = await getAccessToken();
 
-      await postMissDogApi({
+      const missData = await postMissDogApi({
         accessToken: accessToken as string,
         title,
         base64ImageList: [base64Image],
@@ -180,6 +181,11 @@ const MissPost = () => {
         content,
       });
       setIsLoading(false);
+
+      await postAlarmApi({
+        accessToken: accessToken as string,
+        boardId: missData.data.id,
+      });
 
       navigation.goBack();
     } catch (error) {

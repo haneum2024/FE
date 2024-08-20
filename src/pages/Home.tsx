@@ -148,9 +148,20 @@ function Home() {
         <CustomText weight="700" style={styles.title}>
           건강 일지
         </CustomText>
-        <WeeklyCalendar handleDate={handleDate} />
-        <Status date={selectedDate} />
-        <Comment date={selectedDate} />
+        {isProfile ? (
+          <>
+            <WeeklyCalendar handleDate={handleDate} />
+            <Status date={selectedDate} />
+            <Comment date={selectedDate} />
+          </>
+        ) : (
+          <View style={styles.noticeContainer}>
+            <CustomText weight="700" style={styles.noticeText}>
+              건강일지 작성은 프로필 생성 후 이용 가능합니다
+            </CustomText>
+          </View>
+        )}
+
         <MissFound />
       </ScrollView>
     </PaperProvider>
@@ -179,6 +190,20 @@ const styles = StyleSheet.create({
     height: 200,
     borderRadius: 20,
     backgroundColor: color.gray[100],
+  },
+  noticeContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: 24,
+    marginVertical: 8,
+    height: 200,
+    borderRadius: 20,
+    backgroundColor: color.gray[100],
+  },
+  noticeText: {
+    fontSize: 16,
+    color: color.gray[500],
   },
   title: {
     fontSize: 22,
