@@ -44,7 +44,7 @@ const MissDetail = ({route}: MissDetailProps) => {
   const name = missDetail.name;
   const contact = missDetail.contact;
   const missLocation = missDetail.specificLocation;
-  const missDate = missDetail.lostDateTime;
+  const missDate = missDetail.lostDateTime.replace('T', ' ').slice(0, 16);
   const missSituation = missDetail.situation;
   const dogBreed = missDetail.petBreed;
   const dogGender = missDetail.petGender === 'FEMALE' ? '암컷' : '수컷';

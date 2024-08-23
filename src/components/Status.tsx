@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
-import {ActivityIndicator, Button, Portal, Snackbar} from 'react-native-paper';
+import {ActivityIndicator, Button} from 'react-native-paper';
 
 import CustomText from './CustomText';
 import Diagnosis from './Diagnosis';
@@ -73,12 +73,17 @@ const statusItems = [
   },
 ];
 
-const Status = ({date}: {date: string}) => {
+const Status = ({
+  date,
+  handleMessage,
+}: {
+  date: string;
+  handleMessage: (text: string) => void;
+}) => {
   const [checkedItems, setCheckedItems] = useState(
     new Array(statusItems.length).fill(false),
   );
   const [isEditMode, setIsEditMode] = useState(true);
-  const [visible, setVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [diagnosis, setDiagnosis] = useState('');
   const [statusLevel, setStatusLevel] = useState('');
@@ -112,9 +117,9 @@ const Status = ({date}: {date: string}) => {
       setDiagnosis(statusData.diagnosis);
       setStatusLevel(statusData.statusLevel);
       setSymptomColor(statusData.symptomColor);
+      handleMessage('건강일지 저장 완료!');
       setIsLoading(false);
       setIsEditMode(false);
-      setVisible(true);
     } catch (error) {
       console.error(error);
       setIsLoading(false);
@@ -132,7 +137,7 @@ const Status = ({date}: {date: string}) => {
       setDiagnosis(statusData.diagnosis);
       setStatusLevel(statusData.statusLevel);
       setSymptomColor(statusData.symptomColor);
-      console.log('statusData', statusData);
+
       if (statusData) {
         const updatedCheckedItems = statusItems.map(item =>
           statusData.symptoms.includes(item.content),
@@ -198,22 +203,6 @@ const Status = ({date}: {date: string}) => {
           )}
         </Button>
       )}
-      <Portal>
-        <Snackbar
-          visible={visible}
-          onDismiss={() => setVisible(false)}
-          action={{
-            label: '확인',
-            onPress: () => {
-              setVisible(false);
-            },
-            labelStyle: {color: color.white},
-          }}
-          duration={3000}
-          style={styles.snackbarContainer}>
-          건강일지 저장 완료!
-        </Snackbar>
-      </Portal>
     </View>
   );
 };
@@ -274,10 +263,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginTop: 16,
     backgroundColor: color.blue[600],
-  },
-  snackbarContainer: {
-    backgroundColor: color.orange[600],
-    borderRadius: 8,
   },
 });
 

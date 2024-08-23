@@ -51,11 +51,11 @@ function Found() {
       });
       const otherFoundPost = await getOtherFoundApi({
         accessToken: accessToken as string,
-        page: 1,
+        page: 0,
         size: 100,
       });
       setUserFoundBoard(userFoundPost.data);
-      setOtherFoundBoard(otherFoundPost.data);
+      setOtherFoundBoard(otherFoundPost.data.content);
     } catch (error) {
       console.log(error);
     }

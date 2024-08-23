@@ -2,8 +2,12 @@
   "migIndex": 1,
   "data": [
     {
-      "path": "src/assets/fonts/Heanam.ttf",
-      "sha1": "6d2e4619844aa2a919a5aa834ab0772c84ab5e9d"
+      "path": "src/assets/fonts/Inter-ExtraBold.ttf",
+      "sha1": "bff772be6bca9895c6fdcd57e5d5be9a47f2e058"
+    },
+    {
+      "path": "src/assets/fonts/Inter_24pt-ExtraBoldItalic.ttf",
+      "sha1": "41b6f1d5368f6a83f989afcb577383a618fc265a"
     },
     {
       "path": "src/assets/fonts/Pretendard-Black.ttf",

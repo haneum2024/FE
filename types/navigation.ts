@@ -48,7 +48,7 @@ export type AddDogPageNavigation = {
 };
 
 export type ReportDogPageNavigation = {
-  MissFoundMain: undefined;
+  MissFoundMain: {routeName: 'Miss' | 'Found'};
   Miss: undefined;
   MissPost: undefined;
   Found: undefined;

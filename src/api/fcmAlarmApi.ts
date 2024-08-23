@@ -1,14 +1,13 @@
 import axios from './axios';
 
-// 서버로 FCM 토큰을 전송하는 함수
-export const sendFcmTokenToServer = ({
+export const postFCMTokenApi = ({
   accessToken,
   fcmToken,
 }: {
   accessToken: string;
-  fcmToken: String;
+  fcmToken: string;
 }) => {
-  const sendFcmTokenConfig = {
+  const postFCMTokenConfig = {
     method: 'post',
     url: '/notifications/fcm-token',
     headers: {
@@ -19,5 +18,23 @@ export const sendFcmTokenToServer = ({
     },
   };
 
-  return axios(sendFcmTokenConfig);
+  return axios(postFCMTokenConfig);
+};
+
+export const postAlarmApi = ({
+  accessToken,
+  boardId,
+}: {
+  accessToken: string;
+  boardId: string;
+}) => {
+  const postAlarmConfig = {
+    method: 'post',
+    url: `/notifications/send/pet-search/${boardId}`,
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  };
+
+  return axios(postAlarmConfig);
 };

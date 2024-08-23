@@ -44,7 +44,7 @@ const FoundDetail = ({route}: FoundDetailProps) => {
   const name = foundDetail.name;
   const contact = foundDetail.reporterContact;
   const foundLocation = foundDetail.specificLocation;
-  const foundDate = foundDetail.foundDateTime;
+  const foundDate = foundDetail.foundDateTime.replace('T', ' ').slice(0, 16);
   const foundSituation = foundDetail.situation;
   const dogBreed = foundDetail.petBreed;
   const dogGender = foundDetail.petGender === 'FEMALE' ? '암컷' : '수컷';
