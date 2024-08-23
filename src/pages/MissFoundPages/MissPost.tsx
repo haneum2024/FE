@@ -21,8 +21,10 @@ import FemaleIcon from '../../components/Icons/FemaleIcon';
 import MaleIcon from '../../components/Icons/MaleIcon';
 import CustomText from '../../components/CustomText';
 import InputImage from '../../components/InputImage';
+import PickFormat from '../../components/PickFormat';
 import color from '../../styles/color';
 import {getAccessToken} from '../../storage/auth';
+import dogBreeds from '../../utils/dogBreeds';
 import type {ReportDogPageNavigation} from '../../../types/navigation';
 
 type MissNavigationProp = StackNavigationProp<ReportDogPageNavigation, 'Miss'>;
@@ -175,7 +177,7 @@ const MissPost = () => {
         situation: missSituation,
         petGender: dogGender,
         isNeutered,
-        petBreed: dogBreed,
+        petBreed: dogBreed === '잘 모르겠어요' ? '' : dogBreed,
         birthDate: dogBirth,
         petDescription: appearance,
         content,
@@ -282,9 +284,10 @@ const MissPost = () => {
             value={dogName}
             handleValue={handleDogName}
           />
-          <InputFormat
+          <PickFormat
+            datas={dogBreeds}
             title="견종"
-            placeholder="반려견의 견종을 알려주세요."
+            placeholder="견종 선택"
             value={dogBreed}
             handleValue={handleDogBreed}
           />

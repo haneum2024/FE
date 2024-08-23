@@ -2412,6 +2412,11 @@
   resolved "https://registry.npmjs.org/@react-native-google-signin/google-signin/-/google-signin-12.1.1.tgz"
   integrity sha512-jvH8AFFD4syq+HaqHy8LZZl60QwT7ILtKmNLhw96hJ6G6EqOgGr+W2gOKQMbFlgBbu2rsgMiXQcaNpFphUcToA==
 
+"@react-native-picker/picker@^2.7.7":
+  version "2.7.7"
+  resolved "https://registry.npmjs.org/@react-native-picker/picker/-/picker-2.7.7.tgz"
+  integrity sha512-CTHthVmx8ujlH/u5AnxLQfsheh/DoEbo+Kbx0HGTlbKVLC1eZ4Kr9jXIIUcwB7JEgOXifdZIPQCsoTc/7GQ0ag==
+
 "@react-native-seoul/naver-login@^4.0.1":
   version "4.0.1"
   resolved "https://registry.npmjs.org/@react-native-seoul/naver-login/-/naver-login-4.0.1.tgz"

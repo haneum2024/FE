@@ -18,8 +18,10 @@ import FemaleIcon from '../../components/Icons/FemaleIcon';
 import MaleIcon from '../../components/Icons/MaleIcon';
 import CustomText from '../../components/CustomText';
 import InputImage from '../../components/InputImage';
+import PickFormat from '../../components/PickFormat';
 import color from '../../styles/color';
 import {getAccessToken} from '../../storage/auth';
+import dogBreeds from '../../utils/dogBreeds';
 import type {ReportDogPageNavigation} from '../../../types/navigation';
 
 type FoundNavigationProp = StackNavigationProp<
@@ -40,8 +42,6 @@ const FoundPost = () => {
   const [foundDate, setFoundDate] = useState(new Date().toString());
   const [foundSituation, setFoundSituation] = useState('');
   const [dogBreed, setDogBreed] = useState('');
-  // const [prevDogBreed, setPrevDogBreed] = useState('');
-  // const [noDogBreed, setNoDogBreed] = useState(false);
   const [dogGender, setDogGender] = useState('FEMALE');
   const [prevDogGender, setPrevDogGender] = useState('FEMALE');
   const [noDogGender, setNoDogGender] = useState(false);
@@ -91,18 +91,7 @@ const FoundPost = () => {
 
   const handleDogBreed = (input: string) => {
     setDogBreed(input);
-    // setPrevDogBreed(input);
   };
-
-  // const checkDogBreed = () => {
-  //   if (noDogBreed) {
-  //     setNoDogBreed(false);
-  //     setDogBreed(prevDogBreed);
-  //   } else {
-  //     setNoDogBreed(true);
-  //     setDogBreed('잘 모르겠음');
-  //   }
-  // };
 
   const handleDogGender = (input: string) => {
     if (dogGender === 'NOT_SURE') {
@@ -151,7 +140,7 @@ const FoundPost = () => {
         foundDateTime: foundDate,
         situation: foundSituation,
         petGender: dogGender,
-        petBreed: dogBreed,
+        petBreed: dogBreed === '잘 모르겠어요' ? '' : dogBreed,
         petDescription: appearance,
         content,
       });
@@ -246,9 +235,10 @@ const FoundPost = () => {
               반려견 정보
             </CustomText>
           </View>
-          <InputFormat
+          <PickFormat
+            datas={dogBreeds}
             title="견종"
-            placeholder="반려견의 견종을 알려주세요."
+            placeholder="견종 선택"
             value={dogBreed}
             handleValue={handleDogBreed}
           />
