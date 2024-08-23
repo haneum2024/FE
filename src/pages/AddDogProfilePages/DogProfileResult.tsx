@@ -47,7 +47,10 @@ const DogProfileResult = ({navigation, route}: DogProfileResultType) => {
         await addDogProfileApi({
           accessToken: accessToken as string,
           name: dogName,
-          breed: dogBreed === '잘 모르겠어요' ? '' : dogBreed,
+          breed:
+            dogBreed === '잘 모르겠어요' || dogBreed === ''
+              ? '알 수 없음'
+              : dogBreed,
           gender: dogGender,
           neutered: isNeutered,
           birthDate: dogBirth,

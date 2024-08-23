@@ -140,7 +140,10 @@ const FoundPost = () => {
         foundDateTime: foundDate,
         situation: foundSituation,
         petGender: dogGender,
-        petBreed: dogBreed === '잘 모르겠어요' ? '' : dogBreed,
+        petBreed:
+          dogBreed === '잘 모르겠어요' || dogBreed === ''
+            ? '알 수 없음'
+            : dogBreed,
         petDescription: appearance,
         content,
       });
