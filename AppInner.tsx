@@ -73,6 +73,7 @@ const HomeStack = () => {
       />
       <AddDogStack.Screen name="DogNoseCamera" component={DogNoseCamera} />
       <AddDogStack.Screen name="ProfileInfo" component={ProfileInfo} />
+      <ReportDogStack.Screen name="MissFoundMain" component={MissFound} />
       <ReportDogStack.Screen name="Miss" component={Miss} />
       <ReportDogStack.Screen name="MissPost" component={MissPost} />
       <ReportDogStack.Screen name="Found" component={Found} />
@@ -108,6 +109,7 @@ const MissFoundStack = () => {
         name="FoundResultSuccess"
         component={FoundResultSuccess}
       />
+      <AddDogStack.Screen name="HomeMain" component={Home} />
     </ReportDogStack.Navigator>
   );
 };

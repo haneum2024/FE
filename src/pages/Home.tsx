@@ -28,10 +28,10 @@ import {addProfile} from '../store/reducers/profileReducer';
 import {getAccessToken} from '../storage/auth';
 import color from '../styles/color';
 
-import type {MainPageNavigation} from '../../types/navigation';
+import type {ReportDogPageNavigation} from '../../types/navigation';
 import CustomText from '../components/CustomText';
 
-type MissFoundDogProp = StackNavigationProp<MainPageNavigation, 'Home'>;
+type MissFoundDogProp = StackNavigationProp<ReportDogPageNavigation>;
 
 function Home() {
   const navigation = useNavigation<MissFoundDogProp>();
@@ -92,9 +92,9 @@ function Home() {
 
   const handleImagePress = (index: number) => {
     if (index === 0) {
-      navigation.navigate('MissFound');
+      navigation.navigate('MissFoundMain', {routeName: 'Found'});
     } else if (index === 1) {
-      navigation.navigate('MissFound');
+      navigation.navigate('MissFoundMain', {routeName: 'Miss'});
     }
   };
 

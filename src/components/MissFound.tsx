@@ -9,18 +9,21 @@ import IconBox from './IconBox';
 
 import ProfileIcon from './Icons/ProfileIcon';
 import SearchNoticeIcon from '../img/SearchNoticeIcon.svg';
-import type {MainPageNavigation} from '../../types/navigation';
+import type {ReportDogPageNavigation} from '../../types/navigation';
 
-type MissFoundDogProp = StackNavigationProp<MainPageNavigation, 'Home'>;
+type MissFoundDogProp = StackNavigationProp<
+  ReportDogPageNavigation,
+  'MissFoundMain'
+>;
 
 const MissFound = () => {
   const navigation = useNavigation<MissFoundDogProp>();
   const moveToFoundPage = () => {
-    navigation.navigate('MissFound');
+    navigation.navigate('MissFoundMain', {routeName: 'Found'});
   };
 
   const moveToMissPage = () => {
-    navigation.navigate('MissFound');
+    navigation.navigate('MissFoundMain', {routeName: 'Miss'});
   };
 
   return (
