@@ -79,7 +79,7 @@ function Health() {
     <PaperProvider>
       <ScrollView
         style={[styles.healthContainer, !isProfile && styles.transparent]}>
-        <Header />
+        <Header navigation={navigation} />
         {isProfile ? (
           <DogCard
             image={dogProfileImage}

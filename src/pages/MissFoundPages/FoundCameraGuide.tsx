@@ -27,7 +27,7 @@ const FoundCameraGuide = () => {
     <View style={styles.cameraGuideContainer}>
       <AddInfoTitle
         icon={<SearchNoticeIcon width={50} height={50} />}
-        title="유기견 비문 조회"
+        title="유실견 비문 조회"
       />
       <View style={styles.textContainer}>
         <View style={styles.cautionContainer}>
@@ -61,7 +61,7 @@ const FoundCameraGuide = () => {
         mode="contained"
         style={[styles.button, {backgroundColor: color.blue[600]}]}
         onPress={moveToNextPage}>
-        비문 촬영으로 유기견 조회하기
+        비문 촬영으로 유실견 조회하기
       </Button>
     </View>
   );

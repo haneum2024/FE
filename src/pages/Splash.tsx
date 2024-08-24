@@ -10,7 +10,7 @@ const Splash = ({onFinish}: {onFinish: () => void}) => {
   useEffect(() => {
     Animated.timing(opacity, {
       toValue: 0,
-      duration: 2000,
+      duration: 1500,
       useNativeDriver: true,
     }).start(() => onFinish());
   }, [opacity, onFinish]);

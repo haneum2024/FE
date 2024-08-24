@@ -1,11 +1,9 @@
 import React, {useRef, useState} from 'react';
 import {
-  Alert,
   Image,
   StyleSheet,
   TouchableOpacity,
   View,
-  Linking,
   TouchableWithoutFeedback,
 } from 'react-native';
 import ActionSheet, {ActionSheetRef} from 'react-native-actions-sheet';
@@ -39,10 +37,6 @@ const InputImage = ({
     actionSheetRef.current?.show();
   };
 
-  const openSettings = () => {
-    Linking.openSettings();
-  };
-
   const requestCameraPermission = async () => {
     try {
       const result = await request(PERMISSIONS.ANDROID.CAMERA);
@@ -52,16 +46,6 @@ const InputImage = ({
       } else if (result === RESULTS.DENIED) {
         // 권한이 거부됨
         console.log('Camera permission denied');
-      } else if (result === RESULTS.BLOCKED) {
-        // 권한이 차단됨
-        Alert.alert(
-          'Permission Required',
-          'Camera access is required to take a photo. Please enable it in the app settings.',
-          [
-            {text: 'Open Settings', onPress: openSettings},
-            {text: 'Cancel', style: 'cancel'},
-          ],
-        );
       }
     } catch (error) {
       console.error('Error requesting camera permission: ', error);

@@ -33,13 +33,18 @@ import MissFoundIcon from './src/components/Icons/MissFoundIcon';
 import ProfileIcon from './src/components/Icons/ProfileIcon';
 import {
   AddDogPageNavigation,
+  HealthPageNavigation,
   MainPageNavigation,
   ReportDogPageNavigation,
 } from './types/navigation';
+import Notification from './src/pages/Notification';
+import FoundDetail from './src/pages/MissFoundPages/FoundDetail';
+import MissDetail from './src/pages/MissFoundPages/MissDetail';
 
 const Tab = createBottomTabNavigator<MainPageNavigation>();
 const AddDogStack = createStackNavigator<AddDogPageNavigation>();
 const ReportDogStack = createStackNavigator<ReportDogPageNavigation>();
+const HealthDogStack = createStackNavigator<HealthPageNavigation>();
 
 const HomeTabBarIcon = ({color}: {color: string}) => (
   <HomeIcon width={25} height={25} fill={color} />
@@ -73,10 +78,13 @@ const HomeStack = () => {
       />
       <AddDogStack.Screen name="DogNoseCamera" component={DogNoseCamera} />
       <AddDogStack.Screen name="ProfileInfo" component={ProfileInfo} />
+      <AddDogStack.Screen name="Notification" component={Notification} />
       <ReportDogStack.Screen name="MissFoundMain" component={MissFound} />
       <ReportDogStack.Screen name="Miss" component={Miss} />
       <ReportDogStack.Screen name="MissPost" component={MissPost} />
       <ReportDogStack.Screen name="Found" component={Found} />
+      <ReportDogStack.Screen name="FoundDetail" component={FoundDetail} />
+      <ReportDogStack.Screen name="MissDetail" component={MissDetail} />
     </AddDogStack.Navigator>
   );
 };
@@ -110,7 +118,25 @@ const MissFoundStack = () => {
         component={FoundResultSuccess}
       />
       <AddDogStack.Screen name="HomeMain" component={Home} />
+      <ReportDogStack.Screen name="Notification" component={Notification} />
+      <ReportDogStack.Screen name="FoundDetail" component={FoundDetail} />
+      <ReportDogStack.Screen name="MissDetail" component={MissDetail} />
     </ReportDogStack.Navigator>
+  );
+};
+
+const HealthStack = () => {
+  return (
+    <HealthDogStack.Navigator
+      screenOptions={{
+        headerShown: false,
+        cardStyle: {backgroundColor: colorType.white},
+      }}>
+      <HealthDogStack.Screen name="HealthMain" component={Health} />
+      <HealthDogStack.Screen name="Notification" component={Notification} />
+      <ReportDogStack.Screen name="FoundDetail" component={FoundDetail} />
+      <ReportDogStack.Screen name="MissDetail" component={MissDetail} />
+    </HealthDogStack.Navigator>
   );
 };
 
@@ -127,11 +153,14 @@ function AppInner() {
       routeName === 'DogProfileResult' ||
       routeName === 'ProfileInfo' ||
       routeName === 'MissPost' ||
+      routeName === 'MissDetail' ||
+      routeName === 'FoundDetail' ||
       routeName === 'FoundPost' ||
       routeName === 'FoundCameraGuide' ||
       routeName === 'FoundDogNoseCamera' ||
       routeName === 'FoundResultFail' ||
-      routeName === 'FoundResultSuccess'
+      routeName === 'FoundResultSuccess' ||
+      routeName === 'Notification'
     ) {
       return false;
     }
@@ -162,7 +191,7 @@ function AppInner() {
       />
       <Tab.Screen
         name="Health"
-        component={Health}
+        component={HealthStack}
         options={{
           title: '건강 일지',
           tabBarIcon: HealthTabBarIcon,

@@ -38,3 +38,33 @@ export const postAlarmApi = ({
 
   return axios(postAlarmConfig);
 };
+
+export const getAlarmApi = ({accessToken}: {accessToken: string}) => {
+  const getAlarmConfig = {
+    method: 'get',
+    url: '/alarm',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  };
+
+  return axios(getAlarmConfig);
+};
+
+export const patchAlarmApi = ({
+  accessToken,
+  alarmId,
+}: {
+  accessToken: string;
+  alarmId: string;
+}) => {
+  const patchAlarmConfig = {
+    method: 'patch',
+    url: `/alarm/${alarmId}`,
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  };
+
+  return axios(patchAlarmConfig);
+};

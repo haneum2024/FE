@@ -34,7 +34,9 @@ const MissDetail = ({route}: MissDetailProps) => {
   if (!missDetail) {
     return (
       <View style={styles.loadingContainer}>
-        <CustomText>Loading...</CustomText>
+        <CustomText weight="600" style={styles.title}>
+          삭제된 게시물입니다
+        </CustomText>
       </View>
     );
   }
@@ -112,7 +114,7 @@ const MissDetail = ({route}: MissDetailProps) => {
 
       <View style={styles.subTitleContainer}>
         <CustomText weight="600" style={styles.subTitle}>
-          유기견 정보
+          유실견 정보
         </CustomText>
       </View>
       <View style={styles.line}>

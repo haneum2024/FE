@@ -149,7 +149,7 @@ const FoundPost = () => {
       });
       setIsLoading(false);
 
-      navigation.navigate('MissFoundMain');
+      navigation.navigate('MissFoundMain', {routeName: 'Found'});
     } catch (error) {
       console.log(error);
     }
@@ -165,7 +165,7 @@ const FoundPost = () => {
           </CustomText>
         </View>
         <CustomText weight="700" style={styles.title}>
-          유기견을 발견했어요
+          유실견을 발견했어요
         </CustomText>
 
         <View style={styles.group}>

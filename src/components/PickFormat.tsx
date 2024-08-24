@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     color: color.gray[300],
   },
   item: {
-    fontSize: 13,
+    fontSize: 14,
     color: color.gray[950],
   },
   input: {

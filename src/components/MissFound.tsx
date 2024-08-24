@@ -33,7 +33,7 @@ const MissFound = () => {
       </CustomText>
       <View style={styles.iconContainer}>
         <IconBox
-          label={'유기견 발견'}
+          label={'유실견 발견'}
           text={'주인을 찾아요'}
           icon={<SearchNoticeIcon width={40} height={40} />}
           onPress={moveToFoundPage}
