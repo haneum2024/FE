@@ -37,9 +37,9 @@ export const getNfts = async () => {
       .catch(errors => console.log(errors));
 };
 
-/**
+/** 이거 씀
  * 강아지 정보 하나
- * @returns {Promise<{image: *, name: *, description: *, attributes: [{value: *, trait_type: string},{display_type: string, value: number, trait_type: string}]}>}
+ * @returns nftObject
  */
 export const getDogNft = async () => {
   const accessToken = await getAccessToken();
@@ -60,6 +60,10 @@ export const getDogNft = async () => {
       description: nftData[7], // "귀여움"
       image: nftData[8], // "image URL"
       name: nftData[2], // "해피"
+      birthDate: nftData[4], // "2021-10-05"
+      gender:  nftData[5], // "M"
+      address: userAddress,
+      openseaAddress: `https://testnets.opensea.io/assets/sepolia/${contractAddress}/${nftData[0].toString()}`,
       attributes: [
         {
           trait_type: "Gender",
@@ -108,6 +112,7 @@ const createNftJsonString = (name, image, birthDate, gender) => {
 
 
 /**
+ * 이거 씀
  * NFT 생성
  * @param name
  * @param breed
