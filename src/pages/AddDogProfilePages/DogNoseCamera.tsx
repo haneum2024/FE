@@ -1,127 +1,111 @@
-import React, {useState, useRef, useEffect} from 'react';
-import {Dimensions, StyleSheet, View} from 'react-native';
-import {RNCamera} from 'react-native-camera';
-import {AnimatedCircularProgress} from 'react-native-circular-progress';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {RouteProp} from '@react-navigation/native';
-
+import React, { useState, useRef, useEffect } from 'react';
+import { Button, Dimensions, Image, StyleSheet, View } from 'react-native';
+import { RNCamera } from 'react-native-camera';
+import { AnimatedCircularProgress } from 'react-native-circular-progress';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RouteProp } from '@react-navigation/native';
+import WebSocket from 'react-native-websocket';
 import color from '../../styles/color';
-import {AddDogPageNavigation} from '../../../types/navigation';
+import { AddDogPageNavigation } from '../../../types/navigation';
+import { Text, TextInput } from 'react-native-paper';
 
 interface DogNoseCameraType {
   navigation: StackNavigationProp<AddDogPageNavigation, 'DogNoseCamera'>;
   route: RouteProp<AddDogPageNavigation, 'DogNoseCamera'>;
 }
 
-const DogNoseCamera = ({navigation, route}: DogNoseCameraType) => {
-  const {
-    dogName,
-    dogBreed,
-    dogGender,
-    isNeutered,
-    dogBirth,
-    dogIntroduction,
-    base64Image,
-    name,
-    introduction,
-    address,
-    base64ProfileImage,
-  } = route.params;
+const ObjectTracker = () => {
+  const [hasPermission,] = useState<any | null>('garanted');
+  const [label, setLabel] = useState('');
+  const [processedImage, setProcessedImage] = useState<any | null>(null);
+  const cameraRef = useRef<any | null>(null);
+  const wsRef = useRef<any | null>(null);
 
-  const [photos, setPhotos] = useState<string[]>([]);
-  const [fillAmount, setFillAmount] = useState(0);
-  const cameraRef = useRef<RNCamera>(null);
+  // useEffect(() => {
+  //   (async () => {
+  //     const { status } = await Camera.requestCameraPermissionsAsync();
+  //     setHasPermission(status === 'granted');
+  //   })();
+  // }, []);
 
-  const takePicture = async () => {
-    if (cameraRef.current && photos.length < 5) {
-      const options = {
-        quality: 1,
+  useEffect(() => {
+    wsRef.current = new WebSocket('ws://your-server-ip:8000/ws');
+    wsRef.current.onmessage = (event: any) => {
+      setProcessedImage(event.data);
+    };
+
+    return () => {
+      if (wsRef.current) {
+        wsRef.current.close();
+      }
+    };
+  }, []);
+
+  const captureAndSendFrame = async () => {
+    if (cameraRef.current && wsRef.current) {
+      const photo = await cameraRef.current.takePictureAsync({
+        quality: 0.5,
         base64: true,
-        pauseAfterCapture: false,
-      };
-      const data = await cameraRef.current.takePictureAsync(options);
-      setPhotos(prevPhotos => [...prevPhotos, data.uri]);
-      console.log('사진 촬영', data.uri);
+      });
 
-      setFillAmount(prevFill => Math.min(prevFill + 20, 100));
+      wsRef.current.send(`data:image/jpeg;base64,${photo.base64}`);
+    }
+  };
+
+  const setTrackingLabel = async () => {
+    try {
+      await fetch('http://your-server-ip:8000/input_label', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ label }),
+      });
+    } catch (error) {
+      console.error('Error setting label:', error);
     }
   };
 
   useEffect(() => {
-    // 예시: 2초마다 자동으로 사진 촬영
-    const interval = setInterval(() => {
-      if (photos.length < 5) {
-        takePicture();
-      } else {
-        clearInterval(interval);
-      }
-    }, 2000);
+    const intervalId = setInterval(captureAndSendFrame, 1000); // Send frame every second
+    return () => clearInterval(intervalId);
+  }, []);
 
-    return () => clearInterval(interval);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [photos]);
-
-  const moveToNextPage = () => {
-    console.log('사진 촬영 완료');
-    navigation.navigate('DogProfileResult', {
-      dogName,
-      dogBreed,
-      dogGender,
-      isNeutered,
-      dogBirth,
-      dogIntroduction,
-      base64Image,
-      name,
-      introduction,
-      address,
-      base64ProfileImage,
-    });
-  };
+  if (hasPermission === null) {
+    return <View />;
+  }
+  if (hasPermission === false) {
+    return <Text>No access to camera</Text>;
+  }
 
   return (
-    <View style={styles.container}>
-      <RNCamera
-        ref={cameraRef}
-        style={styles.preview}
-        type={RNCamera.Constants.Type.back}
-        flashMode={RNCamera.Constants.FlashMode.off}
-        captureAudio={false}>
-        <View style={styles.overlay}>
-          <AnimatedCircularProgress
-            size={Dimensions.get('window').width / 2.5}
-            width={15}
-            fill={fillAmount}
-            duration={500}
-            tintColor={color.blue[600]}
-            onAnimationComplete={() => {
-              if (fillAmount === 100) {
-                moveToNextPage();
-              }
-            }}
-            backgroundColor={color.white + '80'} // opacity 50%
-          />
-        </View>
-      </RNCamera>
+    <View style={{ flex: 1 }}>
+      <RNCamera style={{ flex: 1 }} ref={cameraRef} />
+      <View
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          padding: 20,
+        }}>
+        <TextInput
+          placeholder="Enter label to track"
+          value={label}
+          onChangeText={setLabel}
+          style={{ backgroundColor: 'white', padding: 10, marginBottom: 10 }}
+        />
+        <Button title="Set Tracking Label" onPress={setTrackingLabel} />
+      </View>
+      {processedImage && (
+        <Image
+          source={{ uri: processedImage }}
+          style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}
+          resizeMode="contain"
+        />
+      )}
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    backgroundColor: color.gray[50],
-  },
-  preview: {
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
-  },
-  overlay: {
-    ...StyleSheet.absoluteFillObject,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
-
-export default DogNoseCamera;
+export default ObjectTracker;
