@@ -44,7 +44,7 @@ const Header = ({navigation}: HeaderProps) => {
   };
 
   const hasUnreadNotifications = notifications.some(
-    notification => !notification.read,
+    (notification: any) => !notification.read,
   );
 
   return (
