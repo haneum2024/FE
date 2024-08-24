@@ -89,8 +89,9 @@ function MyInfo() {
                 '2023-12-24',
                 'M',
                 true,
-                'ㅋㅋㅋㅋㅋㅋ',
-                'https://happymaru-bucket.s3.ap-northeast-2.amazonaws.com/18bf77d6-bb99-4718-aac7-56452be931b9.png'
+                'description',
+                'https://happymaru-bucket.s3.ap-northeast-2.amazonaws.com/18bf77d6-bb99-4718-aac7-56452be931b9.png',
+                  ['nose data image url1', "nose data image url2"]
               )
             }>
             <CustomText weight="500">create dog 확인</CustomText>

@@ -3,6 +3,7 @@ import contractAbi from '../assets/json/HappyMaru.json';
 import {ADMIN_PRIVATE_KEY, INFURA_ENDPOINT,} from 'react-native-dotenv';
 import {getAccessToken} from '../storage/auth';
 import {getUserApi} from '../api/userApi';
+import {birthday} from "../../.yarn/releases/yarn-1.22.22";
 
 console.log(INFURA_ENDPOINT);
 const web3 = new Web3(new Web3.providers.HttpProvider(INFURA_ENDPOINT));
@@ -50,6 +51,7 @@ export const getDogNft = async () => {
 
     // 주어진 배열을 객체 형식으로 변환
     const nftObject = {
+      id: nftData[0],
       description: nftData[7], // "귀여움"
       image: nftData[8], // "image URL"
       name: nftData[2], // "해피"
@@ -61,7 +63,7 @@ export const getDogNft = async () => {
         {
           display_type: "date",
           trait_type: "BirthDate",
-          value: Math.floor(new Date(nftData[4]).getTime() / 1000), // "2021-10-01" -> epoch time
+          value: convertDateToEpoch(birthday), // "2021-10-01" -> epoch time
         },
       ],
     };
@@ -109,6 +111,7 @@ const createNftJsonString = (name, image, birthDate, gender) => {
  * @param neutraled
  * @param description
  * @param image
+ * @param noseDate
  * @returns {Promise<string>}
  */
 export const createDogInfo = async (
@@ -118,7 +121,8 @@ export const createDogInfo = async (
     gender,
     neutraled,
     description,
-    image
+    image,
+    noseData
 ) => {
   const accessToken = await getAccessToken();
 
@@ -142,6 +146,7 @@ export const createDogInfo = async (
       neutraled,
       description,
       image,
+      noseData,
       tokenUri,
       userAddress // nft 발급 받게 되는 user
   );
