@@ -17,7 +17,7 @@ import {logout} from '../store/reducers/authReducer';
 import {AppDispatch} from '../store';
 import CustomText from '../components/CustomText';
 import {getAccessToken, removeAccessToken} from '../storage/auth';
-import {createDogInfo, getAccount, getNfts} from '../services/web3Service';
+import {createDogInfo, getAccount, getDogNft, getNfts} from '../services/web3Service';
 import {getFCMToken} from '../utils/getFCMToken';
 
 GoogleSignin.configure({
@@ -66,21 +66,31 @@ function MyInfo() {
           </Pressable>
           <Pressable
             style={styles.button}
-            onPress={async () => await getNfts()}>
-            <CustomText weight="500">NFT 확인</CustomText>
+            onPress={async () => {
+              const dogNfts = await getDogNft();
+                console.log(dogNfts)
+            }}>
+            <CustomText weight="500">Dog NFT 확인</CustomText>
           </Pressable>
+            <Pressable
+                style={styles.button}
+                onPress={async () => {
+                    const nfts = await getNfts();
+                    console.log(nfts)
+                }}>
+                <CustomText weight="500">전체 NFT 확인</CustomText>
+            </Pressable>
           <Pressable
             style={styles.button}
             onPress={async () =>
               await createDogInfo(
-                '해피',
+                '마루',
                 'mix',
-                '2021-10-01',
+                '2023-12-24',
                 'M',
                 true,
-                '귀여움',
-                'image URL',
-                'tokenURI',
+                'ㅋㅋㅋㅋㅋㅋ',
+                'https://happymaru-bucket.s3.ap-northeast-2.amazonaws.com/18bf77d6-bb99-4718-aac7-56452be931b9.png'
               )
             }>
             <CustomText weight="500">create dog 확인</CustomText>
