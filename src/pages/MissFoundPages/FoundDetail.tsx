@@ -34,7 +34,9 @@ const FoundDetail = ({route}: FoundDetailProps) => {
   if (!foundDetail) {
     return (
       <View style={styles.loadingContainer}>
-        <CustomText>Loading...</CustomText>
+        <CustomText weight="600" style={styles.title}>
+          삭제된 게시물입니다
+        </CustomText>
       </View>
     );
   }
@@ -57,7 +59,7 @@ const FoundDetail = ({route}: FoundDetailProps) => {
       <View style={styles.category}>
         <BornIcon width={20} height={20} fill={color.blue[600]} />
         <CustomText weight="500" style={styles.foundText}>
-          유기견 발견
+          유실견 발견
         </CustomText>
       </View>
       <CustomText
@@ -111,7 +113,7 @@ const FoundDetail = ({route}: FoundDetailProps) => {
 
       <View style={styles.subTitleContainer}>
         <CustomText weight="600" style={styles.subTitle}>
-          유기견 정보
+          유실견 정보
         </CustomText>
       </View>
       <View style={styles.line}>

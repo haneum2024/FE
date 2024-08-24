@@ -7,13 +7,21 @@ import store, {RootState} from './src/store';
 import AppInner from './AppInner';
 import AppSignIn from './AppSignIn';
 import Splash from './src/pages/Splash';
+import AppInitialization from './src/components/AppInitialization';
 
 function MainApp() {
   const isLogin = useSelector((state: RootState) => state.auth.isLogin);
 
   return (
     <NavigationContainer>
-      {isLogin ? <AppInner /> : <AppSignIn />}
+      {isLogin ? (
+        <>
+          <AppInitialization />
+          <AppInner />
+        </>
+      ) : (
+        <AppSignIn />
+      )}
     </NavigationContainer>
   );
 }
@@ -24,7 +32,7 @@ function App() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowSplash(false);
-    }, 2000);
+    }, 1500);
 
     return () => clearTimeout(timer);
   }, []);

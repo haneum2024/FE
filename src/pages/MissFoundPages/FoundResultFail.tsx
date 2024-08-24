@@ -27,11 +27,11 @@ const FoundResultFail = () => {
         <View style={styles.category}>
           <BornIcon width={20} height={20} fill={color.blue[600]} />
           <CustomText weight="500" style={styles.foundText}>
-            유기견 발견
+            유실견 발견
           </CustomText>
         </View>
         <CustomText weight="600" style={styles.contentText}>
-          해당 유기견에 대응하는 비문 정보를 찾지 못했어요.
+          해당 유실견에 대응하는 비문 정보를 찾지 못했어요.
         </CustomText>
       </View>
       <View style={styles.bottomContent}>

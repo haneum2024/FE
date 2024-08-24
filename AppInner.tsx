@@ -38,6 +38,8 @@ import {
   ReportDogPageNavigation,
 } from './types/navigation';
 import Notification from './src/pages/Notification';
+import FoundDetail from './src/pages/MissFoundPages/FoundDetail';
+import MissDetail from './src/pages/MissFoundPages/MissDetail';
 
 const Tab = createBottomTabNavigator<MainPageNavigation>();
 const AddDogStack = createStackNavigator<AddDogPageNavigation>();
@@ -81,6 +83,8 @@ const HomeStack = () => {
       <ReportDogStack.Screen name="Miss" component={Miss} />
       <ReportDogStack.Screen name="MissPost" component={MissPost} />
       <ReportDogStack.Screen name="Found" component={Found} />
+      <ReportDogStack.Screen name="FoundDetail" component={FoundDetail} />
+      <ReportDogStack.Screen name="MissDetail" component={MissDetail} />
     </AddDogStack.Navigator>
   );
 };
@@ -115,6 +119,8 @@ const MissFoundStack = () => {
       />
       <AddDogStack.Screen name="HomeMain" component={Home} />
       <ReportDogStack.Screen name="Notification" component={Notification} />
+      <ReportDogStack.Screen name="FoundDetail" component={FoundDetail} />
+      <ReportDogStack.Screen name="MissDetail" component={MissDetail} />
     </ReportDogStack.Navigator>
   );
 };
@@ -128,6 +134,8 @@ const HealthStack = () => {
       }}>
       <HealthDogStack.Screen name="HealthMain" component={Health} />
       <HealthDogStack.Screen name="Notification" component={Notification} />
+      <ReportDogStack.Screen name="FoundDetail" component={FoundDetail} />
+      <ReportDogStack.Screen name="MissDetail" component={MissDetail} />
     </HealthDogStack.Navigator>
   );
 };
@@ -145,6 +153,8 @@ function AppInner() {
       routeName === 'DogProfileResult' ||
       routeName === 'ProfileInfo' ||
       routeName === 'MissPost' ||
+      routeName === 'MissDetail' ||
+      routeName === 'FoundDetail' ||
       routeName === 'FoundPost' ||
       routeName === 'FoundCameraGuide' ||
       routeName === 'FoundDogNoseCamera' ||

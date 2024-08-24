@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
   },
   divider: {
     marginVertical: 8,
-    color: color.gray[100],
+    backgroundColor: color.gray[100],
   },
   button: {
     borderWidth: 1,

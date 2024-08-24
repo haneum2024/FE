@@ -174,7 +174,7 @@ function Miss() {
         style={styles.reportButton}
         onPress={moveToPostPage}
         activeOpacity={0.8}>
-        <ReportIcon />
+        <ReportIcon fill={color.white} />
       </TouchableOpacity>
       {isShowNotice && (
         <View style={styles.noticeTooltip}>

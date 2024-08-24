@@ -73,7 +73,7 @@ const MissFoundTab = ({routeName}: {routeName: 'Miss' | 'Found'}) => (
       component={FoundStack}
       options={{
         tabBarIcon: ProfileTabBarIcon,
-        tabBarLabel: '유기견 발견',
+        tabBarLabel: '유실견 발견',
         tabBarLabelStyle: {fontSize: 14, fontWeight: '500'},
       }}
     />

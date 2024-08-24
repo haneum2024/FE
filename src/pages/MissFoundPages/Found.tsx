@@ -162,7 +162,7 @@ function Found() {
         style={styles.reportButton}
         onPress={moveToPostPage}
         activeOpacity={0.8}>
-        <ReportIcon />
+        <ReportIcon fill={color.white} />
       </TouchableOpacity>
     </View>
   );

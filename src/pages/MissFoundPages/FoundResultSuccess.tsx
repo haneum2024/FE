@@ -60,7 +60,7 @@ const FoundResultSuccess = () => {
           </CustomText>
         </View>
         <CustomText weight="600" style={styles.contentText}>
-          유기견의 보호자에게 연락을 취해주세요.
+          유실견의 보호자에게 연락을 취해주세요.
         </CustomText>
         <View style={styles.infoContainer}>
           <View style={styles.line}>
@@ -111,15 +111,15 @@ const FoundResultSuccess = () => {
           </CustomText>
           <CustomText weight="500" style={styles.exampleText}>
             ex. 저는 [홍길동]이고, 오늘 [발견한 날짜]에 [발견한 장소]에서
-            유기견을 발견했습니다.
+            유실견을 발견했습니다.
           </CustomText>
           <View style={styles.subTitleContainer}>
             <CustomText weight="600" style={styles.subTitle}>
-              2. 유기견의 상태 설명
+              2. 유실견의 상태 설명
             </CustomText>
           </View>
           <CustomText weight="500" style={styles.subTitleText}>
-            유기견의 현재 상태와 건강 상태를 설명하세요.{'\n'}
+            유실견의 현재 상태와 건강 상태를 설명하세요.{'\n'}
             만약 동물병원에 데려갔다면 그 정보도 포함하세요.
           </CustomText>
           <CustomText weight="500" style={styles.exampleText}>
@@ -132,10 +132,10 @@ const FoundResultSuccess = () => {
             </CustomText>
           </View>
           <CustomText weight="500" style={styles.subTitleText}>
-            유기견을 돌려주는 방법과 장소를 주인과 협의하세요.
+            유실견을 돌려주는 방법과 장소를 주인과 협의하세요.
           </CustomText>
           <CustomText weight="500" style={styles.exampleText}>
-            ex. 언제 어디서 유기견을 데려가실 수 있을지 말씀해주시면 그에 맞춰
+            ex. 언제 어디서 유실견을 데려가실 수 있을지 말씀해주시면 그에 맞춰
             준비하겠습니다.
           </CustomText>
         </View>

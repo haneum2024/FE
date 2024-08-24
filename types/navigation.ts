@@ -46,11 +46,15 @@ export type AddDogPageNavigation = {
   DogNoseCamera: DogNoseCameraType;
   DogProfileResult: DogProfileResultType;
   Notification: undefined;
+  MissDetail: {id: string};
+  FoundDetail: {id: string};
 };
 
 export type HealthPageNavigation = {
   HealthMain: undefined;
   Notification: undefined;
+  MissDetail: {id: string};
+  FoundDetail: {id: string};
 };
 
 export type ReportDogPageNavigation = {
