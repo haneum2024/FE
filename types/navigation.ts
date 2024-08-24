@@ -45,31 +45,36 @@ export type AddDogPageNavigation = {
   CameraGuide: CameraGuideType;
   DogNoseCamera: DogNoseCameraType;
   DogProfileResult: DogProfileResultType;
+  Notification: undefined;
+};
+
+export type HealthPageNavigation = {
+  HealthMain: undefined;
+  Notification: undefined;
 };
 
 export type ReportDogPageNavigation = {
   MissFoundMain: {routeName: 'Miss' | 'Found'};
   Miss: undefined;
   MissPost: undefined;
+  MissDetail: {id: string};
   Found: undefined;
   FoundCameraGuide: undefined;
   FoundDogNoseCamera: undefined;
+  FoundDetail: {id: string};
   FoundPost: undefined;
   FoundResult: undefined;
   FoundResultFail: undefined;
   FoundResultSuccess: undefined;
-};
-
-export type MissFoundDetailType = {
-  id: string;
+  Notification: undefined;
 };
 
 export type FoundDogPageNavigation = {
   FoundBoard: undefined;
-  FoundDetail: MissFoundDetailType;
+  FoundDetail: {id: string};
 };
 
 export type MissDogPageNavigation = {
   MissBoard: undefined;
-  MissDetail: MissFoundDetailType;
+  MissDetail: {id: string};
 };

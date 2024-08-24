@@ -113,7 +113,7 @@ function Home() {
   return (
     <PaperProvider>
       <ScrollView style={styles.homeContainer}>
-        <Header />
+        <Header navigation={navigation} />
         <View style={styles.swiperContainer}>
           <Swiper loop={true} showsPagination={false}>
             <TouchableOpacity

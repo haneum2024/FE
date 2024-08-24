@@ -149,7 +149,7 @@ const FoundPost = () => {
       });
       setIsLoading(false);
 
-      navigation.navigate('MissFoundMain');
+      navigation.navigate('MissFoundMain', {routeName: 'Found'});
     } catch (error) {
       console.log(error);
     }

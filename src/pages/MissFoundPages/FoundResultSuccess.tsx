@@ -23,7 +23,7 @@ const FoundResultSuccess = () => {
   const [foundTipModalOpen, setFoundTipModalOpen] = useState(false);
 
   const moveToMainPage = () => {
-    navigation.navigate('MissFoundMain');
+    navigation.navigate('MissFoundMain', {routeName: 'Found'});
   };
 
   const copyNumber = () => {

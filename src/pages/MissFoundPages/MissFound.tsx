@@ -1,8 +1,11 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import {createStackNavigator} from '@react-navigation/stack';
-import {RouteProp} from '@react-navigation/native';
+import {
+  createStackNavigator,
+  StackNavigationProp,
+} from '@react-navigation/stack';
+import {RouteProp, useNavigation} from '@react-navigation/native';
 import Header from '../../components/Header';
 import BornIcon from '../../components/Icons/BornIcon';
 import ProfileIcon from '../../components/Icons/ProfileIcon';
@@ -86,17 +89,22 @@ const MissFoundTab = ({routeName}: {routeName: 'Miss' | 'Found'}) => (
   </TopTab.Navigator>
 );
 
+type MissFoundNavigation = StackNavigationProp<
+  ReportDogPageNavigation,
+  'Notification'
+>;
+
 function MissFound({
   route,
 }: {
   route?: RouteProp<ReportDogPageNavigation, 'MissFoundMain'>;
 }) {
-  console.log('route', route);
+  const navigation = useNavigation<MissFoundNavigation>();
   const routeName = route?.params?.routeName;
 
   return (
     <View style={styles.missFoundContainer}>
-      <Header />
+      <Header navigation={navigation} />
       <MissFoundTab routeName={routeName || 'Found'} />
     </View>
   );
