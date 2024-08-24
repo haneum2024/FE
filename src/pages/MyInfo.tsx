@@ -83,6 +83,7 @@ function MyInfo() {
             <Pressable
                 style={styles.button}
                 onPress={async () =>
+                    // 비문 데이터는 S3에 일단 넣는 것으로 진행 있는 api 사용
                     await createDogInfo(
                         '마루',
                         'mix',
