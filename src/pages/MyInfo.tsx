@@ -18,21 +18,11 @@ import {AppDispatch} from '../store';
 import CustomText from '../components/CustomText';
 import {getAccessToken, removeAccessToken} from '../storage/auth';
 import {createDogInfo, getAccount, getNfts} from '../services/web3Service';
-import messaging from '@react-native-firebase/messaging';
+import {getFCMToken} from '../utils/getFCMToken';
 
 GoogleSignin.configure({
   webClientId: GOOGLE_CLIENT_ID,
 });
-
-const getToken = async () => {
-  const fcmToken = await messaging().getToken();
-  if (fcmToken) {
-    console.log('FCM Token:', fcmToken);
-    // 이 토큰을 서버로 전송하거나 사용자가 로그인을 했을 때 서버에 저장할 수 있습니다.
-  } else {
-    console.log('Failed to get FCM token');
-  }
-};
 
 const getAccessTokenButton = async () => {
   const accessToken = await getAccessToken();
@@ -100,7 +90,7 @@ function MyInfo() {
             onPress={() => googleLogoutButton(dispatch)}>
             <CustomText weight="500">로그아웃</CustomText>
           </Pressable>
-          <Pressable style={styles.button} onPress={() => getToken()}>
+          <Pressable style={styles.button} onPress={() => getFCMToken()}>
             <CustomText weight="500">GET FCM TOKEN</CustomText>
           </Pressable>
           <Pressable

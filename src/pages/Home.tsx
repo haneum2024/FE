@@ -5,6 +5,7 @@ import {
   View,
   TouchableOpacity,
   Image,
+  PermissionsAndroid,
 } from 'react-native';
 import {PaperProvider} from 'react-native-paper';
 import {useDispatch, useSelector} from 'react-redux';
@@ -27,16 +28,18 @@ import {addProfile} from '../store/reducers/profileReducer';
 import {getAccessToken} from '../storage/auth';
 import color from '../styles/color';
 
-import type {MainPageNavigation} from '../../types/navigation';
+import type {ReportDogPageNavigation} from '../../types/navigation';
 import CustomText from '../components/CustomText';
 
-type MissFoundDogProp = StackNavigationProp<MainPageNavigation, 'Home'>;
+type MissFoundDogProp = StackNavigationProp<ReportDogPageNavigation>;
 
 function Home() {
   const navigation = useNavigation<MissFoundDogProp>();
   const dispatch = useDispatch();
   const isProfile = useSelector((state: RootState) => state.profile.isProfile);
 
+  const [message, setMessage] = useState('');
+  const [isShowMessage, setIsShowMessage] = useState(false);
   const [ownerName, setOwnerName] = useState('');
   const [ownerIntroduction, setOwnerIntroduction] = useState('');
   const [ownerProfileImage, setOwnerProfileImage] = useState('');
@@ -77,16 +80,34 @@ function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    requestNotificationPermission();
+  }, []);
+
+  async function requestNotificationPermission() {
+    await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+    );
+  }
+
   const handleImagePress = (index: number) => {
     if (index === 0) {
-      navigation.navigate('MissFound');
+      navigation.navigate('MissFoundMain', {routeName: 'Found'});
     } else if (index === 1) {
-      navigation.navigate('MissFound');
+      navigation.navigate('MissFoundMain', {routeName: 'Miss'});
     }
   };
 
   const handleDate = (date: string) => {
     setSeletedDate(date);
+  };
+
+  const handleMessage = (text: string) => {
+    setMessage(text);
+    setIsShowMessage(true);
+    setTimeout(() => {
+      setIsShowMessage(false);
+    }, 3000);
   };
 
   return (
@@ -137,11 +158,29 @@ function Home() {
         <CustomText weight="700" style={styles.title}>
           건강 일지
         </CustomText>
-        <WeeklyCalendar handleDate={handleDate} />
-        <Status date={selectedDate} />
-        <Comment date={selectedDate} />
+        {isProfile ? (
+          <>
+            <WeeklyCalendar handleDate={handleDate} />
+            <Status date={selectedDate} handleMessage={handleMessage} />
+            <Comment date={selectedDate} handleMessage={handleMessage} />
+          </>
+        ) : (
+          <View style={styles.noticeContainer}>
+            <CustomText weight="700" style={styles.noticeTitle}>
+              건강일지 작성은 프로필 생성 후 이용 가능합니다
+            </CustomText>
+          </View>
+        )}
+
         <MissFound />
       </ScrollView>
+      {isShowMessage && (
+        <View style={styles.noticeTooltip}>
+          <CustomText weight="500" style={styles.noticeText}>
+            {message}
+          </CustomText>
+        </View>
+      )}
     </PaperProvider>
   );
 }
@@ -169,12 +208,40 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: color.gray[100],
   },
+  noticeContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: 24,
+    marginVertical: 8,
+    height: 200,
+    borderRadius: 20,
+    backgroundColor: color.gray[100],
+  },
+  noticeTitle: {
+    fontSize: 16,
+    color: color.gray[500],
+  },
   title: {
     fontSize: 22,
     color: color.gray[950],
     marginHorizontal: 24,
     marginTop: 22,
     marginBottom: 4,
+  },
+  noticeTooltip: {
+    position: 'absolute',
+    bottom: 30,
+    left: '35%',
+    backgroundColor: color.blue[900],
+    borderRadius: 4,
+    paddingVertical: 6,
+    paddingHorizontal: 14,
+  },
+  noticeText: {
+    fontSize: 12,
+    color: color.white,
+    textAlign: 'center',
   },
 });
 

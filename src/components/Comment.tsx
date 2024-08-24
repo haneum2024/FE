@@ -7,19 +7,24 @@ import {
   TouchableOpacity,
   Keyboard,
 } from 'react-native';
-import {ActivityIndicator, Button, Portal, Snackbar} from 'react-native-paper';
+import {ActivityIndicator, Button} from 'react-native-paper';
 
 import {getCommentApi, postCommentApi} from '../api/commentApi';
 import {getAccessToken} from '../storage/auth';
 import color from '../styles/color';
 import CustomText from './CustomText';
 
-const Comment = ({date}: {date: string}) => {
+const Comment = ({
+  date,
+  handleMessage,
+}: {
+  date: string;
+  handleMessage: (text: string) => void;
+}) => {
   const [isFocused, setIsFocused] = useState(false);
   const [isEditMode, setIsEditMode] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [commentText, setCommentText] = useState('');
-  const [visible, setVisible] = useState(false);
 
   const handleCommentChange = (text: string) => {
     setCommentText(text);
@@ -39,7 +44,7 @@ const Comment = ({date}: {date: string}) => {
         comment: commentText,
       });
       setIsLoading(false);
-      setVisible(true);
+      handleMessage('코멘트 작성 완료!');
       setIsFocused(false);
       setIsEditMode(false);
     } catch (error) {
@@ -135,22 +140,6 @@ const Comment = ({date}: {date: string}) => {
             )}
           </Button>
         )}
-        <Portal>
-          <Snackbar
-            visible={visible}
-            onDismiss={() => setVisible(false)}
-            action={{
-              label: '확인',
-              onPress: () => {
-                setVisible(false);
-              },
-              labelStyle: {color: color.white},
-            }}
-            duration={3000}
-            style={styles.snackbarContainer}>
-            코멘트 작성 완료!
-          </Snackbar>
-        </Portal>
       </View>
     </TouchableWithoutFeedback>
   );
@@ -212,10 +201,6 @@ const styles = StyleSheet.create({
     color: color.gray[800],
     backgroundColor: color.blue[50],
     borderRadius: 10,
-  },
-  snackbarContainer: {
-    backgroundColor: color.orange[600],
-    borderRadius: 8,
   },
 });
 

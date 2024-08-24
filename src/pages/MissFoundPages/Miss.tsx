@@ -2,14 +2,17 @@ import React, {useCallback, useRef, useState} from 'react';
 import {View, ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
 
 import {getOtherMissApi, getUserMissApi} from '../../api/petSearchApi';
 import MissCard from '../../components/MissCard';
 import ReportIcon from '../../components/Icons/ReportIcon';
 import {getAccessToken} from '../../storage/auth';
+import {RootState} from '../../store';
 import color from '../../styles/color';
 import TopArrowIcon2 from '../../img/TopArrowIcon2.svg';
 import type {ReportDogPageNavigation} from '../../../types/navigation';
+import CustomText from '../../components/CustomText';
 
 type MissNavigationProp = StackNavigationProp<
   ReportDogPageNavigation,
@@ -18,11 +21,13 @@ type MissNavigationProp = StackNavigationProp<
 
 function Miss() {
   const navigation = useNavigation<MissNavigationProp>();
+  const isProfile = useSelector((state: RootState) => state.profile.isProfile);
 
   const scrollViewRef = useRef<ScrollView>(null);
   const [userMissBoard, setUserMissBoard] = useState<any[]>([]);
   const [otherMissBoard, setOtherMissBoard] = useState<any[]>([]);
   const [showButton, setShowButton] = useState(false);
+  const [isShowNotice, setIsShowNotice] = useState(false);
 
   const scrollToTop = () => {
     if (scrollViewRef.current) {
@@ -36,7 +41,14 @@ function Miss() {
   };
 
   const moveToPostPage = () => {
-    navigation.navigate('MissPost');
+    if (isProfile) {
+      navigation.navigate('MissPost');
+    } else {
+      setIsShowNotice(true);
+      setTimeout(() => {
+        setIsShowNotice(false);
+      }, 3000);
+    }
   };
 
   const callbackFunction = () => {
@@ -51,11 +63,11 @@ function Miss() {
       });
       const otherMissPost = await getOtherMissApi({
         accessToken: accessToken as string,
-        page: 1,
+        page: 0,
         size: 100,
       });
       setUserMissBoard(userMissPost.data);
-      setOtherMissBoard(otherMissPost.data);
+      setOtherMissBoard(otherMissPost.data.content);
     } catch (error) {
       console.log(error);
     }
@@ -164,6 +176,13 @@ function Miss() {
         activeOpacity={0.8}>
         <ReportIcon />
       </TouchableOpacity>
+      {isShowNotice && (
+        <View style={styles.noticeTooltip}>
+          <CustomText weight="500" style={styles.noticeText}>
+            프로필 생성 후 작성이 가능해요
+          </CustomText>
+        </View>
+      )}
     </View>
   );
 }
@@ -193,6 +212,20 @@ const styles = StyleSheet.create({
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  noticeTooltip: {
+    position: 'absolute',
+    bottom: 30,
+    right: 80,
+    backgroundColor: color.orange[600],
+    borderRadius: 4,
+    paddingVertical: 6,
+    paddingHorizontal: 14,
+  },
+  noticeText: {
+    fontSize: 12,
+    color: color.white,
+    textAlign: 'center',
   },
 });
 

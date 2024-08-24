@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
     color: color.gray[700],
   },
   input: {
+    fontSize: 13,
     paddingVertical: 12,
     paddingHorizontal: 16,
     borderWidth: 1,

@@ -15,11 +15,11 @@ import DateTimePick from '../../components/DateTimePick';
 import InputFormat from '../../components/InputFormat';
 import FemaleIcon from '../../components/Icons/FemaleIcon';
 import MaleIcon from '../../components/Icons/MaleIcon';
-
-import type {AddDogPageNavigation} from '../../../types/navigation';
 import CustomText from '../../components/CustomText';
 import InputImage from '../../components/InputImage';
-
+import PickFormat from '../../components/PickFormat';
+import dogBreeds from '../../utils/dogBreeds';
+import type {AddDogPageNavigation} from '../../../types/navigation';
 interface DogInfoProps {
   navigation: StackNavigationProp<AddDogPageNavigation, 'DogInfo'>;
 }
@@ -95,9 +95,10 @@ const DogInfo = ({navigation}: DogInfoProps) => {
         handleValue={handleDogName}
       />
 
-      <InputFormat
+      <PickFormat
+        datas={dogBreeds}
         title="견종"
-        placeholder="반려견의 견종을 알려주세요."
+        placeholder="견종 선택"
         value={dogBreed}
         handleValue={handleDogBreed}
       />
