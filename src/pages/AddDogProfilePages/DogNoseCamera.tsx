@@ -5,9 +5,14 @@ import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import WebSocket from 'react-native-websocket';
+import useWebSocket from 'react-native-use-websocket';
 import color from '../../styles/color';
 import { AddDogPageNavigation } from '../../../types/navigation';
 import { Text, TextInput } from 'react-native-paper';
+import * as timers from "node:timers";
+
+const socketUrl = 'wsip';
+
 
 interface DogNoseCameraType {
   navigation: StackNavigationProp<AddDogPageNavigation, 'DogNoseCamera'>;
@@ -21,40 +26,34 @@ const ObjectTracker = () => {
   const cameraRef = useRef<any | null>(null);
   const wsRef = useRef<any | null>(null);
 
-  // useEffect(() => {
-  //   (async () => {
-  //     const { status } = await Camera.requestCameraPermissionsAsync();
-  //     setHasPermission(status === 'granted');
-  //   })();
-  // }, []);
-
-  useEffect(() => {
-    wsRef.current = new WebSocket('ws://your-server-ip:8000/ws');
-    wsRef.current.onmessage = (event: any) => {
-      setProcessedImage(event.data);
-    };
-
-    return () => {
-      if (wsRef.current) {
-        wsRef.current.close();
-      }
-    };
-  }, []);
+  const {
+    sendMessage,
+    sendJsonMessage,
+    lastMessage,
+    lastJsonMessage,
+    readyState,
+    getWebSocket
+  } = useWebSocket(socketUrl, {
+    onOpen: () => console.log('opened'),
+    shouldReconnect: (closeEvent) => true,
+  });
 
   const captureAndSendFrame = async () => {
-    if (cameraRef.current && wsRef.current) {
+    if (cameraRef.current) { 
       const photo = await cameraRef.current.takePictureAsync({
         quality: 0.5,
         base64: true,
       });
-
-      wsRef.current.send(`data:image/jpeg;base64,${photo.base64}`);
+      setTimeout(() => {
+        sendMessage(`data:image/jpeg;base64,${photo.base64}`)
+      }, 500)
+      console.log(lastMessage)
     }
   };
 
   const setTrackingLabel = async () => {
     try {
-      await fetch('http://your-server-ip:8000/input_label', {
+      await fetch('ip', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -67,7 +66,7 @@ const ObjectTracker = () => {
   };
 
   useEffect(() => {
-    const intervalId = setInterval(captureAndSendFrame, 1000); // Send frame every second
+    const intervalId = setInterval(captureAndSendFrame, 1500); 
     return () => clearInterval(intervalId);
   }, []);
 
@@ -77,34 +76,18 @@ const ObjectTracker = () => {
   if (hasPermission === false) {
     return <Text>No access to camera</Text>;
   }
-
   return (
-    <View style={{ flex: 1 }}>
-      <RNCamera style={{ flex: 1 }} ref={cameraRef} />
-      <View
-        style={{
-          position: 'absolute',
-          bottom: 0,
-          left: 0,
-          right: 0,
-          padding: 20,
-        }}>
-        <TextInput
-          placeholder="Enter label to track"
-          value={label}
-          onChangeText={setLabel}
-          style={{ backgroundColor: 'white', padding: 10, marginBottom: 10 }}
-        />
-        <Button title="Set Tracking Label" onPress={setTrackingLabel} />
+      <View style={{ flex: 1 }}>
+        <RNCamera captureAudio={false} style={{ flex: 1 }} ref={cameraRef} />
+        {lastMessage && (
+            <Image
+                source={{ uri: lastMessage.data }}
+
+                style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}
+                resizeMode="contain"
+            />
+        )}
       </View>
-      {processedImage && (
-        <Image
-          source={{ uri: processedImage }}
-          style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}
-          resizeMode="contain"
-        />
-      )}
-    </View>
   );
 };
 
