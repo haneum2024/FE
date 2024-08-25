@@ -33,7 +33,7 @@ const ProfileInfo = ({navigation, route}: ProfileInfoProps) => {
   const [address, setAddress] = useState('');
   const [base64ProfileImage, setBase64ProfileImage] = useState('');
 
-  const disabledCondition = name.length === 0 || introduction.length === 0;
+  const disabledCondition = name.length === 0 || address.length === 0;
 
   const handleName = (value: string) => {
     setName(value);
@@ -78,6 +78,7 @@ const ProfileInfo = ({navigation, route}: ProfileInfoProps) => {
       <InputFormat
         title="이름"
         placeholder="주인의 이름을 알려주세요."
+        isEssential={true}
         value={name}
         handleValue={handleName}
       />
@@ -96,6 +97,7 @@ const ProfileInfo = ({navigation, route}: ProfileInfoProps) => {
           '위치 정보를 저장해두면,\n반려견 실종 시 신속하게 신고할 수 있어요.'
         }
         placeholder="거주지를 입력해주세요."
+        isEssential={true}
         value={address}
         multiline
         handleValue={handleAddress}

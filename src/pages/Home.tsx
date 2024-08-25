@@ -68,17 +68,15 @@ function Home() {
         setDogIntroduction(dogData.description);
         setDogProfileImage(dogData.imageUrl);
 
-        setIsLoading(false);
         dispatch(addProfile());
+        setIsLoading(false);
       } catch (error) {
-        console.error('Failed to fetch data:', error);
         setIsLoading(false);
       }
     };
 
     fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch, isProfile]);
 
   useEffect(() => {
     requestNotificationPermission();

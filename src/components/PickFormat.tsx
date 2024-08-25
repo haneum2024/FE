@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
@@ -11,6 +12,7 @@ const PickFormat = ({
   description,
   placeholder,
   value,
+  isEssential = false,
   handleValue,
 }: {
   datas: string[];
@@ -18,15 +20,27 @@ const PickFormat = ({
   description?: string;
   placeholder: string;
   value: string;
+  isEssential?: boolean;
   handleValue: (value: string) => void;
 }) => {
   return (
     <View style={styles.inputContainer}>
-      {title && (
-        <CustomText weight="600" style={styles.label}>
-          {title}
-        </CustomText>
-      )}
+      <View
+        style={[
+          styles.essentialContainer,
+          {justifyContent: title ? 'space-between' : 'flex-end'},
+        ]}>
+        {title && (
+          <CustomText weight="600" style={styles.label}>
+            {title}
+          </CustomText>
+        )}
+        {isEssential && (
+          <CustomText weight="500" style={styles.essential}>
+            * 필수
+          </CustomText>
+        )}
+      </View>
       {description && (
         <CustomText weight="500" style={styles.description}>
           {description}
@@ -65,8 +79,17 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 16,
-    marginBottom: 8,
     color: color.gray[950],
+  },
+  essentialContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  essential: {
+    fontSize: 13,
+    color: color.blue[400],
   },
   description: {
     fontSize: 12,

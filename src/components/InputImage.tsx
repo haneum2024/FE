@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useRef, useState} from 'react';
 import {
   Image,
@@ -24,10 +25,12 @@ import GalleryIcon from '../img/GalleryIcon.svg';
 const InputImage = ({
   title,
   text,
+  isEssential = false,
   handleImage,
 }: {
   title?: string;
   text?: string;
+  isEssential?: boolean;
   handleImage: (image: string) => void;
 }) => {
   const actionSheetRef = useRef<ActionSheetRef>(null);
@@ -116,11 +119,22 @@ const InputImage = ({
 
   return (
     <View style={styles.imageContainer}>
-      {title && (
-        <CustomText weight="600" style={styles.label}>
-          {title}
-        </CustomText>
-      )}
+      <View
+        style={[
+          styles.essentialContainer,
+          {justifyContent: title ? 'space-between' : 'flex-end'},
+        ]}>
+        {title && (
+          <CustomText weight="600" style={styles.label}>
+            {title}
+          </CustomText>
+        )}
+        {isEssential && (
+          <CustomText weight="500" style={styles.essential}>
+            * 필수
+          </CustomText>
+        )}
+      </View>
       <TouchableOpacity onPress={getImage} activeOpacity={0.8}>
         {image ? (
           <Image source={{uri: image}} style={styles.imageBox} />
@@ -167,8 +181,17 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 16,
-    marginBottom: 8,
     color: color.gray[950],
+  },
+  essentialContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  essential: {
+    fontSize: 13,
+    color: color.blue[400],
   },
   imageBox: {
     display: 'flex',

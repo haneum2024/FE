@@ -40,7 +40,6 @@ const DogInfo = ({navigation}: DogInfoProps) => {
     dogName.length === 0 ||
     dogBreed.length === 0 ||
     !isDogBirthSelected ||
-    dogIntroduction.length === 0 ||
     base64Image.length === 0;
 
   const handleDogName = (name: string) => {
@@ -91,6 +90,7 @@ const DogInfo = ({navigation}: DogInfoProps) => {
       <InputFormat
         title="반려견 이름"
         placeholder="반려견의 이름을 알려주세요."
+        isEssential={true}
         value={dogName}
         handleValue={handleDogName}
       />
@@ -99,6 +99,7 @@ const DogInfo = ({navigation}: DogInfoProps) => {
         datas={dogBreeds}
         title="견종"
         placeholder="견종 선택"
+        isEssential={true}
         value={dogBreed}
         handleValue={handleDogBreed}
       />
@@ -168,6 +169,7 @@ const DogInfo = ({navigation}: DogInfoProps) => {
         title="생년월일"
         placeholder="생년월일을 선택해주세요."
         date={dogBirth}
+        isEssential={true}
         mode="date"
         handleValue={handleDogBirth}
       />
@@ -180,7 +182,11 @@ const DogInfo = ({navigation}: DogInfoProps) => {
         handleValue={handleDogIntroduction}
       />
 
-      <InputImage title="사진" handleImage={handleDogImage} />
+      <InputImage
+        title="사진"
+        isEssential={true}
+        handleImage={handleDogImage}
+      />
 
       <Button
         mode="contained"
