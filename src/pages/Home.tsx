@@ -6,12 +6,14 @@ import {
   TouchableOpacity,
   Image,
   PermissionsAndroid,
+  Linking,
 } from 'react-native';
-import {PaperProvider} from 'react-native-paper';
+import {ActivityIndicator, Button, PaperProvider} from 'react-native-paper';
 import {useDispatch, useSelector} from 'react-redux';
 import Swiper from 'react-native-swiper';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {useNavigation} from '@react-navigation/native';
+import Modal from 'react-native-modal';
 
 import {getDogsApi, getUserApi} from '../api/userApi';
 import AddDogProfile from '../components/AddDogProfile';
@@ -23,6 +25,9 @@ import Status from '../components/Status';
 import WeeklyCalendar from '../components/WeeklyCalendar';
 import BannerImage1 from '../img/BannerImage1.png';
 import BannerImage2 from '../img/BannerImage2.png';
+import CertificateImage from '../img/CertificateImage.png';
+import CloseIcon from '../img/CloseIcon.svg';
+import SafeMarkReverseIcon from '../img/SafeMarkReverseIcon.svg';
 import {RootState} from '../store';
 import {addProfile} from '../store/reducers/profileReducer';
 import {getAccessToken} from '../storage/auth';
@@ -30,8 +35,15 @@ import color from '../styles/color';
 
 import type {ReportDogPageNavigation} from '../../types/navigation';
 import CustomText from '../components/CustomText';
+import FemaleIcon from '../components/Icons/FemaleIcon';
+import MaleIcon from '../components/Icons/MaleIcon';
+import {getDogNft} from '../services/web3Service';
 
 type MissFoundDogProp = StackNavigationProp<ReportDogPageNavigation>;
+
+interface NftInfo {
+  openseaAddress?: string;
+}
 
 function Home() {
   const navigation = useNavigation<MissFoundDogProp>();
@@ -44,11 +56,35 @@ function Home() {
   const [ownerIntroduction, setOwnerIntroduction] = useState('');
   const [ownerProfileImage, setOwnerProfileImage] = useState('');
   const [dogName, setDogName] = useState('');
+  const [dogBirth, setDogBirth] = useState('');
   const [dogGender, setDogGender] = useState('');
   const [dogIntroduction, setDogIntroduction] = useState('');
   const [dogProfileImage, setDogProfileImage] = useState('');
   const [selectedDate, setSeletedDate] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+  const [certificateModalOpen, setCertificateModalOpen] = useState(false);
+
+  const [nftInfo, setNftInfo] = useState<NftInfo | null>(null);
+
+  const modalOpen = async () => {
+    const nftObject: any = await getDogNft();
+    setNftInfo(nftObject);
+    console.log('nftObject', nftObject);
+    setCertificateModalOpen(true);
+  };
+
+  const modalClose = () => {
+    setCertificateModalOpen(false);
+  };
+
+  const moveToNFTPage = () => {
+    const url = nftInfo?.openseaAddress;
+    if (url) {
+      Linking.openURL(url).catch(err =>
+        console.error('An error occurred', err),
+      );
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -59,11 +95,12 @@ function Home() {
 
         const userData = userInfo.data;
         const dogData = dogsInfo.data[0];
-
+        console.log('dogData', dogData);
         setOwnerName(userData.name);
         setOwnerIntroduction(userData.description);
         setOwnerProfileImage(userData.profileImageUrl);
         setDogName(dogData.name);
+        setDogBirth(dogData.birthDate);
         setDogGender(dogData.gender);
         setDogIntroduction(dogData.description);
         setDogProfileImage(dogData.imageUrl);
@@ -138,15 +175,17 @@ function Home() {
         </View>
         {!isLoading ? (
           isProfile ? (
-            <ProfileCard
-              ownerName={ownerName}
-              ownerIntroduction={ownerIntroduction}
-              ownerProfileImage={ownerProfileImage}
-              dogName={dogName}
-              dogGender={dogGender}
-              dogIntroduction={dogIntroduction}
-              dogProfileImage={dogProfileImage}
-            />
+            <TouchableOpacity onPress={modalOpen} activeOpacity={0.8}>
+              <ProfileCard
+                ownerName={ownerName}
+                ownerIntroduction={ownerIntroduction}
+                ownerProfileImage={ownerProfileImage}
+                dogName={dogName}
+                dogGender={dogGender}
+                dogIntroduction={dogIntroduction}
+                dogProfileImage={dogProfileImage}
+              />
+            </TouchableOpacity>
           ) : (
             <AddDogProfile />
           )
@@ -171,6 +210,89 @@ function Home() {
         )}
 
         <MissFound />
+
+        <Modal
+          isVisible={certificateModalOpen}
+          onBackdropPress={modalClose}
+          onBackButtonPress={modalClose}
+          useNativeDriver={true}
+          hideModalContentWhileAnimating={true}
+          backdropOpacity={0.3}
+          style={styles.modal}>
+          <View style={styles.modalContent}>
+            <Image
+              source={CertificateImage}
+              style={styles.certificate}
+              resizeMode="cover"
+            />
+            <TouchableOpacity
+              onPress={modalClose}
+              activeOpacity={0.8}
+              style={styles.closeButton}>
+              <CloseIcon width={15} height={15} fill={color.white} />
+            </TouchableOpacity>
+            <View style={styles.modalInner}>
+              <View style={styles.infoContainer}>
+                <View style={styles.line}>
+                  <CustomText weight="600" style={styles.item}>
+                    반려견 이름
+                  </CustomText>
+                  <CustomText weight="500">{dogName}</CustomText>
+                </View>
+                <View style={styles.line}>
+                  <CustomText weight="600" style={styles.item}>
+                    반려견 성별
+                  </CustomText>
+                  {dogGender === 'FEMALE' ? (
+                    <FemaleIcon
+                      width={20}
+                      height={20}
+                      fill={color.orange[400]}
+                    />
+                  ) : (
+                    <MaleIcon width={20} height={20} fill={color.blue[400]} />
+                  )}
+                </View>
+                <View style={styles.line}>
+                  <CustomText weight="600" style={styles.item}>
+                    반려견 생년월일
+                  </CustomText>
+                  <CustomText weight="500">{dogBirth}</CustomText>
+                </View>
+              </View>
+
+              <View style={styles.line}>
+                <SafeMarkReverseIcon />
+                <CustomText weight="500" style={styles.wallet}>
+                  전자지갑 주소
+                </CustomText>
+                <CustomText
+                  weight="500"
+                  numberOfLines={1}
+                  ellipsizeMode="tail"
+                  style={styles.address}>
+                  {nftInfo?.openseaAddress}
+                </CustomText>
+              </View>
+
+              <Button
+                mode="contained"
+                style={styles.button}
+                onPress={moveToNFTPage}>
+                {isLoading ? (
+                  <ActivityIndicator size={25} color={color.white} />
+                ) : (
+                  '내 NFT 확인하기'
+                )}
+              </Button>
+              <View style={styles.guide}>
+                <CustomText weight="500" style={styles.guideText}>
+                  [내 정보] 탭에서도 확인이 가능해요.
+                </CustomText>
+              </View>
+            </View>
+          </View>
+        </Modal>
       </ScrollView>
       {isShowMessage && (
         <View style={styles.noticeTooltip}>
@@ -240,6 +362,79 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: color.white,
     textAlign: 'center',
+  },
+  modal: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 0,
+  },
+  modalContent: {
+    width: '100%',
+    borderRadius: 10,
+    overflow: 'hidden',
+    backgroundColor: color.white,
+  },
+  modalInner: {
+    padding: 20,
+  },
+  modalText: {
+    fontSize: 16,
+    color: color.gray[900],
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  infoContainer: {
+    marginTop: 4,
+    marginBottom: 16,
+    padding: 10,
+    borderRadius: 8,
+    gap: 6,
+    backgroundColor: color.blue[50],
+  },
+  line: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    overflow: 'hidden',
+  },
+  item: {
+    fontSize: 13,
+    color: color.blue[500],
+  },
+  wallet: {
+    fontSize: 12,
+    color: color.blue[500],
+  },
+  address: {
+    fontSize: 12,
+    color: color.gray[600],
+  },
+  certificate: {
+    width: '100%',
+  },
+  button: {
+    marginTop: 24,
+    marginBottom: 8,
+    paddingVertical: 6,
+    borderRadius: 10,
+    color: color.white,
+    backgroundColor: color.blue[600],
+  },
+  guide: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  guideText: {
+    fontSize: 12,
+    lineHeight: 16,
+    marginBottom: 12,
+    color: color.blue[400],
+  },
+  closeButton: {
+    position: 'absolute',
+    top: 25,
+    right: 25,
   },
 });
 

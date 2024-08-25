@@ -107,7 +107,7 @@ const FoundResultSuccess = () => {
               발견을 알리는 팁
             </CustomText>
             <TouchableOpacity onPress={modalClose} activeOpacity={0.8}>
-              <CloseIcon width={10} height={10} fill={color.gray[600]} />
+              <CloseIcon width={15} height={15} fill={color.gray[600]} />
             </TouchableOpacity>
           </View>
           <View style={styles.subTitleContainer}>
@@ -307,10 +307,6 @@ const styles = StyleSheet.create({
     color: color.gray[900],
     marginBottom: 20,
     textAlign: 'center',
-  },
-  closeButton: {
-    marginTop: 10,
-    backgroundColor: color.blue[600],
   },
 });
 
