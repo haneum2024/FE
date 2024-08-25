@@ -59,10 +59,7 @@ const FoundPost = () => {
     contact.length === 0 ||
     foundLocation.length === 0 ||
     !isFoundDateSelected ||
-    foundSituation.length === 0 ||
-    dogBreed.length === 0 ||
-    appearance.length === 0 ||
-    content.length === 0;
+    appearance.length === 0;
 
   const handleTitle = (input: string) => {
     setTitle(input);
@@ -173,6 +170,9 @@ const FoundPost = () => {
             <CustomText weight="600" style={styles.subTitle}>
               게시글 대표 이미지
             </CustomText>
+            <CustomText weight="500" style={styles.essential}>
+              * 필수
+            </CustomText>
           </View>
           <InputImage
             text={'반려견 사진 업로드'}
@@ -180,6 +180,7 @@ const FoundPost = () => {
           />
           <InputFormat
             placeholder="게시글의 제목을 입력해주세요."
+            isEssential={true}
             value={title}
             handleValue={handleTitle}
           />
@@ -194,12 +195,14 @@ const FoundPost = () => {
           <InputFormat
             title="이름"
             placeholder="신고자의 이름을 알려주세요."
+            isEssential={true}
             value={username}
             handleValue={handleUsername}
           />
           <InputFormat
             title="연락 수단"
             placeholder="연락 수단을 알려주세요. (카톡 아이디, 전화번호 등)"
+            isEssential={true}
             value={contact}
             handleValue={handleContact}
           />
@@ -214,6 +217,7 @@ const FoundPost = () => {
           <InputFormat
             title="발견 장소"
             placeholder="발견 위치 찾기"
+            isEssential={true}
             value={foundLocation}
             handleValue={handleFoundLocation}
           />
@@ -221,6 +225,7 @@ const FoundPost = () => {
             title="발견 일시"
             placeholder="발견 날짜와 시간을 알려주세요."
             date={foundDate}
+            isEssential={true}
             mode="datetime"
             handleValue={handleFoundDate}
           />
@@ -360,6 +365,7 @@ const FoundPost = () => {
           <InputFormat
             title="외형"
             placeholder="반려견을 쉽게 알아볼 수 있는 특징을 알려주세요."
+            isEssential={true}
             value={appearance}
             multiline
             handleValue={handleAppearance}
@@ -431,6 +437,10 @@ const styles = StyleSheet.create({
     marginBottom: 6,
   },
   subTitleContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     paddingVertical: 8,
     paddingHorizontal: 10,
     marginTop: 24,
@@ -441,6 +451,10 @@ const styles = StyleSheet.create({
   subTitle: {
     fontSize: 16,
     color: color.blue[900],
+  },
+  essential: {
+    fontSize: 13,
+    color: color.blue[400],
   },
   label: {
     fontSize: 16,

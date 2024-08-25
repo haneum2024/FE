@@ -85,7 +85,7 @@ export const addDogProfileApi = ({
   gender: 'MALE' | 'FEMALE';
   birthDate: string;
   breed: string;
-  description: string;
+  description: string | null;
   neutered: boolean;
   base64Image: string;
 }) => {
@@ -119,7 +119,7 @@ export const addUserProfileApi = ({
   accessToken: string;
   name: string;
   location: string;
-  description: string;
+  description: string | null;
   base64ProfileImage: string | null;
 }) => {
   const userProfileConfig = {

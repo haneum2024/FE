@@ -11,6 +11,7 @@ const DateTimePick = ({
   date,
   inputDate,
   mode,
+  isEssential = false,
   handleValue,
 }: {
   title: string;
@@ -18,6 +19,7 @@ const DateTimePick = ({
   date: string;
   inputDate?: string;
   mode: 'date' | 'datetime';
+  isEssential?: boolean;
   handleValue: (date: string) => void;
 }) => {
   const [open, setOpen] = useState(false);
@@ -54,9 +56,16 @@ const DateTimePick = ({
 
   return (
     <View style={styles.inputContainer}>
-      <CustomText weight="600" style={styles.label}>
-        {title}
-      </CustomText>
+      <View style={styles.essentialContainer}>
+        <CustomText weight="600" style={styles.label}>
+          {title}
+        </CustomText>
+        {isEssential && (
+          <CustomText weight="500" style={styles.essential}>
+            * 필수
+          </CustomText>
+        )}
+      </View>
       <Pressable onPress={pressBirthButton}>
         <TextInput
           value={
@@ -97,8 +106,18 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 16,
-    marginBottom: 8,
     color: color.gray[950],
+  },
+  essentialContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  essential: {
+    fontSize: 13,
+    color: color.blue[400],
   },
   input: {
     paddingVertical: 12,

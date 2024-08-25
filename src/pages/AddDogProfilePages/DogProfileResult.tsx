@@ -54,7 +54,7 @@ const DogProfileResult = ({navigation, route}: DogProfileResultType) => {
           gender: dogGender,
           neutered: isNeutered,
           birthDate: dogBirth,
-          description: dogIntroduction,
+          description: dogIntroduction === '' ? null : dogIntroduction,
           base64Image: base64Image,
         });
 
@@ -62,7 +62,7 @@ const DogProfileResult = ({navigation, route}: DogProfileResultType) => {
           accessToken: accessToken as string,
           name: name,
           location: address,
-          description: introduction,
+          description: introduction === '' ? null : introduction,
           base64ProfileImage:
             base64ProfileImage === '' ? null : base64ProfileImage,
         });

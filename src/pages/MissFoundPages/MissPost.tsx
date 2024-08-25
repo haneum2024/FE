@@ -63,10 +63,9 @@ const MissPost = () => {
     !isMissDateSelected ||
     missSituation.length === 0 ||
     dogName.length === 0 ||
-    dogBreed.length === 0 ||
     !isDogBirthSelected ||
-    appearance.length === 0 ||
-    content.length === 0;
+    dogBreed.length === 0 ||
+    appearance.length === 0;
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -216,6 +215,9 @@ const MissPost = () => {
             <CustomText weight="600" style={styles.subTitle}>
               게시글 대표 이미지
             </CustomText>
+            <CustomText weight="500" style={styles.essential}>
+              * 필수
+            </CustomText>
           </View>
           <InputImage
             text={'반려견 사진 업로드'}
@@ -223,6 +225,7 @@ const MissPost = () => {
           />
           <InputFormat
             placeholder="게시글의 제목을 입력해주세요."
+            isEssential={true}
             value={title}
             handleValue={handleTitle}
           />
@@ -234,15 +237,21 @@ const MissPost = () => {
               신고자 정보
             </CustomText>
           </View>
+          <CustomText weight="500" style={styles.guideText}>
+            안심하세요, 발견자가 강아지 인식에 성공하는 경우에만 개인정보가
+            공개돼요.
+          </CustomText>
           <InputFormat
             title="이름"
             placeholder="신고자의 이름을 알려주세요."
+            isEssential={true}
             value={username}
             handleValue={handleUsername}
           />
           <InputFormat
             title="연락처"
             placeholder="연락처를 알려주세요."
+            isEssential={true}
             value={contact}
             handleValue={handleContact}
           />
@@ -257,12 +266,14 @@ const MissPost = () => {
           <InputFormat
             title="실종 장소"
             placeholder="실종 위치 찾기"
+            isEssential={true}
             value={missLocation}
             handleValue={handleMissLocation}
           />
           <DateTimePick
             title="실종 일시"
             placeholder="실종 날짜와 시간을 알려주세요."
+            isEssential={true}
             date={missDate}
             mode="datetime"
             handleValue={handleMissDate}
@@ -270,6 +281,7 @@ const MissPost = () => {
           <InputFormat
             title="실종 경위"
             placeholder="실종 당시의 상황을 알려주세요."
+            isEssential={true}
             value={missSituation}
             handleValue={handleMissSituation}
           />
@@ -284,6 +296,7 @@ const MissPost = () => {
           <InputFormat
             title="반려견 이름"
             placeholder="반려견의 이름을 알려주세요."
+            isEssential={true}
             value={dogName}
             handleValue={handleDogName}
           />
@@ -291,6 +304,7 @@ const MissPost = () => {
             datas={dogBreeds}
             title="견종"
             placeholder="견종 선택"
+            isEssential={true}
             value={dogBreed}
             handleValue={handleDogBreed}
           />
@@ -359,6 +373,7 @@ const MissPost = () => {
             placeholder="생년월일을 선택해주세요."
             date={dogBirth}
             inputDate={isDogBirthSelected ? dogBirth : ''}
+            isEssential={true}
             mode="date"
             handleValue={handleDogBirth}
           />
@@ -366,6 +381,7 @@ const MissPost = () => {
             title="외형"
             placeholder="반려견을 쉽게 알아볼 수 있는 특징을 알려주세요."
             value={appearance}
+            isEssential={true}
             multiline
             handleValue={handleAppearance}
           />
@@ -396,6 +412,10 @@ const MissPost = () => {
             '게시글 등록하기'
           )}
         </Button>
+        <CustomText weight="500" style={styles.guideText}>
+          게시글을 등록하면, 작성한 실종 위치 정보를 바탕으로 근처 이웃들에게
+          실종 강아지 알림을 보내요.
+        </CustomText>
         <View style={styles.blank} />
       </ScrollView>
       {showButton && (
@@ -455,6 +475,10 @@ const styles = StyleSheet.create({
     marginBottom: 6,
   },
   subTitleContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     paddingVertical: 8,
     paddingHorizontal: 10,
     marginTop: 24,
@@ -465,6 +489,10 @@ const styles = StyleSheet.create({
   subTitle: {
     fontSize: 16,
     color: color.blue[900],
+  },
+  essential: {
+    fontSize: 13,
+    color: color.blue[400],
   },
   label: {
     fontSize: 16,
@@ -521,6 +549,12 @@ const styles = StyleSheet.create({
   bottomText: {
     color: color.white,
     paddingVertical: 20,
+  },
+  guideText: {
+    fontSize: 12,
+    lineHeight: 16,
+    marginBottom: 12,
+    color: color.blue[400],
   },
   blank: {
     height: 60,
