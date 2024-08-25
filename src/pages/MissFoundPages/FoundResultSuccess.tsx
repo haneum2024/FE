@@ -11,6 +11,7 @@ import CustomText from '../../components/CustomText';
 import BornIcon from '../../components/Icons/BornIcon';
 import LeftArrowIcon from '../../img/LeftArrowIcon.svg';
 import RightArrowIcon from '../../img/RightArrowIcon.svg';
+import CloseIcon from '../../img/CloseIcon.svg';
 import type {ReportDogPageNavigation} from '../../../types/navigation';
 
 type FoundNavigationProp = StackNavigationProp<
@@ -101,6 +102,14 @@ const FoundResultSuccess = () => {
         backdropOpacity={0.3}
         style={styles.modal}>
         <View style={styles.modalContent}>
+          <View style={styles.mainTitleContainer}>
+            <CustomText weight="500" style={styles.mainTitle}>
+              발견을 알리는 팁
+            </CustomText>
+            <TouchableOpacity onPress={modalClose} activeOpacity={0.8}>
+              <CloseIcon width={10} height={10} fill={color.gray[600]} />
+            </TouchableOpacity>
+          </View>
           <View style={styles.subTitleContainer}>
             <CustomText weight="600" style={styles.subTitle}>
               1. 자신의 신원 밝히기
@@ -118,8 +127,10 @@ const FoundResultSuccess = () => {
               2. 유실견의 상태 설명
             </CustomText>
           </View>
+          <CustomText weight="500" style={styles.subTitleFirstText}>
+            유실견의 현재 상태와 건강 상태를 설명하세요.
+          </CustomText>
           <CustomText weight="500" style={styles.subTitleText}>
-            유실견의 현재 상태와 건강 상태를 설명하세요.{'\n'}
             만약 동물병원에 데려갔다면 그 정보도 포함하세요.
           </CustomText>
           <CustomText weight="500" style={styles.exampleText}>
@@ -197,7 +208,20 @@ const styles = StyleSheet.create({
   infoContainer: {
     marginTop: 16,
     padding: 10,
+    borderRadius: 8,
+    gap: 6,
     backgroundColor: color.blue[50],
+  },
+  mainTitleContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 16,
+  },
+  mainTitle: {
+    fontSize: 13,
+    color: color.gray[800],
   },
   subTitleContainer: {
     paddingVertical: 6,
@@ -207,12 +231,18 @@ const styles = StyleSheet.create({
     backgroundColor: color.blue[50],
   },
   subTitle: {
-    fontSize: 16,
+    fontSize: 14,
     color: color.gray[950],
   },
-  subTitleText: {
-    fontSize: 10,
+  subTitleFirstText: {
+    fontSize: 13,
     color: color.gray[800],
+    lineHeight: 18,
+  },
+  subTitleText: {
+    fontSize: 13,
+    color: color.gray[800],
+    lineHeight: 18,
     marginBottom: 6,
   },
   exampleText: {
@@ -225,7 +255,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-start',
     gap: 6,
-    marginBottom: 6,
   },
   item: {
     fontSize: 13,
@@ -268,7 +297,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalContent: {
-    width: '80%',
+    width: '100%',
     padding: 20,
     borderRadius: 10,
     backgroundColor: color.white,
