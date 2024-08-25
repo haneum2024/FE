@@ -76,7 +76,8 @@ const styles = StyleSheet.create({
   description: {
     fontSize: 12,
     marginBottom: 8,
-    color: color.gray[700],
+    lineHeight: 16,
+    color: color.blue[400],
   },
   input: {
     fontSize: 13,

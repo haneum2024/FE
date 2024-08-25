@@ -234,6 +234,10 @@ const MissPost = () => {
               신고자 정보
             </CustomText>
           </View>
+          <CustomText weight="500" style={styles.guideText}>
+            안심하세요, 발견자가 강아지 인식에 성공하는 경우에만 개인정보가
+            공개돼요.
+          </CustomText>
           <InputFormat
             title="이름"
             placeholder="신고자의 이름을 알려주세요."
@@ -396,6 +400,10 @@ const MissPost = () => {
             '게시글 등록하기'
           )}
         </Button>
+        <CustomText weight="500" style={styles.guideText}>
+          게시글을 등록하면, 작성한 실종 위치 정보를 바탕으로 근처 이웃들에게
+          실종 강아지 알림을 보내요.
+        </CustomText>
         <View style={styles.blank} />
       </ScrollView>
       {showButton && (
@@ -521,6 +529,12 @@ const styles = StyleSheet.create({
   bottomText: {
     color: color.white,
     paddingVertical: 20,
+  },
+  guideText: {
+    fontSize: 12,
+    lineHeight: 16,
+    marginBottom: 12,
+    color: color.blue[400],
   },
   blank: {
     height: 60,
