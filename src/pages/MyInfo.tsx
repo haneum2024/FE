@@ -17,7 +17,12 @@ import {logout} from '../store/reducers/authReducer';
 import {AppDispatch} from '../store';
 import CustomText from '../components/CustomText';
 import {getAccessToken, removeAccessToken} from '../storage/auth';
-import {createDogInfo, getAccount, getDogNft, getNfts} from '../services/web3Service';
+import {
+  createDogInfo,
+  getAccount,
+  getDogNft,
+  getNfts,
+} from '../services/web3Service';
 import {getFCMToken} from '../utils/getFCMToken';
 
 GoogleSignin.configure({
@@ -50,69 +55,69 @@ function MyInfo() {
   };
 
   return (
-      <SafeAreaView style={backgroundStyle}>
-        <StatusBar
-            barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-            backgroundColor={backgroundStyle.backgroundColor}
-        />
-        <ScrollView
-            contentInsetAdjustmentBehavior="automatic"
-            style={backgroundStyle}>
-          <View>
-            <Pressable
-                style={styles.button}
-                onPress={() => console.log(getAccount())}>
-              <CustomText weight="500">address 확인</CustomText>
-            </Pressable>
-            <Pressable
-                style={styles.button}
-                onPress={async () => {
-                  const dogNfts = await getDogNft();
-                  console.log(dogNfts)
-                }}>
-              <CustomText weight="500">Dog NFT 확인</CustomText>
-            </Pressable>
-            <Pressable
-                style={styles.button}
-                onPress={async () => {
-                  const nfts = await getNfts();
-                  console.log(nfts)
-                }}>
-              <CustomText weight="500">전체 NFT 확인</CustomText>
-            </Pressable>
-            <Pressable
-                style={styles.button}
-                onPress={async () =>
-                    // 비문 데이터는 S3에 일단 넣는 것으로 진행 있는 api 사용
-                    await createDogInfo(
-                        '마루',
-                        'mix',
-                        '2023-12-24',
-                        'M',
-                        true,
-                        'description',
-                        'https://happymaru-bucket.s3.ap-northeast-2.amazonaws.com/18bf77d6-bb99-4718-aac7-56452be931b9.png',
-                        ['nose data image url1', "nose data image url2"]
-                    )
-                }>
-              <CustomText weight="500">create dog 확인</CustomText>
-            </Pressable>
-            <Pressable
-                style={styles.button}
-                onPress={() => googleLogoutButton(dispatch)}>
-              <CustomText weight="500">로그아웃</CustomText>
-            </Pressable>
-            <Pressable style={styles.button} onPress={() => getFCMToken()}>
-              <CustomText weight="500">GET FCM TOKEN</CustomText>
-            </Pressable>
-            <Pressable
-                style={styles.button}
-                onPress={() => getAccessTokenButton()}>
-              <CustomText weight="500">GET ACCESS TOKEN</CustomText>
-            </Pressable>
-          </View>
-        </ScrollView>
-      </SafeAreaView>
+    <SafeAreaView style={backgroundStyle}>
+      <StatusBar
+        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+        backgroundColor={backgroundStyle.backgroundColor}
+      />
+      <ScrollView
+        contentInsetAdjustmentBehavior="automatic"
+        style={backgroundStyle}>
+        <View>
+          <Pressable
+            style={styles.button}
+            onPress={() => console.log(getAccount())}>
+            <CustomText weight="500">address 확인</CustomText>
+          </Pressable>
+          <Pressable
+            style={styles.button}
+            onPress={async () => {
+              const dogNfts = await getDogNft();
+              console.log(dogNfts);
+            }}>
+            <CustomText weight="500">Dog NFT 확인</CustomText>
+          </Pressable>
+          <Pressable
+            style={styles.button}
+            onPress={async () => {
+              const nfts = await getNfts();
+              console.log(nfts);
+            }}>
+            <CustomText weight="500">전체 NFT 확인</CustomText>
+          </Pressable>
+          <Pressable
+            style={styles.button}
+            onPress={async () =>
+              // 비문 데이터는 S3에 일단 넣는 것으로 진행 있는 api 사용
+              await createDogInfo(
+                '마루',
+                'mix',
+                '2023-12-24',
+                'M',
+                true,
+                'description',
+                'https://happymaru-bucket.s3.ap-northeast-2.amazonaws.com/18bf77d6-bb99-4718-aac7-56452be931b9.png',
+                ['nose data image url1', 'nose data image url2'],
+              )
+            }>
+            <CustomText weight="500">create dog 확인</CustomText>
+          </Pressable>
+          <Pressable
+            style={styles.button}
+            onPress={() => googleLogoutButton(dispatch)}>
+            <CustomText weight="500">로그아웃</CustomText>
+          </Pressable>
+          <Pressable style={styles.button} onPress={() => getFCMToken()}>
+            <CustomText weight="500">GET FCM TOKEN</CustomText>
+          </Pressable>
+          <Pressable
+            style={styles.button}
+            onPress={() => getAccessTokenButton()}>
+            <CustomText weight="500">GET ACCESS TOKEN</CustomText>
+          </Pressable>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
