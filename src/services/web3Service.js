@@ -120,7 +120,7 @@ const createNftJsonString = (name, image, birthDate, gender) => {
  * @param noseData
  * @returns {Promise<string>}
  */
-export const createDogInfo = async ({
+export const createDogInfo = async (
   name,
   breed,
   birthDate,
@@ -129,7 +129,7 @@ export const createDogInfo = async ({
   description,
   image,
   noseData,
-}) => {
+) => {
   const accessToken = await getAccessToken();
 
   // 사용자 정보 가져오기

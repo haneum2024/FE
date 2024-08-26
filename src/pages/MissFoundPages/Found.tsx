@@ -80,10 +80,9 @@ function Found() {
   );
 
   return (
-    <View>
+    <View style={styles.missFoundContainer}>
       <ScrollView
         ref={scrollViewRef}
-        style={styles.missFoundContainer}
         onScroll={handleScroll}
         scrollEventThrottle={16}>
         <View style={styles.sort}>
@@ -149,54 +148,54 @@ function Found() {
               foundDate={post.foundDateTime.replace('T', ' ').slice(0, 16)}
             />
           ))}
-        <FoundCard
+        {/* <FoundCard
           id="1"
           image={
             'https://happymaru-bucket.s3.ap-northeast-2.amazonaws.com/random-person/person-1.png'
           }
-          title="주인을 찾습니다!!"
+          title="중앙대학교 정문 앞 푸들 발견"
           dogGender="수컷"
           dogBreed="푸들"
-          appearance="잘생김 어쩌구저쩌구 어쩌구저쩌구2 어쩌구저쩌구3ㄴㄴㄴㄴㄴㄴㄴㄴ"
-          foundLocation="동작구"
-          foundDate="2023년 12월 23일"
+          appearance="말랑말랑하게 생겼고, 파란색 옷을 입고 있음"
+          foundLocation="서울특별시 동작구 중앙대학교 정문 앞"
+          foundDate="2023-12-23"
         />
         <FoundCard
           id="2"
           image={
             'https://happymaru-bucket.s3.ap-northeast-2.amazonaws.com/random-person/person-2.png'
           }
-          title="주인을 찾습니다!!"
+          title="중앙대학교 정문 앞 푸들 발견"
           dogGender="수컷"
           dogBreed="푸들"
-          appearance="잘생김 어쩌구저쩌구 어쩌구저쩌구2 어쩌구저쩌구3ㄴㄴㄴㄴㄴㄴㄴㄴ"
-          foundLocation="동작구"
-          foundDate="2023년 12월 23일"
+          appearance="말랑말랑하게 생겼고, 파란색 옷을 입고 있음"
+          foundLocation="서울특별시 동작구 중앙대학교 정문 앞"
+          foundDate="2023-12-23"
         />
         <FoundCard
           id="3"
           image={
             'https://happymaru-bucket.s3.ap-northeast-2.amazonaws.com/random-person/person-3.png'
           }
-          title="주인을 찾습니다!!"
+          title="중앙대학교 정문 앞 푸들 발견"
           dogGender="수컷"
           dogBreed="푸들"
-          appearance="잘생김 어쩌구저쩌구 어쩌구저쩌구2 어쩌구저쩌구3ㄴㄴㄴㄴㄴㄴㄴㄴ"
-          foundLocation="동작구"
-          foundDate="2023년 12월 23일"
+          appearance="말랑말랑하게 생겼고, 파란색 옷을 입고 있음"
+          foundLocation="서울특별시 동작구 중앙대학교 정문 앞"
+          foundDate="2023-12-23"
         />
         <FoundCard
           id="4"
           image={
             'https://happymaru-bucket.s3.ap-northeast-2.amazonaws.com/random-person/person-4.png'
           }
-          title="주인을 찾습니다!!"
+          title="중앙대학교 정문 앞 푸들 발견"
           dogGender="수컷"
           dogBreed="푸들"
-          appearance="잘생김 어쩌구저쩌구 어쩌구저쩌구2 어쩌구저쩌구3ㄴㄴㄴㄴㄴㄴㄴㄴ"
-          foundLocation="동작구"
-          foundDate="2023년 12월 23일"
-        />
+          appearance="말랑말랑하게 생겼고, 파란색 옷을 입고 있음"
+          foundLocation="서울특별시 동작구 중앙대학교 정문 앞"
+          foundDate="2023-12-23"
+        /> */}
       </ScrollView>
       {showButton && (
         <TouchableOpacity style={styles.arrowButton} onPress={scrollToTop}>
@@ -214,7 +213,9 @@ function Found() {
 }
 
 const styles = StyleSheet.create({
-  missFoundContainer: {},
+  missFoundContainer: {
+    flex: 1,
+  },
   sort: {
     alignItems: 'flex-end',
     marginHorizontal: 24,
