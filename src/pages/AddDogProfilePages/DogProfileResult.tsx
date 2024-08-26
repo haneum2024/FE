@@ -4,14 +4,18 @@ import {useDispatch} from 'react-redux';
 import {RouteProp} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 
+import {
+  addDogProfileApi,
+  addUserProfileApi,
+  getDogsApi,
+} from '../../api/userApi';
 import color from '../../styles/color';
 import CustomText from '../../components/CustomText';
 import LogoIcon from '../../img/LogoIcon.svg';
-import {AddDogPageNavigation} from '../../../types/navigation';
-import {addDogProfileApi, addUserProfileApi} from '../../api/userApi';
+import {createDogInfo} from '../../services/web3Service';
 import {getAccessToken} from '../../storage/auth';
 import {addProfile} from '../../store/reducers/profileReducer';
-
+import type {AddDogPageNavigation} from '../../../types/navigation';
 interface DogProfileResultType {
   navigation: StackNavigationProp<AddDogPageNavigation, 'DogProfileResult'>;
   route: RouteProp<AddDogPageNavigation, 'DogProfileResult'>;
@@ -44,7 +48,16 @@ const DogProfileResult = ({navigation, route}: DogProfileResultType) => {
       try {
         const accessToken = await getAccessToken();
 
-        await addDogProfileApi({
+        const userProfilePromise = addUserProfileApi({
+          accessToken: accessToken as string,
+          name: name,
+          location: address,
+          description: introduction === '' ? null : introduction,
+          base64ProfileImage:
+            base64ProfileImage === '' ? null : base64ProfileImage,
+        });
+
+        const dogProfilePromise = addDogProfileApi({
           accessToken: accessToken as string,
           name: dogName,
           breed:
@@ -58,13 +71,23 @@ const DogProfileResult = ({navigation, route}: DogProfileResultType) => {
           base64Image: base64Image,
         });
 
-        await addUserProfileApi({
-          accessToken: accessToken as string,
-          name: name,
-          location: address,
-          description: introduction === '' ? null : introduction,
-          base64ProfileImage:
-            base64ProfileImage === '' ? null : base64ProfileImage,
+        await Promise.all([userProfilePromise, dogProfilePromise]);
+
+        const dogsInfo = await getDogsApi(accessToken as string);
+        const dogData = dogsInfo.data[0];
+
+        await createDogInfo({
+          name: dogName,
+          breed:
+            dogBreed === '잘 모르겠어요' || dogBreed === ''
+              ? '알 수 없음'
+              : dogBreed,
+          birthDate: dogBirth,
+          gender: dogGender,
+          neutraled: isNeutered,
+          description: dogIntroduction === '' ? null : dogIntroduction,
+          image: dogData.imageUrl,
+          noseData: ['nose data image url1', 'nose data image url2'],
         });
 
         dispatch(addProfile());

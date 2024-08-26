@@ -3,16 +3,18 @@ import {View, ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
+import {Menu} from 'react-native-paper';
 
 import {getOtherMissApi, getUserMissApi} from '../../api/petSearchApi';
+import CustomText from '../../components/CustomText';
 import MissCard from '../../components/MissCard';
 import ReportIcon from '../../components/Icons/ReportIcon';
 import {getAccessToken} from '../../storage/auth';
 import {RootState} from '../../store';
 import color from '../../styles/color';
+import BottomArrowIcon from '../../img/BottomArrowIcon.svg';
 import TopArrowIcon2 from '../../img/TopArrowIcon2.svg';
 import type {ReportDogPageNavigation} from '../../../types/navigation';
-import CustomText from '../../components/CustomText';
 
 type MissNavigationProp = StackNavigationProp<
   ReportDogPageNavigation,
@@ -28,6 +30,10 @@ function Miss() {
   const [otherMissBoard, setOtherMissBoard] = useState<any[]>([]);
   const [showButton, setShowButton] = useState(false);
   const [isShowNotice, setIsShowNotice] = useState(false);
+  const [sortMode, setSortMode] = useState('최신 순');
+  const [sortMenuVisible, setSortMenuVisible] = useState(false);
+
+  const sortList = ['최신 순', '오래된 순'];
 
   const scrollToTop = () => {
     if (scrollViewRef.current) {
@@ -73,6 +79,11 @@ function Miss() {
     }
   };
 
+  const handleSortChange = (type: string) => {
+    setSortMode(type);
+    setSortMenuVisible(false);
+  };
+
   useFocusEffect(
     useCallback(() => {
       fetchMissBoards();
@@ -86,6 +97,39 @@ function Miss() {
         style={styles.missFoundContainer}
         onScroll={handleScroll}
         scrollEventThrottle={16}>
+        <View style={styles.sort}>
+          <Menu
+            visible={sortMenuVisible}
+            contentStyle={styles.menuContent}
+            onDismiss={() => setSortMenuVisible(false)}
+            anchor={
+              <TouchableOpacity
+                style={styles.button}
+                activeOpacity={0.8}
+                onPress={() => setSortMenuVisible(true)}>
+                <View style={styles.buttonView}>
+                  <CustomText weight="500" style={styles.text}>
+                    {sortMode}
+                  </CustomText>
+                  <BottomArrowIcon
+                    width={12}
+                    height={12}
+                    fill={color.gray[700]}
+                  />
+                </View>
+              </TouchableOpacity>
+            }>
+            {sortList.map((type, index) => (
+              <Menu.Item
+                key={index}
+                style={styles.menuItem}
+                titleStyle={styles.text}
+                onPress={() => handleSortChange(type)}
+                title={type}
+              />
+            ))}
+          </Menu>
+        </View>
         {userMissBoard.length > 0 &&
           userMissBoard.map(post => (
             <MissCard
@@ -189,6 +233,37 @@ function Miss() {
 
 const styles = StyleSheet.create({
   missFoundContainer: {},
+  sort: {
+    alignItems: 'flex-end',
+    marginHorizontal: 24,
+    marginTop: 12,
+  },
+  button: {
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: color.gray[200],
+    backgroundColor: color.gray[50],
+  },
+  buttonView: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  menuContent: {
+    borderRadius: 10,
+    backgroundColor: color.gray[50],
+  },
+  menuItem: {
+    height: 35,
+    backgroundColor: color.gray[50],
+  },
+  text: {
+    fontSize: 12,
+    color: color.gray[700],
+  },
   reportButton: {
     position: 'absolute',
     bottom: 20,

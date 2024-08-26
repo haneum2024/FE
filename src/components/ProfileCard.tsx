@@ -104,11 +104,6 @@ const styles = StyleSheet.create({
     backgroundColor: color.white,
     overflow: 'hidden',
   },
-  imageContainer: {
-    width: 180,
-    height: 100,
-    marginBottom: 10,
-  },
   mark: {
     display: 'flex',
     flexDirection: 'row',
@@ -126,8 +121,9 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   image: {
-    width: 180,
-    height: 100,
+    width: '100%',
+    aspectRatio: 1.4,
+    resizeMode: 'cover',
     marginBottom: 10,
   },
   labelContainer: {

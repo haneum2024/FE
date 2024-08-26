@@ -20,6 +20,7 @@ import type {
   MissFoundPageNavigation,
   ReportDogPageNavigation,
 } from '../../../types/navigation';
+import {PaperProvider} from 'react-native-paper';
 
 const TopTab = createMaterialTopTabNavigator<MissFoundPageNavigation>();
 const FoundBoardStack = createStackNavigator<FoundDogPageNavigation>();
@@ -103,10 +104,12 @@ function MissFound({
   const routeName = route?.params?.routeName;
 
   return (
-    <View style={styles.missFoundContainer}>
-      <Header navigation={navigation} />
-      <MissFoundTab routeName={routeName || 'Found'} />
-    </View>
+    <PaperProvider>
+      <View style={styles.missFoundContainer}>
+        <Header navigation={navigation} />
+        <MissFoundTab routeName={routeName || 'Found'} />
+      </View>
+    </PaperProvider>
   );
 }
 

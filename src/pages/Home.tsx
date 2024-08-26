@@ -324,7 +324,7 @@ const styles = StyleSheet.create({
   skeletonContainer: {
     marginHorizontal: 24,
     marginVertical: 8,
-    height: 200,
+    height: 240,
     borderRadius: 20,
     backgroundColor: color.gray[100],
   },
@@ -409,6 +409,7 @@ const styles = StyleSheet.create({
   address: {
     fontSize: 12,
     color: color.gray[600],
+    flexShrink: 1,
   },
   certificate: {
     width: '100%',
