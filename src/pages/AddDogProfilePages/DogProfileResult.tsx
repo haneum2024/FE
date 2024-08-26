@@ -75,29 +75,29 @@ const DogProfileResult = ({navigation, route}: DogProfileResultType) => {
 
         const dogsInfo = await getDogsApi(accessToken as string);
         const dogData = dogsInfo.data[0];
-
-        await createDogInfo({
-          name: dogName,
-          breed:
-            dogBreed === '잘 모르겠어요' || dogBreed === ''
-              ? '알 수 없음'
-              : dogBreed,
-          birthDate: dogBirth,
-          gender: dogGender,
-          neutraled: isNeutered,
-          description: dogIntroduction === '' ? null : dogIntroduction,
-          image: dogData.imageUrl,
-          noseData: ['nose data image url1', 'nose data image url2'],
-        });
+        console.log(1);
+        await createDogInfo(
+          dogName,
+          dogBreed === '잘 모르겠어요' || dogBreed === ''
+            ? '알 수 없음'
+            : dogBreed,
+          dogBirth,
+          dogGender,
+          isNeutered,
+          dogIntroduction,
+          dogData.imageUrl,
+          ['nose data image url1', 'nose data image url2'],
+        );
 
         dispatch(addProfile());
         setLoading(false);
-
+        console.log(2);
         Animated.timing(scaleAnim, {
           toValue: 1,
           duration: 1500,
           useNativeDriver: true,
         }).start();
+        console.log(3);
         await delay(1500);
         navigation.navigate('HomeMain');
       } catch (error) {

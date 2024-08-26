@@ -91,10 +91,9 @@ function Miss() {
   );
 
   return (
-    <View>
+    <View style={styles.missFoundContainer}>
       <ScrollView
         ref={scrollViewRef}
-        style={styles.missFoundContainer}
         onScroll={handleScroll}
         scrollEventThrottle={16}>
         <View style={styles.sort}>
@@ -160,7 +159,7 @@ function Miss() {
               missingDate={post.lostDateTime.replace('T', ' ').slice(0, 16)}
             />
           ))}
-        <MissCard
+        {/* <MissCard
           id="1"
           image={
             'https://happymaru-bucket.s3.ap-northeast-2.amazonaws.com/random-person/person-4.png'
@@ -207,7 +206,7 @@ function Miss() {
           dogAge={8}
           missingLocation="동작구"
           missingDate="2023년 12월 23일"
-        />
+        /> */}
       </ScrollView>
       {showButton && (
         <TouchableOpacity style={styles.arrowButton} onPress={scrollToTop}>
@@ -232,7 +231,9 @@ function Miss() {
 }
 
 const styles = StyleSheet.create({
-  missFoundContainer: {},
+  missFoundContainer: {
+    flex: 1,
+  },
   sort: {
     alignItems: 'flex-end',
     marginHorizontal: 24,
