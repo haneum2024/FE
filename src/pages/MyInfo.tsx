@@ -40,7 +40,6 @@ const googleLogoutButton = async (dispatch: AppDispatch) => {
     await GoogleSignin.signOut();
     removeAccessToken();
     dispatch(logout());
-    console.log('로그아웃 성공');
   } catch (error) {
     console.error('로그아웃 실패:', error);
   }
@@ -89,17 +88,16 @@ function MyInfo() {
             style={styles.button}
             onPress={async () =>
               // 비문 데이터는 S3에 일단 넣는 것으로 진행 있는 api 사용
-              await createDogInfo({
-                name: '마루',
-                breed: 'mix',
-                birthDate: '2023-12-24',
-                gender: 'M',
-                neutraled: true,
-                description: 'description',
-                image:
-                  'https://happymaru-bucket.s3.ap-northeast-2.amazonaws.com/18bf77d6-bb99-4718-aac7-56452be931b9.png',
-                noseData: ['nose data image url1', 'nose data image url2'],
-              })
+              await createDogInfo(
+                '마루',
+                'mix',
+                '2023-12-24',
+                'M',
+                true,
+                'description',
+                'https://happymaru-bucket.s3.ap-northeast-2.amazonaws.com/18bf77d6-bb99-4718-aac7-56452be931b9.png',
+                ['nose data image url1', 'nose data image url2'],
+              )
             }>
             <CustomText weight="500">create dog 확인</CustomText>
           </Pressable>

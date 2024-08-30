@@ -69,7 +69,6 @@ function Home() {
   const modalOpen = async () => {
     const nftObject: any = await getDogNft();
     setNftInfo(nftObject);
-    console.log('nftObject', nftObject);
     setCertificateModalOpen(true);
   };
 
@@ -95,7 +94,7 @@ function Home() {
 
         const userData = userInfo.data;
         const dogData = dogsInfo.data[0];
-        console.log('dogData', dogData);
+
         setOwnerName(userData.name);
         setOwnerIntroduction(userData.description);
         setOwnerProfileImage(userData.profileImageUrl);
