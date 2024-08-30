@@ -36,7 +36,6 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
             fcmToken: fcmToken,
           });
           const userData: UserResponse = userResponse.data;
-          console.log('userData:', userData);
 
           if (!userData.termsOfServiceAgreement) {
             navigation.navigate('TermsOfUse');
@@ -62,7 +61,6 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
 
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
-      console.log('User Info:', userInfo);
 
       const loginResponse = await loginApi({
         provider: 'google',
@@ -79,7 +77,6 @@ const Login: React.FC<LoginProps> = ({navigation}) => {
         fcmToken: fcmToken,
       });
       const userData: UserResponse = userResponse.data;
-      console.log('userData:', userData);
 
       if (!userData.termsOfServiceAgreement) {
         navigation.navigate('TermsOfUse');

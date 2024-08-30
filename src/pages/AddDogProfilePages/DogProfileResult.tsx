@@ -75,7 +75,7 @@ const DogProfileResult = ({navigation, route}: DogProfileResultType) => {
 
         const dogsInfo = await getDogsApi(accessToken as string);
         const dogData = dogsInfo.data[0];
-        console.log(1);
+
         await createDogInfo(
           dogName,
           dogBreed === '잘 모르겠어요' || dogBreed === ''
@@ -91,13 +91,13 @@ const DogProfileResult = ({navigation, route}: DogProfileResultType) => {
 
         dispatch(addProfile());
         setLoading(false);
-        console.log(2);
+
         Animated.timing(scaleAnim, {
           toValue: 1,
           duration: 1500,
           useNativeDriver: true,
         }).start();
-        console.log(3);
+
         await delay(1500);
         navigation.navigate('HomeMain');
       } catch (error) {

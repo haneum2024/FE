@@ -41,7 +41,6 @@ const DogNoseCamera = ({navigation, route}: DogNoseCameraType) => {
       };
       const data = await cameraRef.current.takePictureAsync(options);
       setPhotos(prevPhotos => [...prevPhotos, data.uri]);
-      console.log('사진 촬영', data.uri);
 
       setFillAmount(prevFill => Math.min(prevFill + 20, 100));
     }
@@ -62,7 +61,6 @@ const DogNoseCamera = ({navigation, route}: DogNoseCameraType) => {
   }, [photos]);
 
   const moveToNextPage = () => {
-    console.log('사진 촬영 완료');
     navigation.navigate('DogProfileResult', {
       dogName,
       dogBreed,
