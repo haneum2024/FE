@@ -71,7 +71,7 @@ The software project is a front-end application within a larger architecture, wi
 
 ##  Demo Video
 
-- [Youtube Demo Video](https://www.youtube.com/watch?v=YkoMIvic9LY&t=9s)
+[Youtube Demo Video](https://www.youtube.com/watch?v=YkoMIvic9LY)
 
 ---
 
