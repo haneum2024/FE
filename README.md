@@ -69,17 +69,23 @@ The software project is a front-end application within a larger architecture, wi
 
 ---
 
+##  Demo Video
+
+- [Youtube Demo Video](https://www.youtube.com/watch?v=YkoMIvic9LY&t=9s)
+
+---
+
 ##  Features
 
 |    |   Feature         | Description                                                                                         |
 |----|-------------------|-----------------------------------------------------------------------------------------------------|
-| ⚙️  | **Architecture**  | Built using React Native for a cross-platform mobile app development. Follows a component-based architecture for a scalable and maintainable codebase.                    |
+| ⚙️ | **Architecture**  | Built using React Native for a cross-platform mobile app development. Follows a component-based architecture for a scalable and maintainable codebase.                    |
 | 🔩 | **Code Quality**  | Codebase maintains a good level of code quality with consistent coding style, adhering to industry best practices and clean code principles.                     |
 | 📄 | **Documentation** | The project provides comprehensive documentation, including setup instructions, API references, and code comments for easier understanding and onboarding of new contributors. |
 | 🔌 | **Integrations**  | Key integrations include React Navigation for routing, Firebase for messaging, and Web3 for blockchain interactions, enhancing the functionality of the app.          |
 | 🧩 | **Modularity**    | Codebase exhibits good modularity with reusable components and clear separation of concerns, enabling easier maintenance and future extensions of the app.             |
 | 🧪 | **Testing**       | Testing is performed using Jest for unit testing and snapshot testing, ensuring code reliability and preventing regressions in the application.                 |
-| ⚡️  | **Performance**   | The project demonstrates efficient performance with optimized resource usage, fast rendering, and responsive interactions, providing a smooth user experience.        |
+| ⚡️ | **Performance**   | The project demonstrates efficient performance with optimized resource usage, fast rendering, and responsive interactions, providing a smooth user experience.        |
 | 🛡️ | **Security**      | Security measures are in place to protect user data through Firebase's authentication and access control mechanisms, ensuring data confidentiality and integrity.        |
 | 📦 | **Dependencies**  | Utilizes various external libraries such as React Native, Babel, Metro, and Firebase for enhanced functionality and development convenience.                          |
 | 🚀 | **Scalability**   | The project shows scalability potential to handle increased traffic and load by leveraging React Native's performance optimizations and server-side scalability options.   |
